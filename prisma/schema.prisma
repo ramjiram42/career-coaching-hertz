@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String         @id @default(uuid())
+  email          String         @unique
+  name           String
+  currentRole    String
+  yearsExperience Int
+  targetRoleId   String?
+  targetRole     Role?          @relation("UserTargetRole", fields: [targetRoleId], references: [id])
+  skills         UserSkill[]
+  mentorships    Mentorship[]
+  progress       UserProgress[]
+  tenantId       String?
+  tenant         Tenant?        @relation(fields: [tenantId], references: [id])
+  tenantRole     String         @default("employee") // admin, manager, employee
+  subscriptions  Subscription[]
+  aiLogs         AiUsageLog[]
+}
+
+model Role {
+  id               String       @id @default(uuid())
+  title            String
+  description      String
+  difficultyLevel  String
+  salaryGrowth     String
+  estimatedMonths  Int
+  parentRoleId     String?
+  parentRole       Role?        @relation("RoleTree", fields: [parentRoleId], references: [id])
+  childRoles       Role[]       @relation("RoleTree")
+  requiredSkills   RoleSkill[]
+  learningPath     LearningPath?
+  targetedByUsers  User[]       @relation("UserTargetRole")
+  mentors          Mentor[]
+}
+
+model Skill {
+  id          String       @id @default(uuid())
+  name        String
+  category    String
+  users       UserSkill[]
+  roles       RoleSkill[]
+}
+
+model UserSkill {
+  id       String @id @default(uuid())
+  userId   String
+  skillId  String
+  level    Int    // 1-5 proficiency
+  user     User   @relation(fields: [userId], references: [id])
+  skill    Skill  @relation(fields: [skillId], references: [id])
+}
+
+model RoleSkill {
+  id       String  @id @default(uuid())
+  roleId   String
+  skillId  String
+  required Boolean @default(true)
+  role     Role    @relation(fields: [roleId], references: [id])
+  skill    Skill   @relation(fields: [skillId], references: [id])
+}
+
+model LearningPath {
+  id       String   @id @default(uuid())
+  roleId   String   @unique
+  role     Role     @relation(fields: [roleId], references: [id])
+  modules  Module[]
+}
+
+model Module {
+  id             String   @id @default(uuid())
+  pathId         String
+  title          String
+  description    String
+  estimatedHours Int
+  canBeParallel  Boolean  @default(false)
+  orderIndex     Int
+  prerequisites  String?  // JSON list of prerequisite module IDs
+  learningPath   LearningPath @relation(fields: [pathId], references: [id])
+  userProgress   UserProgress[]
+}
+
+model UserProgress {
+  id           String   @id @default(uuid())
+  userId       String
+  moduleId     String
+  status       String   // NOT_STARTED, IN_PROGRESS, COMPLETED
+  completionPct Float
+  user         User     @relation(fields: [userId], references: [id])
+  module       Module   @relation(fields: [moduleId], references: [id])
+}
+
+model Mentor {
+  id              String   @id @default(uuid())
+  name            String
+  photoUrl        String?
+  expertiseArea   String
+  yearsExperience Int
+  language        String
+  rating          Float
+  sessionsDone    Int
+  roleId          String?
+  supportedRole   Role?    @relation(fields: [roleId], references: [id])
+  engagements     Mentorship[]
+}
+
+model Mentorship {
+  id              String   @id @default(uuid())
+  userId          String
+  mentorId        String
+  status          String   // PLANNED, ACTIVE, COMPLETED
+  sessionsPlanned Int
+  sessionsDone    Int
+  user            User     @relation(fields: [userId], references: [id])
+  mentor          Mentor   @relation(fields: [mentorId], references: [id])
+}
+
+model Tenant {
+  id             String         @id @default(uuid())
+  name           String
+  domain         String?
+  users          User[]
+  subscriptions  Subscription[]
+}
+
+model Subscription {
+  id                   String   @id @default(uuid())
+  tenantId             String?
+  userId               String?
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  planTier             String   // Free, Pro, Team, Enterprise
+  status               String
+  seats                Int      @default(1)
+  
+  tenant               Tenant?  @relation(fields: [tenantId], references: [id])
+  user                 User?    @relation(fields: [userId], references: [id])
+}
+
+model AiPromptTemplate {
+  id             String   @id @default(uuid())
+  systemPrompt   String
+  taskType       String   @unique // role_recommendation, next_action, roadmap
+  active         Boolean  @default(true)
+}
+
+model AiUsageLog {
+  id             String   @id @default(uuid())
+  userId         String
+  task           String
+  promptTokens   Int
+  completionTokens Int
+  createdAt      DateTime @default(now())
+
+  user           User     @relation(fields: [userId], references: [id])
+}
