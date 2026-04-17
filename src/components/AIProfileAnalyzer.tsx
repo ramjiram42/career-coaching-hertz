@@ -1,82 +1,136 @@
 'use client';
 
-import { UploadCloud, Cpu, Search, X, CheckCircle2, ArrowRight, Target, TrendingUp, Info, Award, BookOpen, Layers, Zap, Sparkles, User, HelpCircle, Compass, Heart, Share2, ChevronRight, BarChart2 } from "lucide-react"
-import { useState, useEffect } from 'react'
+import { UploadCloud, Cpu, Search, X, CheckCircle2, ArrowRight, Target, TrendingUp, Info, Award, BookOpen, Layers, Zap, Sparkles, User, HelpCircle, Compass, Heart, Share2, ChevronRight, BarChart3, ChevronDown, UserCheck } from "lucide-react"
+import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 
-type ViewMode = 'explore' | 'journey';
 type Step = 'upload' | 'analyzing' | 'results';
 
-interface Skill {
-  name: string;
-  status: 'mastered' | 'missing';
-}
-
-interface PathNode {
+interface NodeData {
   role: string;
-  match: string;
+  skills: string; // e.g. "12/15"
   tag?: string;
+  isTarget?: boolean;
 }
 
-interface JourneyPath {
+interface Branch {
   id: string;
+  nodes: NodeData[];
+}
+
+interface Section {
   title: string;
-  color: string;
-  nodes: PathNode[];
+  tag: string;
+  tagColor: string;
+  branches: Branch[];
 }
 
 export function AIProfileAnalyzer() {
   const [step, setStep] = useState<Step>('upload');
-  const [viewMode, setViewMode] = useState<ViewMode>('explore');
-  const [analyzingText, setAnalyzingText] = useState('Parsing resume...');
-  
-  const skills: Skill[] = [
-    { name: 'RPA (UiPath/AA)', status: 'mastered' },
-    { name: 'Architecture', status: 'mastered' },
-    { name: 'Stakeholder Mgmt', status: 'mastered' },
-    { name: 'Team Leadership', status: 'mastered' },
-    { name: 'Agile/PMP', status: 'mastered' },
-    { name: 'AI/ML Foundations', status: 'missing' },
-    { name: 'System Design', status: 'missing' },
-    { name: 'Cloud Architecture', status: 'missing' },
-    { name: 'Product Growth', status: 'missing' },
-  ];
+  const [analyzingText, setAnalyzingText] = useState('Initializing Neural Engine...');
+  const [selectedNode, setSelectedNode] = useState<NodeData | null>(null);
 
-  const journeys: JourneyPath[] = [
+  const sections: Section[] = [
     {
-      id: 'desired',
-      title: 'Desired Path',
-      color: '#FF5A3C',
-      nodes: [
-        { role: 'RPA Solution Architect', match: '15/15' },
-        { role: 'AI Automation Lead', match: '12/15', tag: 'Leadership Role' },
-        { role: 'Head of Intelligent Auto', match: '9/15', tag: 'Leadership Role' },
-        { role: 'Head of Engineering', match: '7/15', tag: 'Executive' },
-        { role: 'CTO', match: '5/15', tag: 'Ultimate Goal' }
+      title: 'Same Domain Growth',
+      tag: 'HIGH MATCH',
+      tagColor: '#10B981',
+      branches: [
+        {
+          id: 's1-b1',
+          nodes: [
+            { role: 'Intelligent Automation Architect', skills: '14/15', tag: 'High Match' },
+            { role: 'AI Automation Lead', skills: '12/15' },
+            { role: 'Head of Intelligent Automation', skills: '9/15' },
+            { role: 'CTO', skills: '6/15', isTarget: true }
+          ]
+        },
+        {
+          id: 's1-b2',
+          nodes: [
+            { role: 'Enterprise Automation Architect', skills: '13/15', tag: 'High Match' },
+            { role: 'Automation Practice Head', skills: '10/15' },
+            { role: 'Director of Automation', skills: '8/15' },
+            { role: 'CTO', skills: '6/15', isTarget: true }
+          ]
+        },
+        {
+          id: 's1-b3',
+          nodes: [
+            { role: 'Engineering Manager (Automation)', skills: '12/15', tag: 'High Match' },
+            { role: 'Sr. Engineering Manager', skills: '9/15' },
+            { role: 'VP Engineering', skills: '7/15' },
+            { role: 'CTO', skills: '6/15', isTarget: true }
+          ]
+        }
       ]
     },
     {
-      id: 'popular',
-      title: 'Popular Path',
-      color: '#00C2A8',
-      nodes: [
-        { role: 'RPA Solution Architect', match: '15/15' },
-        { role: 'Engineering Manager', match: '11/15' },
-        { role: 'Sr. Engineering Manager', match: '8/15' },
-        { role: 'VP Engineering', match: '6/15' },
-        { role: 'CTO', match: '5/15' }
+      title: 'Adjacent Domain Paths',
+      tag: 'MEDIUM MATCH',
+      tagColor: '#F59E0B',
+      branches: [
+        {
+          id: 's2-b1',
+          nodes: [
+            { role: 'Technical Program Manager', skills: '11/15', tag: 'Medium Match' },
+            { role: 'Program Director', skills: '8/15' },
+            { role: 'VP Delivery', skills: '6/15' },
+            { role: 'COO / CTO', skills: '5/15', isTarget: true }
+          ]
+        },
+        {
+          id: 's2-b2',
+          nodes: [
+            { role: 'Product Manager (AI)', skills: '9/15', tag: 'Medium Match' },
+            { role: 'Senior Product Manager', skills: '7/15' },
+            { role: 'Head of Product', skills: '5/15' },
+            { role: 'Chief Product Officer', skills: '4/15', isTarget: true }
+          ]
+        },
+        {
+          id: 's2-b3',
+          nodes: [
+            { role: 'Cloud & Solution Architect', skills: '10/15', tag: 'Medium Match' },
+            { role: 'Enterprise Architect', skills: '8/15' },
+            { role: 'Chief Architect', skills: '6/15' },
+            { role: 'CTO', skills: '5/15', isTarget: true }
+          ]
+        }
       ]
     },
     {
-      id: 'promoted',
-      title: 'Promoted Lane (Cross Domain)',
-      color: '#3B82F6',
-      nodes: [
-        { role: 'RPA Solution Architect', match: '15/15' },
-        { role: 'Data Analyst', match: '8/15' },
-        { role: 'AI Engineer', match: '6/15' },
-        { role: 'AI Architect', match: '4/15' },
-        { role: 'CTO', match: '5/15' }
+      title: 'Cross Domain Opportunities',
+      tag: 'WILD CARD',
+      tagColor: '#8B5CF6',
+      branches: [
+        {
+          id: 's3-b1',
+          nodes: [
+            { role: 'Data Analyst', skills: '8/15', tag: 'Wild Card' },
+            { role: 'Data Engineer', skills: '6/15' },
+            { role: 'AI Engineer', skills: '5/15' },
+            { role: 'AI Architect', skills: '4/15' },
+            { role: 'CTO', skills: '3/15', isTarget: true }
+          ]
+        },
+        {
+          id: 's3-b2',
+          nodes: [
+            { role: 'Full Stack Developer', skills: '7/15', tag: 'Wild Card' },
+            { role: 'Tech Lead', skills: '5/15' },
+            { role: 'Engineering Head', skills: '4/15' }
+          ]
+        },
+        {
+          id: 's3-b3',
+          nodes: [
+            { role: 'Management Consulting', skills: '6/15', tag: 'Wild Card' },
+            { role: 'Consultant', skills: '4/15' },
+            { role: 'Partner', skills: '3/15' },
+            { role: 'Strategy / CTO roles', skills: '3/15', isTarget: true }
+          ]
+        }
       ]
     }
   ];
@@ -85,26 +139,70 @@ export function AIProfileAnalyzer() {
     if (e.target.files && e.target.files.length > 0) {
       setStep('analyzing');
       setTimeout(() => setAnalyzingText('Analyzing 10+ years experience...'), 800);
-      setTimeout(() => setAnalyzingText('Identifying RPA & Architecture strengths...'), 1600);
+      setTimeout(() => setAnalyzingText('Extracting RPA & Architecture strengths...'), 1600);
       setTimeout(() => setAnalyzingText('Calculating Executive Trajectory...'), 2400);
       setTimeout(() => setStep('results'), 3500);
     }
   };
 
+  const Node = ({ data, color }: { data: NodeData, color: string }) => {
+    const [matchNum, matchTotal] = data.skills.split('/').map(Number);
+    const progress = (matchNum / matchTotal) * 100;
+
+    return (
+      <div 
+        onClick={() => setSelectedNode(data)}
+        className="bg-white rounded-2xl p-4 shadow-md border border-gray-100 min-w-[200px] cursor-pointer hover:shadow-xl transition-all group relative"
+      >
+        {data.tag && (
+          <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[9px] font-black text-white uppercase tracking-wider" style={{ background: color }}>
+            {data.tag}
+          </span>
+        )}
+        <h5 className="text-[12px] font-bold text-gray-900 mb-2 leading-tight flex items-center justify-between">
+          {data.role}
+          {data.isTarget && <Target size={12} className="text-[#FF5A3C]" />}
+        </h5>
+        
+        <div className="space-y-1">
+          <div className="flex justify-between items-center text-[10px] font-bold text-gray-400">
+            <span>Skill Match</span>
+            <span style={{ color }}>{data.skills}</span>
+          </div>
+          <div className="h-1 bg-gray-50 rounded-full overflow-hidden">
+             <div className="h-full transition-all duration-1000" style={{ width: `${progress}%`, background: color }}></div>
+          </div>
+        </div>
+
+        {/* Tooltip on Hover */}
+        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-gray-900 text-white p-3 rounded-xl text-[10px] opacity-0 group-hover:opacity-100 transition-opacity z-50 pointer-events-none shadow-2xl">
+           <p className="font-bold mb-1">Skill Gap Analysis</p>
+           <p className="opacity-70 mb-2">Missing: AI/ML Strategy, Cloud Arch</p>
+           <div className="flex items-center gap-1 text-[#FFC900] font-black uppercase tracking-tighter">
+              <Zap size={10} /> Next Steps: Python for AI
+           </div>
+        </div>
+      </div>
+    );
+  };
+
   if (step === 'upload') {
     return (
-      <div className="max-w-4xl mx-auto mt-20">
+      <div className="max-w-4xl mx-auto mt-20 px-8">
         <div 
-          onClick={() => document.getElementById('resume-upload')?.click()}
+          onClick={(e) => {
+            if (e.target instanceof HTMLInputElement) return;
+            document.getElementById('resume-upload')?.click();
+          }}
           className="bg-white border-2 border-dashed border-gray-200 rounded-[48px] p-20 text-center cursor-pointer hover:border-[#FF5A3C] transition-all group shadow-xl shadow-gray-200/50"
         >
-          <input type="file" id="resume-upload" hidden onChange={handleFileSelect} accept=".pdf,.doc,.docx" />
+          <input type="file" id="resume-upload" hidden onChange={handleFileSelect} onClick={(e) => e.stopPropagation()} accept=".pdf,.doc,.docx" />
           <div className="w-24 h-24 bg-[#FF5A3C] rounded-[32px] flex items-center justify-center mx-auto mb-10 shadow-lg shadow-[#FF5A3C]33 group-hover:scale-110 transition-transform">
             <UploadCloud size={48} color="white" />
           </div>
-          <h2 className="text-4xl font-black text-gray-900 mb-4 tracking-tight">Upload Your Resume</h2>
+          <h2 className="text-4xl font-black text-gray-900 mb-4 tracking-tight">Generate Future Moves</h2>
           <p className="text-xl text-gray-500 font-medium mb-12 max-w-lg mx-auto">
-            Let AI map your journey from RPA Architect to CTO in 3–5 years.
+            Upload your resume to reveal your holistic RPA-to-CTO career tree.
           </p>
           <button className="bg-[#FF5A3C] text-white px-12 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-[#FF5A3C]44 transition-all">
             Analyze My Trajectory
@@ -116,251 +214,166 @@ export function AIProfileAnalyzer() {
 
   if (step === 'analyzing') {
     return (
-      <div className="max-w-4xl mx-auto mt-40 text-center">
+      <div className="max-w-4xl mx-auto mt-40 text-center px-8">
         <div className="relative w-32 h-32 mx-auto mb-10">
           <div className="absolute inset-0 border-8 border-gray-100 rounded-full"></div>
-          <div className="absolute inset-0 border-8 border-[#FF5A3C] rounded-full border-t-transparent animate-spin"></div>
+          <div className="absolute inset-0 border-8 border-[#FF5A3C] rounded-full border-t-transparent animate-spin-custom"></div>
           <div className="absolute inset-0 flex items-center justify-center">
             <Cpu size={48} className="text-gray-900" />
           </div>
         </div>
-        <h3 className="text-3xl font-black text-gray-900 mb-4">Neural Strategy Map</h3>
+        <h3 className="text-3xl font-black text-gray-900 mb-4">Neural Strategy Mapping...</h3>
         <p className="text-xl text-gray-500 font-bold animate-pulse">{analyzingText}</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F7FA] pb-20">
+    <div className="min-h-screen bg-[#F8FAFC] pb-40 overflow-x-hidden">
       
-      {/* Sub Header / Tab Bar */}
-      <div className="bg-white border-b border-gray-100 px-8 py-4 sticky top-20 z-40 flex items-center justify-center">
-        <div className="flex bg-gray-100 p-1.5 rounded-2xl border border-gray-100">
-           <button 
-            onClick={() => setViewMode('explore')}
-            className={`px-8 py-3 rounded-xl text-sm font-black transition-all ${viewMode === 'explore' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-800'}`}
-           >
-            Explore Future Moves
-           </button>
-           <button 
-            onClick={() => setViewMode('journey')}
-            className={`px-8 py-3 rounded-xl text-sm font-black transition-all ${viewMode === 'journey' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-800'}`}
-           >
-            Career Journey
-           </button>
-        </div>
+      {/* HEADER SECTION */}
+      <div className="max-w-[1600px] mx-auto pt-16 px-8 text-center mb-24">
+         <h1 className="text-5xl font-black text-gray-900 mb-3 tracking-tighter">Explore Future Moves</h1>
+         <p className="text-xl text-gray-500 font-bold">Personalized career paths based on your RPA Solution Architect profile</p>
       </div>
 
-      <div className="container mx-auto px-8 py-12">
-        {viewMode === 'explore' ? (
-          <div className="animate-in fade-in duration-500">
-            <div className="text-center mb-20">
-               <h1 className="text-5xl font-black text-gray-900 mb-4 tracking-tight">Explore Future Moves</h1>
-               <p className="text-xl text-gray-500 font-semibold">Strategic transitions calculated for your RPA mastery.</p>
-            </div>
-
-            {/* Top Node Flow */}
-            <div className="relative flex justify-center items-start gap-32 mb-32">
-               {/* Left: Next Step */}
-               <div className="text-center relative z-10 w-64 group">
-                  <div className="w-24 h-24 bg-white border-4 border-[#00C2A8] rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-[#00C2A8]11 group-hover:scale-110 transition-transform">
-                     <Target size={40} className="text-[#00C2A8]" />
-                  </div>
-                  <span className="bg-[#00C2A8] text-white text-[10px] font-black px-3 py-1 rounded-md tracking-wider uppercase mb-3 inline-block">Next Step</span>
-                  <h4 className="text-xl font-black text-gray-900 mb-1 leading-tight">AI Automation Lead</h4>
-                  <p className="text-sm text-gray-500 font-bold">Suggested Move</p>
-               </div>
-
-               {/* Center: You Today */}
-               <div className="text-center relative z-10 w-80">
-                  <div className="w-32 h-32 bg-white p-1 rounded-full border-4 border-[#FF5A3C] mx-auto mb-6 shadow-2xl shadow-[#FF5A3C]22">
-                     <div className="w-full h-full rounded-full overflow-hidden">
-                        <Image src="/ram_profile.png" width={128} height={128} alt="You" className="object-cover" />
-                     </div>
-                  </div>
-                  <span className="bg-[#FF5A3C] text-white text-[10px] font-black px-3 py-1 rounded-md tracking-wider uppercase mb-3 inline-block">You Today</span>
-                  <h4 className="text-2xl font-black text-gray-900 mb-1 leading-tight">RPA Solution Architect</h4>
-                  <p className="text-sm text-gray-500 font-bold">10+ Years Experience</p>
-               </div>
-
-               {/* Right: Future Move */}
-               <div className="text-center relative z-10 w-64 group">
-                  <div className="w-24 h-24 bg-white border-4 border-[#6C63FF] rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-[#6C63FF]11 group-hover:scale-110 transition-transform">
-                     <Award size={40} className="text-[#6C63FF]" />
-                  </div>
-                  <span className="bg-[#6C63FF] text-white text-[10px] font-black px-3 py-1 rounded-md tracking-wider uppercase mb-3 inline-block">Future Move</span>
-                  <h4 className="text-xl font-black text-gray-900 mb-1 leading-tight">CTO / Head of Eng</h4>
-                  <p className="text-sm text-gray-500 font-bold">Target Role</p>
-               </div>
-
-               {/* SVG Lines */}
-               <div className="absolute left-0 top-12 w-full h-12 pointer-events-none opacity-30">
-                  <svg width="100%" height="60" className="path-line">
-                    <path d="M400 30 Q500 30, 600 30" stroke="#CBD5E1" strokeWidth="4" strokeDasharray="10 10" fill="none" />
-                    <path d="M600 30 Q700 30, 800 30" stroke="#CBD5E1" strokeWidth="4" strokeDasharray="10 10" fill="none" />
-                  </svg>
-               </div>
-            </div>
-
-            {/* Cards Grid */}
-            <div className="flex flex-wrap justify-center gap-8 relative z-10">
-               {/* Card 1 */}
-               <div className="bg-white rounded-[40px] p-10 w-80 shadow-xl border border-gray-100 hover:scale-105 transition-transform">
-                  <div className="bg-[#00C2A8] text-white text-[10px] font-black px-4 py-1.5 rounded-lg inline-block mb-6 uppercase tracking-widest">High Match</div>
-                  <h5 className="text-2xl font-black text-gray-900 mb-4 leading-tight">Intelligent Automation Architect</h5>
-                  <p className="text-[#64748B] font-semibold text-sm mb-10 leading-relaxed">Advanced automation architecture with AI integration & ML deployment.</p>
-                  <button className="w-full bg-[#00C2A8] text-white py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:brightness-110 transition-all">Next Step</button>
-               </div>
-
-               {/* Card 2 */}
-               <div className="bg-white rounded-[40px] p-10 w-80 shadow-xl border border-gray-100 hover:scale-105 transition-transform">
-                  <div className="bg-[#F39C12] text-white text-[10px] font-black px-4 py-1.5 rounded-lg inline-block mb-6 uppercase tracking-widest">Medium Match</div>
-                  <h5 className="text-2xl font-black text-gray-900 mb-4 leading-tight">Technical Program Manager</h5>
-                  <p className="text-[#64748B] font-semibold text-sm mb-10 leading-relaxed">Manage large-scale automation & digital transformation programs for enterprise.</p>
-                  <button className="w-full border-2 border-[#F39C12] text-[#F39C12] py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-[#F39C12] hover:text-white transition-all">Explore</button>
-               </div>
-
-               {/* Card 3 */}
-               <div className="bg-white rounded-[40px] p-10 w-80 shadow-xl border border-gray-100 hover:scale-105 transition-transform">
-                  <div className="bg-[#FF5A3C] text-white text-[10px] font-black px-4 py-1.5 rounded-lg inline-block mb-6 uppercase tracking-widest">High Match</div>
-                  <h5 className="text-2xl font-black text-gray-900 mb-4 leading-tight">Engineering Manager (Automation)</h5>
-                  <p className="text-[#64748B] font-semibold text-sm mb-10 leading-relaxed">Lead scalable automation teams and define the platform architecture.</p>
-                  <button className="w-full bg-[#FF5A3C] text-white py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:brightness-110 transition-all">Next Step</button>
-               </div>
-
-               {/* Card 4 */}
-               <div className="bg-white rounded-[40px] p-10 w-80 shadow-xl border border-gray-100 hover:scale-105 transition-transform">
-                  <div className="bg-[#6C63FF] text-white text-[10px] font-black px-4 py-1.5 rounded-lg inline-block mb-6 uppercase tracking-widest">Wild Card</div>
-                  <h5 className="text-2xl font-black text-gray-900 mb-4 leading-tight">AI Engineer / Data Engineer</h5>
-                  <p className="text-[#64748B] font-semibold text-sm mb-10 leading-relaxed">Pivotal transition into Core AI/ML domain leveraging your logic skills.</p>
-                  <button className="w-full bg-[#6C63FF] text-white py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:brightness-110 transition-all">Explore</button>
-               </div>
-            </div>
-          </div>
-        ) : (
-          <div className="animate-in slide-in-from-right duration-500 flex gap-12">
+      <div className="max-w-[1600px] mx-auto px-8">
+         <div className="flex flex-col items-center">
             
-            {/* Left Main Pillar: Journey Paths */}
-            <div className="flex-1">
-               <div className="mb-12">
-                  <h1 className="text-4xl font-black text-gray-900 mb-2">Recommended for you</h1>
-                  <p className="text-lg text-gray-500 font-bold">Based on your profile and skills (RPA Solution Architect)</p>
+            {/* ROOT NODE (CENTERED) */}
+            <div id="root-node" className="mb-24 relative z-20">
+               <div className="bg-white rounded-[40px] p-8 shadow-2xl border-4 border-[#FF5A3C] flex items-center gap-6 min-w-[380px] hover:scale-105 transition-transform">
+                  <div className="w-20 h-20 rounded-[24px] bg-gray-100 overflow-hidden border-2 border-white shadow-lg">
+                     <Image src="/ram_profile.png" width={80} height={80} alt="Ram" className="object-cover" />
+                  </div>
+                  <div className="text-left">
+                     <span className="bg-[#FF5A3C] text-white text-[10px] font-black px-3 py-1 rounded-lg tracking-widest uppercase mb-2 inline-block">YOU TODAY</span>
+                     <h4 className="text-2xl font-black text-gray-900 m-0 leading-tight">RPA Solution Architect</h4>
+                     <p className="text-sm font-bold text-gray-400 mt-1">10+ Years Experience</p>
+                  </div>
                </div>
+            </div>
 
-               <div className="space-y-12">
-                  {journeys.map((path) => (
-                    <div key={path.id} className="relative">
-                       <div className="flex items-center gap-4 mb-6">
-                          <div className="w-3 h-8 rounded-full" style={{ backgroundColor: path.color }}></div>
-                          <h3 className="text-xl font-black text-gray-900">{path.title}</h3>
-                       </div>
+            {/* SVG CONNECTORS BACKGROUND */}
+            <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+               <svg width="100%" height="2000" viewBox="0 0 1600 2000" fill="none" opacity="0.3">
+                  {/* Desired Path Connection */}
+                  <path d="M800 200 C800 300, 400 300, 100 500" stroke="#10B981" strokeWidth="3" strokeDasharray="10 10" className="path-line" />
+                  <path d="M800 200 C800 350, 400 350, 100 1000" stroke="#F59E0B" strokeWidth="3" strokeDasharray="10 10" className="path-line" />
+                  <path d="M800 200 C800 400, 400 400, 100 1500" stroke="#8B5CF6" strokeWidth="3" strokeDasharray="10 10" className="path-line" />
+               </svg>
+            </div>
 
-                       <div className="flex items-stretch gap-6 overflow-x-auto pb-6">
-                          {path.nodes.map((node, i) => (
-                            <div key={i} className="flex items-center gap-6 flex-shrink-0">
-                               <div className="bg-white rounded-[32px] p-8 min-w-[280px] shadow-lg border border-gray-50 hover:border-gray-200 transition-all group relative">
-                                  <div className="flex justify-between items-start mb-6">
-                                     <div className="text-[10px] font-black text-[#FF5A3C] uppercase tracking-wider">{node.match} Skills</div>
-                                     <Heart size={18} className="text-gray-200 hover:text-[#FF5A3C] cursor-pointer transition-colors" />
-                                  </div>
-                                  <h4 className="text-xl font-bold text-gray-900 mb-2 leading-tight">{node.role}</h4>
-                                  {node.tag && (
-                                    <div className="flex items-center gap-2 mt-4">
-                                       <div className="w-1.5 h-1.5 rounded-full bg-gray-400"></div>
-                                       <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{node.tag}</span>
-                                    </div>
-                                  )}
-                               </div>
-                               {i < path.nodes.length - 1 && (
-                                 <div className="text-gray-300">
-                                    <ChevronRight size={32} />
+            {/* TREE SECTIONS */}
+            <div className="w-full space-y-32 relative z-10">
+               {sections.map((section, sIdx) => (
+                 <div key={section.title} className="relative">
+                    
+                    {/* Section Label */}
+                    <div className="flex items-center gap-4 mb-12">
+                       <span className="px-4 py-1.5 rounded-xl text-[10px] font-black text-white uppercase tracking-[0.15em]" style={{ background: section.tagColor }}>{section.tag}</span>
+                       <h3 className="text-2xl font-black text-gray-900">{section.title}</h3>
+                    </div>
+
+                    {/* Branches Grid */}
+                    <div className="space-y-16">
+                       {section.branches.map((branch, bIdx) => (
+                         <div key={branch.id} className="relative flex items-center">
+                            
+                            {/* Branch Wrapper for alignment */}
+                            <div className="flex items-center gap-8 overflow-x-auto no-scrollbar py-4 px-2">
+                               {branch.nodes.map((node, nIdx) => (
+                                 <div key={nIdx} className="flex items-center gap-8 flex-shrink-0">
+                                    <Node data={node} color={section.tagColor} />
+                                    {nIdx < branch.nodes.length - 1 && (
+                                      <div className="text-gray-300">
+                                         <ArrowRight size={20} strokeWidth={3} />
+                                      </div>
+                                    )}
                                  </div>
-                               )}
+                               ))}
                             </div>
+
+                            {/* SVG PATHS will be drawn here if needed, simplified with relative layout for now */}
+                         </div>
+                       ))}
+                    </div>
+                 </div>
+               ))}
+            </div>
+
+         </div>
+      </div>
+
+      {/* MODAL / PANEL (Same as before but refined) */}
+      {selectedNode && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-2xl z-[1000] flex items-center justify-center p-8 animate-in fade-in duration-300">
+           <div className="bg-white w-full max-w-4xl rounded-[48px] overflow-hidden shadow-2xl relative animate-in slide-in-from-bottom-8">
+              <button 
+                onClick={() => setSelectedNode(null)}
+                className="absolute top-8 right-8 w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center hover:bg-gray-100 transition-colors"
+              >
+                <X />
+              </button>
+
+              <div className="p-16">
+                 <div className="flex items-start gap-10 mb-12">
+                    <div className="w-32 h-32 bg-gray-100 rounded-[32px] flex items-center justify-center">
+                       <Briefcase size={64} className="text-gray-400" />
+                    </div>
+                    <div>
+                       <span className="text-xs font-black text-[#FF5A3C] uppercase tracking-widest">AI Journey Mapping</span>
+                       <h2 className="text-5xl font-black text-gray-900 mt-2 mb-4">{selectedNode.role}</h2>
+                       <div className="flex items-center gap-6">
+                          <div className="flex items-center gap-2">
+                             <TrendingUp size={18} className="text-[#10B981]" />
+                             <span className="text-sm font-bold text-gray-500">Match Level: {selectedNode.skills}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                             <UserCheck size={18} className="text-[#6C63FF]" />
+                             <span className="text-sm font-bold text-gray-500">10+ Open Roles</span>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+
+                 <div className="grid grid-cols-2 gap-10">
+                    <div className="bg-gray-50 rounded-[32px] p-10">
+                       <h4 className="text-xl font-black text-gray-900 mb-6">Required Skillset</h4>
+                       <div className="space-y-4">
+                          {[
+                            { name: 'System Design', status: 'missing' },
+                            { name: 'Cloud Architecture', status: 'missing' },
+                            { name: 'RPA Mastery', status: 'mastered' },
+                            { name: 'Stakeholder Mgmt', status: 'mastered' }
+                          ].map(s => (
+                             <div key={s.name} className="flex items-center justify-between p-4 bg-white rounded-2xl border border-gray-100">
+                                <span className="text-sm font-bold text-gray-700">{s.name}</span>
+                                {s.status === 'mastered' ? <CheckCircle2 size={18} className="text-[#10B981]" /> : <div className="w-4 h-4 rounded-full border-2 border-gray-200" />}
+                             </div>
                           ))}
                        </div>
                     </div>
-                  ))}
-               </div>
-            </div>
+                    <div className="bg-[#1A1D23] rounded-[32px] p-10 text-white">
+                       <h4 className="text-xl font-black mb-6">AI Career Insight</h4>
+                       <p className="text-gray-400 leading-relaxed font-medium mb-8">
+                          Your extensive architecture background makes you 80% ready for this transition. Focus on cloud-native patterns to close the gap within 6 months.
+                       </p>
+                       <button className="w-full bg-[#FF5A3C] py-4 rounded-2xl font-black text-sm uppercase tracking-widest">Enroll in Transition Program</button>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+      )}
 
-            {/* Right Side Panel: Analysis */}
-            <div className="w-[400px] flex flex-shrink-0 flex-col gap-8 sticky top-48 h-fit">
-               {/* Analysis Card */}
-               <div className="bg-white rounded-[40px] p-10 shadow-xl border border-gray-50">
-                  <div className="flex items-center gap-4 mb-8">
-                     <div className="w-12 h-12 bg-[#FF5A3C]11 rounded-2xl flex items-center justify-center">
-                        <BarChart2 className="text-[#FF5A3C]" />
-                     </div>
-                     <h4 className="text-xl font-black text-gray-900 m-0">Skill Gap Analysis</h4>
-                  </div>
-                  
-                  <div className="space-y-6">
-                     <div>
-                        <div className="flex justify-between mb-2">
-                           <span className="text-sm font-bold text-gray-700">RPA Mastery</span>
-                           <span className="text-sm font-black text-[#00C2A8]">100%</span>
-                        </div>
-                        <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
-                           <div className="h-full bg-[#00C2A8] w-full"></div>
-                        </div>
-                     </div>
-                     <div>
-                        <div className="flex justify-between mb-2">
-                           <span className="text-sm font-bold text-gray-700">Cloud Architecture</span>
-                           <span className="text-sm font-black text-[#FF5A3C]">40%</span>
-                        </div>
-                        <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
-                           <div className="h-full bg-[#FF5A3C] w-[40%] transition-all duration-1000"></div>
-                        </div>
-                     </div>
-                     <div>
-                        <div className="flex justify-between mb-2">
-                           <span className="text-sm font-bold text-gray-700">AI/ML Strategy</span>
-                           <span className="text-sm font-black text-gray-300">10%</span>
-                        </div>
-                        <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
-                           <div className="h-full bg-gray-300 w-[10%]"></div>
-                        </div>
-                     </div>
-                  </div>
-
-                  <div className="mt-10 pt-10 border-t border-gray-50">
-                     <h5 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-6">Recommended Learning</h5>
-                     <div className="space-y-4">
-                        {['Python for AI (Stanford)', 'Cloud Native Cert', 'Product Leadership'].map((course, i) => (
-                           <div key={i} className="flex items-center gap-4 p-4 hover:bg-gray-50 rounded-2xl transition-colors cursor-pointer group">
-                              <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center group-hover:bg-white border border-transparent group-hover:border-gray-200">
-                                 <BookOpen size={18} className="text-gray-400 group-hover:text-[#FF5A3C]" />
-                              </div>
-                              <span className="text-sm font-bold text-gray-700">{course}</span>
-                           </div>
-                        ))}
-                     </div>
-                  </div>
-               </div>
-
-               {/* Salary Card */}
-               <div className="bg-[#1A1D23] rounded-[40px] p-10 text-white shadow-2xl relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#FF5A3C] rounded-full blur-[80px] opacity-20"></div>
-                  <h4 className="text-lg font-bold text-gray-400 mb-2 uppercase tracking-widest">Est. CTO Salary</h4>
-                  <div className="text-5xl font-black mb-6 tracking-tight">$320k - $450k</div>
-                  <div className="flex items-center gap-2 text-[#00C2A8] font-bold">
-                     <TrendingUp size={20} />
-                     <span>+45% Career Growth</span>
-                  </div>
-               </div>
-            </div>
-
-          </div>
-        )}
-      </div>
-
-      <style jsx>{`
+      <style>{`
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .animate-spin { animation: spin 1.5s linear infinite; }
-        .path-line { filter: drop-shadow(0 0 10px rgba(0,0,0,0.05)); }
+        .animate-spin-custom { animation: spin 1.5s linear infinite; }
       `}</style>
+
     </div>
   );
 }
