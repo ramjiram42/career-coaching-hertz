@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 // import Stripe from 'stripe'; // Simulated for MVP demonstration without env variables
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: Request) {
   try {
     const payload = await req.json();
