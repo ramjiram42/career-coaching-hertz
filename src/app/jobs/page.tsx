@@ -3,7 +3,7 @@
 import { Briefcase, Search, ArrowRight, TrendingUp, UploadCloud, CheckCircle2, Loader2, X } from "lucide-react"
 import Link from 'next/link'
 import { useState, useRef } from 'react'
-import extractedData from '../../../hertz_jobs_extracted.json'
+import jobsData from '../../../../public/data/jobs.json'
 
 export default function JobsPortal() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -19,7 +19,7 @@ export default function JobsPortal() {
     }
   }
 
-  let filteredJobs = extractedData.filter(job =>
+  let filteredJobs = jobsData.filter(job =>
     (job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
      job.category.toLowerCase().includes(searchTerm.toLowerCase())) &&
     (location === '' || job.location.toLowerCase().includes(location.toLowerCase()))
@@ -45,7 +45,7 @@ export default function JobsPortal() {
             <div className="icon-box"><Briefcase size={22} /></div>
             <div>
               <h1>Open Roles</h1>
-              <p style={{ marginTop: '0.25rem' }}>{extractedData.length.toLocaleString()}+ live opportunities across Hertz locations.</p>
+              <p style={{ marginTop: '0.25rem' }}>{jobsData.length.toLocaleString()}+ live opportunities across Hertz locations.</p>
             </div>
           </div>
         </div>
