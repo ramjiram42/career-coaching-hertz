@@ -151,48 +151,64 @@ export default function CareerTreePage() {
             <p style={{ color: '#6B7280', fontSize: '1.05rem', maxWidth: 650 }}>Based on your skills, experience, and Hertz's internal mobility data, here are the top career paths recommended for your growth.</p>
           </div>
 
-          <div style={{ background: '#fff', borderRadius: 20, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', overflow: 'hidden', border: '1px solid #E5E7EB' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-              <thead>
-                <tr style={{ background: '#F9FAFB', borderBottom: '2px solid #E5E7EB' }}>
-                  <th style={{ padding: '1.25rem 1.5rem', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#6B7280' }}>Role & Vertical</th>
-                  <th style={{ padding: '1.25rem 1.5rem', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#6B7280' }}>Match Score</th>
-                  <th style={{ padding: '1.25rem 1.5rem', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#6B7280' }}>Est. Time</th>
-                  <th style={{ padding: '1.25rem 1.5rem', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#6B7280' }}>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {suggestedMoves.map((move, i) => (
-                  <tr key={move.id} style={{ borderBottom: i !== suggestedMoves.length - 1 ? '1px solid #F1F5F9' : 'none', cursor: 'pointer', transition: 'background 0.2s', ':hover': { background: '#F8FAFC' } }}>
-                    <td style={{ padding: '1.5rem' }}>
-                      <p style={{ fontWeight: 800, color: '#111827', fontSize: '1.1rem', margin: '0 0 0.25rem 0' }}>{move.role}</p>
-                      <span style={{ fontSize: '0.8rem', color: '#6B7280', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                        <Briefcase size={14} color="#FFD100" /> {move.vertical}
-                      </span>
-                    </td>
-                    <td style={{ padding: '1.5rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <div style={{ width: 40, height: 40, borderRadius: '50%', border: '3px solid #E5E7EB', display: 'flex', alignItems: 'center', justifyContent: 'center', borderTopColor: move.matchScore > 90 ? '#16A34A' : '#F59E0B' }}>
-                          <span style={{ fontSize: '0.8rem', fontWeight: 900, color: '#111827' }}>{move.matchScore}</span>
-                        </div>
-                        <span style={{ fontSize: '0.8rem', color: '#6B7280', fontWeight: 600 }}>% Match</span>
-                      </div>
-                    </td>
-                    <td style={{ padding: '1.5rem' }}>
-                      <span style={{ fontSize: '0.9rem', color: '#374151', fontWeight: 600 }}>{move.timeToAchieve}</span>
-                    </td>
-                    <td style={{ padding: '1.5rem' }}>
-                      <button 
-                        onClick={() => setSelectedMove(move)}
-                        style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#FFD100', color: '#000', padding: '0.6rem 1.25rem', borderRadius: 10, fontWeight: 800, fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em', border: 'none', cursor: 'pointer' }}
-                      >
-                        Explore <ArrowRight size={16} />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            {suggestedMoves.map((move, i) => {
+              const theme = [
+                { badgeBg: '#EC4899', bg: '#fff', border: '#F1F5F9', label: 'Desired path' },
+                { badgeBg: '#14B8A6', bg: '#fff', border: '#F1F5F9', label: 'Popular path' },
+                { badgeBg: '#3B82F6', bg: '#EFF6FF', border: '#BFDBFE', label: 'Promoted Lane' },
+                { badgeBg: '#8B5CF6', bg: '#fff', border: '#F1F5F9', label: 'Wild Card' }
+              ][i % 4];
+
+              return (
+              <div key={move.id} style={{ background: theme.bg, border: `1px solid ${theme.border}`, borderRadius: 20, padding: '1.5rem 2rem', boxShadow: i===2 ? '0 4px 24px rgba(59,130,246,0.08)' : '0 2px 8px rgba(0,0,0,0.04)' }}>
+                {/* Header */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <span style={{ background: theme.badgeBg, color: '#fff', padding: '0.2rem 0.75rem', borderRadius: 999, fontSize: '0.7rem', fontWeight: 900 }}>{theme.label}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', background: theme.badgeBg + '20', padding: '0.2rem 0.6rem', borderRadius: 999 }}>
+                      <span style={{ color: theme.badgeBg, fontSize: '0.75rem' }}>◆</span>
+                      <span style={{ color: theme.badgeBg, fontSize: '0.75rem', fontWeight: 800 }}>{move.matchScore}% Match</span>
+                    </div>
+                    <span style={{ fontSize: '0.85rem', color: '#6B7280' }}>Target destination <strong style={{ color: '#000' }}>{move.role}</strong> ›</span>
+                  </div>
+                  <button 
+                    onClick={() => setSelectedMove(move)}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: theme.badgeBg, fontSize: '0.85rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+                  >
+                    View Details <ArrowRight size={15} />
+                  </button>
+                </div>
+
+                {/* Horizontal Sequence */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: '50%', background: '#FFD100', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '2px solid #E5E7EB', overflow: 'hidden' }}>
+                    <img src="/ram_profile.png" alt="Ram" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                  <div style={{ width: 24, height: 2, background: '#D1D5DB' }} />
+
+                  {/* Mid Node */}
+                  <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+                     <div style={{ width: 12, height: 12, borderRadius: '50%', border: '2px solid #D1D5DB', background: '#fff', flexShrink: 0 }} />
+                     <div style={{ background: '#fff', border: '1px solid #E5E7EB', borderRadius: 12, padding: '0.85rem 1rem', width: 200, flexShrink: 0, boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+                       <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#111827', margin: '0 0 0.4rem' }}>Intermediate Move</p>
+                       <p style={{ fontSize: '0.7rem', color: '#9CA3AF', margin: 0 }}>Gain {move.vertical} exp.</p>
+                     </div>
+                     <div style={{ flex: 1, height: 2, background: '#E5E7EB', minWidth: 20 }} />
+                  </div>
+
+                  {/* Target Node */}
+                  <div style={{ display: 'flex', alignItems: 'center', flex: 0 }}>
+                     <div style={{ width: 12, height: 12, borderRadius: '50%', border: '3px solid #000', background: '#000', flexShrink: 0 }} />
+                     <div style={{ background: '#fff', border: '1px solid #E5E7EB', borderRadius: 12, padding: '0.85rem 1rem', width: 200, flexShrink: 0, boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+                       <p style={{ fontSize: '0.85rem', fontWeight: 900, color: '#111827', margin: '0 0 0.4rem' }}>{move.role}</p>
+                       <p style={{ fontSize: '0.7rem', color: '#9CA3AF', fontWeight: 700, margin: 0 }}>Est. {move.timeToAchieve}</p>
+                     </div>
+                  </div>
+                </div>
+              </div>
+              )
+            })}
           </div>
         </div>
       </main>
@@ -309,146 +325,137 @@ export default function CareerTreePage() {
           </div>
           {/* Decorative graphic */}
           <Target size={200} color="#F1F5F9" style={{ position: 'absolute', right: -30, top: -30, zIndex: 1 }} />
-        </div>
-
-        {/* Tree Structure */}
-        <div style={{ padding: '0 1rem' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 900, color: '#000', marginBottom: '2rem' }}>Learning Path & Mentors</h2>
+        </div>        {/* Tree Structure */}
+        <div style={{ padding: '0' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 900, color: '#000', marginBottom: '2rem' }}>Learning Path & Modules</h2>
           
-          <div style={{ position: 'relative' }}>
-            {/* Vertical Line */}
-            <div style={{ position: 'absolute', left: 24, top: 20, bottom: 20, width: 3, background: '#E5E7EB', zIndex: 0 }} />
-            
-            {/* Nodes */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', position: 'relative', zIndex: 1 }}>
-              {selectedMove.learningPath.map((step, idx) => {
-                const isCompleted = step.status === 'completed';
-                const isInProgress = step.status === 'in-progress';
-                const isPending = step.status === 'pending';
-                const isExpanded = expandedStep === step.id;
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            {selectedMove.learningPath.map((step, idx) => {
+              const isCompleted = step.status === 'completed';
+              const isInProgress = step.status === 'in-progress';
+              const isPending = step.status === 'pending';
+              const isExpanded = expandedStep === step.id;
 
-                return (
-                  <div key={step.id} style={{ display: 'flex', gap: '1.5rem' }}>
-                    {/* Icon Node */}
-                    <div style={{ 
-                      width: 50, height: 50, borderRadius: '50%', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      background: isCompleted ? '#16A34A' : isInProgress ? '#FFD100' : '#fff',
-                      border: isPending ? '3px solid #E5E7EB' : 'none',
-                      color: isCompleted ? '#fff' : isInProgress ? '#000' : '#9CA3AF',
-                      boxShadow: isInProgress ? '0 0 0 5px rgba(255, 209, 0, 0.2)' : 'none',
-                      transition: 'all 0.2s'
-                    }}>
-                      {isCompleted && <CheckCircle size={24} />}
-                      {isInProgress && <Clock size={24} />}
-                      {isPending && <span style={{ fontWeight: 900, fontSize: '1.1rem' }}>{idx + 1}</span>}
+              const theme = isCompleted 
+                ? { badgeBg: '#14B8A6', bg: '#F0FDFA', border: '#CCFBF1' }
+                : isInProgress 
+                  ? { badgeBg: '#3B82F6', bg: '#EFF6FF', border: '#BFDBFE' }
+                  : { badgeBg: '#9CA3AF', bg: '#fff', border: '#E5E7EB' };
+
+              return (
+                <div key={step.id} style={{ background: theme.bg, border: `1px solid ${theme.border}`, borderRadius: 20, padding: '1.5rem 2rem', boxShadow: isInProgress ? '0 4px 24px rgba(59,130,246,0.08)' : '0 2px 8px rgba(0,0,0,0.04)' }}>
+                  
+                  {/* Top Header */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                       <span style={{ background: theme.badgeBg, color: '#fff', padding: '0.2rem 0.75rem', borderRadius: 999, fontSize: '0.7rem', fontWeight: 900 }}>{step.type}</span>
+                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', background: theme.badgeBg + '20', padding: '0.2rem 0.6rem', borderRadius: 999 }}>
+                         <span style={{ color: theme.badgeBg, fontSize: '0.75rem' }}>◆</span>
+                         <span style={{ color: theme.badgeBg, fontSize: '0.75rem', fontWeight: 800 }}>{step.durationWeeks} Weeks</span>
+                       </div>
+                       <span style={{ fontSize: '0.85rem', color: '#6B7280', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                         {isCompleted && <span style={{ color: '#16A34A', fontWeight: 700 }}>✓ Completed</span>}
+                         {isInProgress && <span style={{ color: '#3B82F6', fontWeight: 700 }}>In Progress</span>}
+                         {isPending && <span>Pending</span>}
+                       </span>
+                    </div>
+                    <button 
+                      onClick={() => setExpandedStep(expandedStep === step.id ? null : step.id)}
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', color: theme.badgeBg, fontSize: '0.85rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+                    >
+                      {isExpanded ? 'Hide Modules' : 'View Modules'} <ChevronDown size={15} style={{ transform: isExpanded ? 'rotate(180deg)' : 'none', transition: '0.2s' }} />
+                    </button>
+                  </div>
+
+                  {/* Horizontal Node Track */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+                    {/* Course Avatar */}
+                    <div style={{ width: 44, height: 44, borderRadius: '50%', background: theme.badgeBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '2px solid #fff', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', color: '#fff', fontWeight: 900 }}>
+                      {idx + 1}
+                    </div>
+                    <div style={{ width: 24, height: 2, background: isCompleted ? theme.badgeBg : '#D1D5DB' }} />
+
+                    {/* Node 1: Course Info */}
+                    <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+                       <div style={{ width: 12, height: 12, borderRadius: '50%', border: `2px solid ${isCompleted ? theme.badgeBg : '#D1D5DB'}`, background: '#fff', flexShrink: 0 }} />
+                       <div style={{ background: '#fff', border: `1px solid ${isCompleted ? theme.badgeBg : '#E5E7EB'}`, borderRadius: 12, padding: '0.85rem 1rem', flex: 1, maxWidth: 300, minWidth: 200, margin: '0 10px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+                         <p style={{ fontSize: '0.85rem', fontWeight: 700, color: '#111827', margin: '0 0 0.4rem' }}>{step.title}</p>
+                         <p style={{ fontSize: '0.7rem', color: '#9CA3AF', margin: 0 }}>{step.modules ? `${step.modules.length} internal tasks` : 'No tasks'}</p>
+                       </div>
+                       <div style={{ flex: 1, height: 2, background: isCompleted ? theme.badgeBg : '#E5E7EB', minWidth: 20 }} />
                     </div>
 
-                    {/* Content Card */}
-                    <div 
-                      onClick={() => setExpandedStep(expandedStep === step.id ? null : step.id)}
-                      style={{ 
-                      flex: 1, background: '#fff', border: '1px solid', borderColor: isInProgress ? '#FFD100' : isExpanded ? '#6B7280' : '#E5E7EB',
-                      borderRadius: 16, padding: '1.5rem', boxShadow: isInProgress ? '0 4px 20px rgba(255, 209, 0, 0.1)' : '0 2px 8px rgba(0,0,0,0.03)',
-                      cursor: 'pointer', transition: 'all 0.2s', overflow: 'hidden'
-                    }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
-                        <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.35rem' }}>
-                            <span style={{ fontSize: '0.65rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', color: isInProgress ? '#92400E' : '#6B7280', background: isInProgress ? '#FEF3C7' : '#F3F4F6', padding: '0.2rem 0.6rem', borderRadius: 999 }}>
-                              {step.type}
-                            </span>
-                            {isCompleted && <span style={{ fontSize: '0.65rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#16A34A' }}>Completed</span>}
-                          </div>
-                          <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#000', margin: 0 }}>{step.title}</h4>
-                        </div>
-                        <div style={{ textAlign: 'right', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                          <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#4B5563', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                            <Clock size={16} /> {step.durationWeeks} Weeks
-                          </span>
-                          <span style={{ color: '#D1D5DB', transition: 'transform 0.2s', transform: isExpanded ? 'rotate(180deg)' : 'rotate(0)' }}>
-                            <ChevronDown size={20} />
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Mentor Section */}
-                      {step.mentor && (
-                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#F8FAFC', border: '1px solid #E5E7EB', padding: '0.5rem 1rem', borderRadius: 10, marginTop: '0.5rem' }}>
-                          <UserCircle size={18} color="#6B7280" />
-                          <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#374151' }}>Mentor: <strong style={{ color: '#000' }}>{step.mentor}</strong></span>
-                        </div>
-                      )}
-
-                      {/* In Progress Bar */}
-                      {isInProgress && (
-                        <div style={{ marginTop: '1.25rem' }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 800, color: '#6B7280', marginBottom: '0.4rem' }}>
-                            <span>Progress</span>
-                            <span style={{ color: '#000' }}>{step.progress}%</span>
-                          </div>
-                          <div style={{ width: '100%', height: 6, background: '#F1F5F9', borderRadius: 99, overflow: 'hidden' }}>
-                            <div style={{ width: `${step.progress}%`, height: '100%', background: '#FFD100' }} />
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Expanded Syllabus Details */}
-                      {isExpanded && step.modules && (
-                        <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid #E5E7EB', animation: 'fadeIn 0.3s ease-in-out' }}>
-                          <h5 style={{ fontSize: '0.85rem', fontWeight: 800, color: '#111827', margin: '0 0 1rem 0' }}>Syllabus breakdown:</h5>
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-                            {step.modules.map((mod, midx) => {
-                              const modId = `${step.id}-${midx}`;
-                              const isModExpanded = expandedModule === modId;
-                              return (
-                              <div key={midx} 
-                                onClick={(e) => { e.stopPropagation(); setExpandedModule(isModExpanded ? null : modId); }}
-                                style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: '0.5rem', borderRadius: 8, cursor: 'pointer', background: isModExpanded ? '#F8FAFC' : 'transparent', transition: 'background 0.2s', margin: '-0.5rem' }}
-                              >
-                                {(() => {
-                                  const computedStatus = completedModules.has(mod.title) ? 'completed' : mod.status;
-                                  return (
-                                  <React.Fragment>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                       {computedStatus === 'completed' && <CheckCircle size={16} color="#16A34A" />}
-                                       {computedStatus === 'in-progress' && <Clock size={16} color="#F59E0B" />}
-                                       {computedStatus === 'pending' && <div style={{ width: 14, height: 14, borderRadius: '50%', border: '2px solid #D1D5DB' }} />}
-                                       <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                         <span style={{ fontSize: '0.85rem', color: computedStatus === 'pending' ? '#9CA3AF' : '#374151', fontWeight: computedStatus === 'in-progress' ? 800 : 500, textDecoration: computedStatus === 'completed' ? 'line-through' : 'none' }}>
-                                           {mod.title}
-                                         </span>
-                                         <span style={{ color: '#D1D5DB', transition: 'transform 0.2s', transform: isModExpanded ? 'rotate(180deg)' : 'rotate(0)' }}>
-                                           <ChevronDown size={14} />
-                                         </span>
-                                       </div>
-                                    </div>
-                                    {isModExpanded && (
-                                      <div style={{ paddingLeft: '1.75rem', marginTop: '0.25rem', animation: 'fadeIn 0.2s' }}>
-                                        <p style={{ fontSize: '0.8rem', color: '#6B7280', lineHeight: 1.5, margin: '0 0 0.75rem 0' }}>
-                                          {mod.description || 'This module provides essential training materials, assessments, and reference guides required to complete this syllabus item.'}
-                                        </p>
-                                        <button 
-                                          onClick={(e) => { e.stopPropagation(); setActiveVideo(mod); }}
-                                          style={{ background: '#fff', border: '1px solid #E5E7EB', borderRadius: 6, padding: '0.4rem 0.8rem', fontSize: '0.75rem', fontWeight: 600, color: '#111827', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.3rem', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
-                                          <BookOpen size={12} /> {computedStatus === 'completed' ? 'Review Material' : 'Launch Module'}
-                                        </button>
-                                      </div>
-                                    )}
-                                  </React.Fragment>
-                                  )
-                                })()}
-                              </div>
-                              )
-                            })}
-                          </div>
-                        </div>
-                      )}
-
+                    {/* Node 2: Mentorship info or end point */}
+                    <div style={{ display: 'flex', alignItems: 'center', flex: 0 }}>
+                       <div style={{ width: 12, height: 12, borderRadius: '50%', border: `3px solid ${isCompleted ? theme.badgeBg : '#D1D5DB'}`, background: isCompleted ? theme.badgeBg : '#fff', flexShrink: 0 }} />
+                       <div style={{ background: '#fff', border: '1px solid #E5E7EB', borderRadius: 12, padding: '0.85rem 1rem', width: 200, flexShrink: 0, marginLeft: 10, boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+                         {step.mentor ? (
+                           <>
+                             <p style={{ fontSize: '0.8rem', fontWeight: 800, color: '#111827', margin: '0 0 0.4rem' }}>Mentor assigned</p>
+                             <p style={{ fontSize: '0.7rem', color: theme.badgeBg, fontWeight: 700, margin: 0 }}>{step.mentor}</p>
+                           </>
+                         ) : (
+                           <>
+                             <p style={{ fontSize: '0.8rem', fontWeight: 800, color: '#111827', margin: '0 0 0.4rem' }}>Self-Paced Core</p>
+                             <p style={{ fontSize: '0.7rem', color: '#9CA3AF', fontWeight: 600, margin: 0 }}>Auto-verification</p>
+                           </>
+                         )}
+                       </div>
                     </div>
                   </div>
-                )
-              })}
-            </div>
+
+                  {/* Syllabus Expandable Section matching pastel theme */}
+                  {isExpanded && step.modules && (
+                    <div style={{ marginTop: '1.5rem', background: '#fff', border: `1px solid ${theme.border}`, borderRadius: 16, padding: '1.5rem', animation: 'fadeIn 0.3s ease-in-out' }}>
+                      <h5 style={{ fontSize: '0.9rem', fontWeight: 800, color: '#111827', margin: '0 0 1rem 0' }}>Syllabus Breakdown:</h5>
+                      <div style={{ display: 'grid', gap: '0.85rem' }}>
+                        {step.modules.map((mod, midx) => {
+                          const modId = `${step.id}-${midx}`;
+                          const isModExpanded = expandedModule === modId;
+                          return (
+                          <div key={midx} 
+                            onClick={(e) => { e.stopPropagation(); setExpandedModule(isModExpanded ? null : modId); }}
+                            style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: '0.75rem', borderRadius: 12, cursor: 'pointer', background: isModExpanded ? '#F8FAFC' : '#fff', border: '1px solid #F1F5F9', transition: 'all 0.2s', boxShadow: isModExpanded ? 'inset 3px 0 0 '+theme.badgeBg : 'none' }}
+                          >
+                            {(() => {
+                              const computedStatus = completedModules.has(mod.title) ? 'completed' : mod.status;
+                              return (
+                              <React.Fragment>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                   {computedStatus === 'completed' ? <CheckCircle size={18} color="#14B8A6" /> : computedStatus === 'in-progress' ? <Clock size={18} color="#3B82F6" /> : <div style={{ width: 16, height: 16, borderRadius: '50%', border: '2px solid #D1D5DB' }} />}
+                                   <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                     <span style={{ fontSize: '0.9rem', color: computedStatus === 'pending' ? '#9CA3AF' : '#111827', fontWeight: computedStatus === 'in-progress' ? 800 : 600, textDecoration: computedStatus === 'completed' ? 'line-through' : 'none' }}>
+                                       {mod.title}
+                                     </span>
+                                     <span style={{ color: '#D1D5DB', transition: 'transform 0.2s', transform: isModExpanded ? 'rotate(180deg)' : 'rotate(0)' }}>
+                                       <ChevronDown size={16} />
+                                     </span>
+                                   </div>
+                                </div>
+                                {isModExpanded && (
+                                  <div style={{ paddingLeft: '2rem', marginTop: '0.5rem', animation: 'fadeIn 0.2s' }}>
+                                    <p style={{ fontSize: '0.8rem', color: '#6B7280', lineHeight: 1.5, margin: '0 0 1rem 0' }}>
+                                      {mod.description || 'This module provides essential training materials, assessments, and reference guides required to complete this syllabus item.'}
+                                    </p>
+                                    <button 
+                                      onClick={(e) => { e.stopPropagation(); setActiveVideo(mod); }}
+                                      style={{ background: theme.badgeBg, border: 'none', borderRadius: 8, padding: '0.5rem 1rem', fontSize: '0.75rem', fontWeight: 800, color: '#fff', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', boxShadow: '0 2px 6px ' + theme.badgeBg + '40', transition: '0.2s', transform: 'translateY(0)' }}>
+                                      <BookOpen size={14} /> {computedStatus === 'completed' ? 'Review Material' : 'Launch Module'}
+                                    </button>
+                                  </div>
+                                )}
+                              </React.Fragment>
+                              )
+                            })()}
+                          </div>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
         </div>
 
