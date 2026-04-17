@@ -1,16 +1,16 @@
-@import "tailwindcss";
-
 :root {
-  --primary: #FF5A3C;
-  --secondary: #6C63FF;
-  --accent: #00C2A8;
-  --background: #F5F7FA;
+  --primary: #FFD100;
+  --secondary: #000000;
+  --accent: #22C55E;
+  --background: #F8FAFC;
   --card-bg: #FFFFFF;
-  --text-main: #1A1D23;
+  --text-main: #000000;
   --text-muted: #64748B;
   --shadow-soft: 0 10px 30px rgba(0,0,0,0.04);
   --shadow-medium: 0 20px 50px rgba(0,0,0,0.08);
 }
+
+@import "tailwindcss";
 
 * {
   box-sizing: border-box;
@@ -28,62 +28,47 @@ body {
 
 h1, h2, h3, h4 {
   font-family: 'Poppins', sans-serif;
+  font-weight: 900;
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+.hertz-nav-link {
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
 }
 
-.btn-primary {
+.hertz-nav-link:hover {
+  color: var(--secondary) !important;
+  border-bottom-color: var(--primary);
+}
+
+.btn-hertz {
   background: var(--primary);
-  color: white;
+  color: var(--secondary);
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 12px;
-  font-weight: 600;
+  font-weight: 800;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-shadow: 0 4px 0 #D1AB00;
 }
 
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(255, 90, 60, 0.2);
+.btn-hertz:active {
+  transform: translateY(2px);
+  box-shadow: 0 0px 0 #D1AB00;
 }
 
-.card {
+.card-hertz {
   background: var(--card-bg);
   border-radius: 24px;
   box-shadow: var(--shadow-soft);
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  box-shadow: var(--shadow-medium);
-  transform: translateY(-5px);
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  border: 1px solid #E5E7EB;
 }
 
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
-.path-line {
-  stroke-dasharray: 8;
-  animation: dash 20s linear infinite;
-}
-
-@keyframes dash {
-  to { stroke-dashoffset: -1000; }
+.animate-spin-custom {
+  animation: spin 1s linear infinite;
 }

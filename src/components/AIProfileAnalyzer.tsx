@@ -34,7 +34,7 @@ export function AIProfileAnalyzer() {
     {
       title: 'Same Domain Growth',
       tag: 'HIGH MATCH',
-      tagColor: '#10B981',
+      tagColor: '#000000',
       branches: [
         {
           id: 's1-b1',
@@ -68,7 +68,7 @@ export function AIProfileAnalyzer() {
     {
       title: 'Adjacent Domain Paths',
       tag: 'MEDIUM MATCH',
-      tagColor: '#F59E0B',
+      tagColor: '#6B7280',
       branches: [
         {
           id: 's2-b1',
@@ -102,7 +102,7 @@ export function AIProfileAnalyzer() {
     {
       title: 'Cross Domain Opportunities',
       tag: 'WILD CARD',
-      tagColor: '#8B5CF6',
+      tagColor: '#9CA3AF',
       branches: [
         {
           id: 's3-b1',
@@ -154,47 +154,46 @@ export function AIProfileAnalyzer() {
         onClick={() => setSelectedNode(data)}
         style={{
           background: '#fff',
-          borderRadius: 24,
-          padding: '1.5rem',
-          boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
-          border: '1px solid #F1F5F9',
-          minWidth: 220,
+          borderRadius: 16,
+          padding: '1.25rem',
+          boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)',
+          border: '2px solid #F1F5F9',
+          minWidth: 240,
           cursor: 'pointer',
           position: 'relative',
           transition: 'all 0.2s',
         }}
-        className="group"
+        className="group hover:border-[#FFD100] hover:shadow-lg"
       >
         {data.tag && (
           <span style={{
             position: 'absolute',
-            top: -12,
-            left: '50%',
-            transform: 'translateX(-50%)',
-            padding: '4px 12px',
-            borderRadius: 999,
-            fontSize: 9,
+            top: -10,
+            left: 16,
+            padding: '2px 10px',
+            borderRadius: 4,
+            fontSize: 8,
             fontWeight: 900,
-            color: '#fff',
+            color: color === '#000000' ? '#FFD100' : '#fff',
             textTransform: 'uppercase',
-            letterSpacing: '0.05em',
+            letterSpacing: '0.1em',
             background: color
           }}>
             {data.tag}
           </span>
         )}
-        <h5 style={{ fontSize: 13, fontWeight: 800, color: '#111827', marginBottom: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h5 style={{ fontSize: 13, fontWeight: 900, color: '#000', marginBottom: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center', textTransform: 'uppercase', letterSpacing: '-0.01em' }}>
           {data.role}
-          {data.isTarget && <Target size={14} color="#FF5A3C" />}
+          {data.isTarget && <Target size={14} color="#FFD100" fill="#000" />}
         </h5>
         
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, fontWeight: 800, color: '#94A3B8' }}>
-            <span>Skill Match</span>
-            <span style={{ color }}>{data.skills}</span>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9, fontWeight: 900, color: '#94A3B8', textTransform: 'uppercase' }}>
+            <span>Profile Sync</span>
+            <span style={{ color: '#000' }}>{data.skills}</span>
           </div>
-          <div style={{ height: 4, background: '#F8FAFC', borderRadius: 999, overflow: 'hidden' }}>
-             <div style={{ height: '100%', width: `${progress}%`, background: color, transition: 'width 1s' }}></div>
+          <div style={{ height: 6, background: '#F1F5F9', borderRadius: 2, overflow: 'hidden' }}>
+             <div style={{ height: '100%', width: `${progress}%`, background: '#FFD100', transition: 'width 1s' }}></div>
           </div>
         </div>
 
@@ -202,25 +201,25 @@ export function AIProfileAnalyzer() {
         <div style={{
           position: 'absolute',
           top: '100%',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          left: 0,
+          right: 0,
           marginTop: 12,
-          width: 200,
-          background: '#1A1D23',
-          color: '#fff',
+          background: '#000',
+          color: '#FFD100',
           padding: '12px',
-          borderRadius: 16,
+          borderRadius: 12,
           fontSize: 10,
           zIndex: 50,
           pointerEvents: 'none',
-          boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)',
+          boxShadow: '0 20px 25px -5px rgba(0,0,0,0.2)',
           opacity: 0,
-          transition: 'opacity 0.2s'
+          transition: 'opacity 0.2s',
+          border: '1px solid #FFD100'
         }} className="group-hover:opacity-100">
-           <p style={{ fontWeight: 800, marginBottom: 4 }}>Skill Gap Analysis</p>
-           <p style={{ opacity: 0.6, marginBottom: 8 }}>Missing: AI/ML Strategy, Cloud Arch</p>
-           <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#FFD100', fontWeight: 900 }}>
-              <Zap size={10} /> Next Steps: Python for AI
+           <p style={{ fontWeight: 900, marginBottom: 4, textTransform: 'uppercase' }}>Hertz Talent Insight</p>
+           <p style={{ color: '#fff', opacity: 0.8, marginBottom: 8, fontWeight: 700 }}>Next Skill: Systems Arch V2</p>
+           <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontWeight: 900 }}>
+              <Zap size={10} fill="#FFD100" /> Executive Match Found
            </div>
         </div>
       </div>
@@ -237,46 +236,49 @@ export function AIProfileAnalyzer() {
           }}
           style={{
             background: '#fff',
-            border: '2px dashed #E2E8F0',
-            borderRadius: 48,
+            border: '4px solid #FFD100',
+            borderRadius: 32,
             padding: '80px 40px',
             textAlign: 'center',
             cursor: 'pointer',
-            boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.05)',
+            boxShadow: '0 20px 40px -10px rgba(255, 209, 0, 0.15)',
             transition: 'all 0.2s'
           }}
-          className="hover:border-[#FF5A3C] group"
+          className="hover:scale-[1.01] group"
         >
           <input type="file" id="resume-upload" hidden onChange={handleFileSelect} onClick={(e) => e.stopPropagation()} accept=".pdf,.doc,.docx" />
           <div style={{
             width: 80,
             height: 80,
-            background: '#FF5A3C',
-            borderRadius: 24,
+            background: '#000',
+            borderRadius: 20,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             margin: '0 auto 40px',
-            boxShadow: '0 10px 15px -3px rgba(255, 90, 60, 0.4)'
+            boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+            border: '3px solid #FFD100'
           }}>
-            <UploadCloud size={32} color="white" />
+            <UploadCloud size={32} color="#FFD100" />
           </div>
-          <h2 style={{ fontSize: 32, fontWeight: 900, color: '#111827', marginBottom: 16 }}>Generate Future Moves</h2>
-          <p style={{ fontSize: 18, color: '#64748B', fontWeight: 600, marginBottom: 48, maxWidth: 500, margin: '0 auto 48px' }}>
-            Upload your resume to reveal your holistic RPA-to-CTO career tree.
+          <h2 style={{ fontSize: 36, fontWeight: 900, color: '#000', marginBottom: 16, textTransform: 'uppercase', letterSpacing: '-0.03em' }}>Generate Future Moves</h2>
+          <p style={{ fontSize: 18, color: '#4B5563', fontWeight: 600, marginBottom: 48, maxWidth: 500, margin: '0 auto 48px' }}>
+            Map your RPA mastery to executive Hertz leadership paths.
           </p>
           <button style={{
-            background: '#FF5A3C',
-            color: '#white',
-            border: 'none',
-            padding: '16px 40px',
-            borderRadius: 16,
-            fontWeight: 800,
-            fontSize: 16,
+            background: '#FFD100',
+            color: '#000',
+            border: '2px solid #000',
+            padding: '18px 48px',
+            borderRadius: 12,
+            fontWeight: 900,
+            fontSize: 15,
             cursor: 'pointer',
-            boxShadow: '0 10px 15px -3px rgba(255, 90, 60, 0.2)',
-            transition: 'all 0.2s'
-          }} className="hover:scale-105">
+            boxShadow: '0 6px 0 #000',
+            transition: 'all 0.1s',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em'
+          }} className="active:translate-y-1 active:shadow-none">
             Analyze My Trajectory
           </button>
         </div>
@@ -288,13 +290,13 @@ export function AIProfileAnalyzer() {
     return (
       <div style={{ maxWidth: 600, margin: '160px auto', textAlign: 'center' }}>
         <div style={{ position: 'relative', width: 100, height: 100, margin: '0 auto 40px' }}>
-          <div style={{ position: 'absolute', inset: 0, border: '6px solid #F1F5F9', borderRadius: '50%' }} />
-          <div style={{ position: 'absolute', inset: 0, border: '6px solid #FF5A3C', borderRadius: '50%', borderTopColor: 'transparent', animation: 'spin 1.2s linear infinite' }} />
+          <div style={{ position: 'absolute', inset: 0, border: '8px solid #F1F5F9', borderRadius: '50%' }} />
+          <div style={{ position: 'absolute', inset: 0, border: '8px solid #FFD100', borderRadius: '50%', borderTopColor: 'transparent', animation: 'spin 0.8s linear infinite' }} />
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Cpu size={40} color="#111827" />
+            <Cpu size={40} color="#000" />
           </div>
         </div>
-        <h3 style={{ fontSize: 24, fontWeight: 900, color: '#111827', marginBottom: 16 }}>Neural Strategy Mapping...</h3>
+        <h3 style={{ fontSize: 24, fontWeight: 900, color: '#000', marginBottom: 16, textTransform: 'uppercase' }}>Hertz Intelligence...</h3>
         <p style={{ fontSize: 18, color: '#64748B', fontWeight: 800 }}>{analyzingText}</p>
       </div>
     );
@@ -305,62 +307,63 @@ export function AIProfileAnalyzer() {
       
       {/* Header */}
       <div style={{ maxWidth: 1400, margin: '0 auto', paddingTop: 80, paddingLeft: 40, paddingRight: 40, textAlign: 'center', marginBottom: 100 }}>
-         <h1 style={{ fontSize: 48, fontWeight: 900, color: '#111827', marginBottom: 12, letterSpacing: '-0.02em' }}>Explore Future Moves</h1>
-         <p style={{ fontSize: 20, color: '#64748B', fontWeight: 700 }}>Personalized career paths based on your RPA Solution Architect profile</p>
+         <h1 style={{ fontSize: 56, fontWeight: 950, color: '#000', marginBottom: 12, letterSpacing: '-0.04em', textTransform: 'uppercase' }}>Explore Future Moves</h1>
+         <div style={{ display: 'inline-block', background: '#FFD100', padding: '6px 20px', borderRadius: 8, marginBottom: 20 }}>
+            <p style={{ fontSize: 16, color: '#000', fontWeight: 900, margin: 0, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Strategic Growth Tree</p>
+         </div>
+         <p style={{ fontSize: 20, color: '#64748B', fontWeight: 700, maxWidth: 800, margin: '0 auto' }}>Personalized executive paths based on your RPA Solution Architect profile</p>
       </div>
 
       <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 40px' }}>
          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             
             {/* Root Node */}
-            <div style={{ marginBottom: 100, position: 'relative', zIndex: 10 }}>
+            <div style={{ marginBottom: 120, position: 'relative', zIndex: 10 }}>
                <div style={{
-                  background: '#fff',
-                  borderRadius: 40,
-                  padding: '32px',
-                  boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.1)',
-                  border: '4px solid #FF5A3C',
+                  background: '#000',
+                  borderRadius: 32,
+                  padding: '40px',
+                  boxShadow: '0 30px 60px -12px rgba(0,0,0,0.3)',
+                  border: '6px solid #FFD100',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: 24,
-                  minWidth: 380
+                  gap: 32,
+                  minWidth: 420
                }}>
-                  <div style={{ width: 80, height: 80, borderRadius: 24, background: '#F1F5F9', overflow: 'hidden', border: '2px solid #fff', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}>
-                     <Image src="/ram_profile.png" width={80} height={80} alt="Ram" style={{ objectFit: 'cover' }} />
+                  <div style={{ width: 100, height: 100, borderRadius: 20, background: '#FFD100', overflow: 'hidden', border: '3px solid #fff' }}>
+                     <Image src="/ram_profile.png" width={100} height={100} alt="Ram" style={{ objectFit: 'cover' }} />
                   </div>
                   <div style={{ textAlign: 'left' }}>
-                     <span style={{ background: '#FF5A3C', color: '#fff', fontSize: 10, fontWeight: 900, padding: '4px 12px', borderRadius: 8, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8, display: 'inline-block' }}>YOU TODAY</span>
-                     <h4 style={{ fontSize: 24, fontWeight: 900, color: '#111827', margin: 0, lineHeight: 1.1 }}>RPA Solution Architect</h4>
-                     <p style={{ fontSize: 14, fontWeight: 700, color: '#94A3B8', marginTop: 4 }}>10+ Years Experience</p>
+                     <span style={{ background: '#FFD100', color: '#000', fontSize: 11, fontWeight: 950, padding: '4px 16px', borderRadius: 6, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 12, display: 'inline-block' }}>YOU TODAY</span>
+                     <h4 style={{ fontSize: 28, fontWeight: 950, color: '#fff', margin: 0, lineHeight: 1, letterSpacing: '-0.02em' }}>RPA Architect</h4>
+                     <p style={{ fontSize: 15, fontWeight: 800, color: '#FFD100', marginTop: 6, opacity: 0.8 }}>10+ Years Experience</p>
                   </div>
                </div>
             </div>
 
-            {/* SVG Background Connections (Simplified for reliability) */}
-            <div style={{ position: 'absolute', top: 500, left: '50%', transform: 'translateX(-50%)', width: '100%', maxWidth: 1200, height: 1000, pointerEvents: 'none', opacity: 0.1 }}>
-                <svg width="100%" height="100%" viewBox="0 0 1200 1000">
-                   <path d="M600 0 Q600 200, 300 400" stroke="#FF5A3C" strokeWidth="4" strokeDasharray="10 10" fill="none" />
-                   <path d="M600 0 Q600 200, 900 400" stroke="#FF5A3C" strokeWidth="4" strokeDasharray="10 10" fill="none" />
-                </svg>
-            </div>
-
             {/* Tree Sections */}
-            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 120, position: 'relative', zIndex: 10 }}>
+            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 140, position: 'relative', zIndex: 10 }}>
                {sections.map((section) => (
                  <div key={section.title}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 40 }}>
-                       <span style={{ background: section.tagColor, color: '#fff', fontSize: 10, fontWeight: 900, padding: '4px 16px', borderRadius: 12, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{section.tag}</span>
-                       <h3 style={{ fontSize: 24, fontWeight: 900, color: '#111827' }}>{section.title}</h3>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 48, borderLeft: `8px solid ${section.tagColor === '#000000' ? '#FFD100' : section.tagColor}`, paddingLeft: 24 }}>
+                       <div>
+                          <span style={{ background: section.tagColor, color: section.tagColor === '#000000' ? '#FFD100' : '#fff', fontSize: 10, fontWeight: 900, padding: '4px 16px', borderRadius: 4, textTransform: 'uppercase', letterSpacing: '0.15em' }}>{section.tag}</span>
+                          <h3 style={{ fontSize: 28, fontWeight: 950, color: '#000', margin: '8px 0 0 0', textTransform: 'uppercase' }}>{section.title}</h3>
+                       </div>
                     </div>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 60 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 80 }}>
                        {section.branches.map((branch) => (
-                         <div key={branch.id} style={{ display: 'flex', alignItems: 'center', gap: 32, overflowX: 'auto', padding: '16px 0' }} className="no-scrollbar">
+                         <div key={branch.id} style={{ display: 'flex', alignItems: 'center', gap: 40, overflowX: 'auto', padding: '24px 0' }} className="no-scrollbar">
                             {branch.nodes.map((node, nIdx) => (
-                              <div key={nIdx} style={{ display: 'flex', alignItems: 'center', gap: 32, flexShrink: 0 }}>
+                              <div key={nIdx} style={{ display: 'flex', alignItems: 'center', gap: 40, flexShrink: 0 }}>
                                  <Node data={node} color={section.tagColor} />
                                  {nIdx < branch.nodes.length - 1 && (
-                                   <ArrowRight size={20} color="#CBD5E1" strokeWidth={3} />
+                                   <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                                      <div style={{ width: 40, height: 2, background: '#000', opacity: 0.1 }}></div>
+                                      <ArrowRight size={24} color="#000" strokeWidth={3} />
+                                      <div style={{ width: 40, height: 2, background: '#000', opacity: 0.1 }}></div>
+                                   </div>
                                  )}
                               </div>
                             ))}
@@ -376,49 +379,54 @@ export function AIProfileAnalyzer() {
 
       {/* Modal */}
       {selectedNode && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(20px)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
-           <div style={{ background: '#fff', width: '100%', maxWidth: 900, borderRadius: 48, overflow: 'hidden', position: 'relative' }}>
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.95)', backdropFilter: 'blur(30px)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
+           <div style={{ background: '#fff', width: '100%', maxWidth: 1000, borderRadius: 32, overflow: 'hidden', position: 'relative', border: '8px solid #FFD100' }}>
               <button 
                 onClick={() => setSelectedNode(null)}
-                style={{ position: 'absolute', top: 32, right: 32, width: 48, height: 48, borderRadius: '50%', background: '#F8FAFC', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyCenter: 'center' }}
+                style={{ position: 'absolute', top: 32, right: 32, width: 56, height: 56, borderRadius: 16, background: '#000', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 10px 20px rgba(0,0,0,0.2)' }}
               >
-                <X size={20} color="#111827" />
+                <X size={24} color="#FFD100" />
               </button>
 
               <div style={{ padding: 64 }}>
-                 <div style={{ display: 'flex', gap: 40, marginBottom: 48 }}>
-                    <div style={{ width: 120, height: 120, background: '#F1F5F9', borderRadius: 32, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                       <Briefcase size={64} color="#94A3B8" />
+                 <div style={{ display: 'flex', gap: 48, marginBottom: 56 }}>
+                    <div style={{ width: 140, height: 140, background: '#000', borderRadius: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '4px solid #FFD100 shadow-2xl' }}>
+                       <Briefcase size={72} color="#FFD100" />
                     </div>
                     <div>
-                       <p style={{ fontSize: 12, fontWeight: 900, color: '#FF5A3C', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>AI Career Architecture</p>
-                       <h2 style={{ fontSize: 40, fontWeight: 900, color: '#111827', margin: 0 }}>{selectedNode.role}</h2>
-                       <div style={{ display: 'flex', gap: 24, marginTop: 16 }}>
-                          <span style={{ fontSize: 14, fontWeight: 700, color: '#64748B' }}>Match: {selectedNode.skills}</span>
-                          <span style={{ fontSize: 14, fontWeight: 700, color: '#64748B' }}>Growth Potential: 95%</span>
+                       <p style={{ fontSize: 13, fontWeight: 950, color: '#000', textTransform: 'uppercase', letterSpacing: '0.2rem', marginBottom: 12 }}>Executive Pathway</p>
+                       <h2 style={{ fontSize: 48, fontWeight: 950, color: '#000', margin: 0, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>{selectedNode.role}</h2>
+                       <div style={{ display: 'flex', gap: 32, marginTop: 20 }}>
+                          <span style={{ fontSize: 16, fontWeight: 800, color: '#4B5563', textTransform: 'uppercase' }}>Match Level: {selectedNode.skills}</span>
+                          <span style={{ fontSize: 16, fontWeight: 800, color: '#16A34A', textTransform: 'uppercase' }}>Gold Tier Priority</span>
                        </div>
                     </div>
                  </div>
 
-                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40 }}>
-                    <div style={{ background: '#F8FAFC', padding: 40, borderRadius: 32 }}>
-                       <h4 style={{ fontSize: 18, fontWeight: 900, color: '#111827', marginBottom: 24 }}>Skill Comparison</h4>
-                       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                          {['System Design', 'Cloud Architecture', 'RPA Logic', 'Stakeholder Mgt'].map((s, i) => (
-                             <div key={s} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', background: '#fff', borderRadius: 12, border: '1px solid #E2E8F0' }}>
-                                <span style={{ fontSize: 14, fontWeight: 700, color: '#334155' }}>{s}</span>
-                                {i > 1 ? <CheckCircle2 size={18} color="#10B981" /> : <div style={{ width: 16, height: 16, border: '2px solid #E2E8F0', borderRadius: '50%' }} />}
+                 <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: 48 }}>
+                    <div style={{ background: '#F8FAFC', padding: 48, borderRadius: 24, border: '2px solid #E2E8F0' }}>
+                       <h4 style={{ fontSize: 20, fontWeight: 950, color: '#000', marginBottom: 32, textTransform: 'uppercase' }}>Profile Synchronization</h4>
+                       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                          {[
+                            { name: 'Architecture V2', ok: false },
+                            { name: 'Hertz Global Ops', ok: false },
+                            { name: 'RPA Engineering', ok: true },
+                            { name: 'Strategic Leadership', ok: true }
+                          ].map((s) => (
+                             <div key={s.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', background: '#fff', borderRadius: 12, border: '2px solid #F1F5F9' }}>
+                                <span style={{ fontSize: 15, fontWeight: 800, color: '#000', textTransform: 'uppercase' }}>{s.name}</span>
+                                {s.ok ? <div style={{ background: '#000', padding: 4, borderRadius: 999 }}><CheckCircle2 size={18} color="#FFD100" /></div> : <div style={{ width: 18, height: 18, border: '2px solid #CBD5E1', borderRadius: '50%' }} />}
                              </div>
                           ))}
                        </div>
                     </div>
-                    <div style={{ background: '#111827', padding: 40, borderRadius: 32, color: '#fff' }}>
-                       <h4 style={{ fontSize: 18, fontWeight: 900, marginBottom: 16 }}>AI Strategic Insight</h4>
-                       <p style={{ fontSize: 15, color: '#94A3B8', lineHeight: 1.6, marginBottom: 24 }}>
-                          You have 10+ years of logic mastery. By adding AWS/Azure certification, you can achieve the CTO role within 36 months via this journey.
+                    <div style={{ background: '#000', padding: 48, borderRadius: 24, color: '#FFD100', border: '4px solid #FFD100' }}>
+                       <h4 style={{ fontSize: 20, fontWeight: 950, marginBottom: 20, textTransform: 'uppercase' }}>AI Strategy Insight</h4>
+                       <p style={{ fontSize: 16, color: '#fff', opacity: 0.9, lineHeight: 1.6, marginBottom: 32, fontWeight: 600 }}>
+                          Hertz is prioritizing intelligent automation. Your 10+ years of logic mastery places you in the TOP 1% of candidates for this executive path.
                        </p>
-                       <button style={{ background: '#FF5A3C', width: '100%', color: '#fff', border: 'none', padding: 16, borderRadius: 16, fontWeight: 900, fontSize: 14, textTransform: 'uppercase', cursor: 'pointer' }}>
-                          Start Roadmap
+                       <button style={{ background: '#FFD100', width: '100%', color: '#000', border: 'none', padding: 20, borderRadius: 12, fontWeight: 950, fontSize: 16, textTransform: 'uppercase', cursor: 'pointer', boxShadow: '0 6px 0 #BD9A00' }}>
+                          Unlock Full Roadmap
                        </button>
                     </div>
                  </div>
