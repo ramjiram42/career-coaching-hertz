@@ -161,9 +161,9 @@ export function AIProfileAnalyzer() {
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setStep('analyzing');
-      setTimeout(() => setAnalyzingText('Analyzing Hertz vertical requirements...'), 1000);
-      setTimeout(() => setAnalyzingText('Matching John\'s leadership traits...'), 2000);
-      setTimeout(() => setAnalyzingText('Calculating path readiness...'), 3000);
+      setTimeout(() => setAnalyzingText('Extracting ERP & Operational skills...'), 1000);
+      setTimeout(() => setAnalyzingText('Analyzing Hertz vertical requirements...'), 2000);
+      setTimeout(() => setAnalyzingText('Calculating your optimal career path...'), 3000);
       setTimeout(() => setStep('results'), 4000);
     }
   };
@@ -183,9 +183,9 @@ export function AIProfileAnalyzer() {
         <div style={{ width: 120, height: 120, background: '#FFC900', borderRadius: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 3rem', boxShadow: '0 15px 45px rgba(255,201,0,0.4)', transform: 'rotate(-3deg)' }}>
           <UploadCloud size={56} color="#000" />
         </div>
-        <h2 style={{ fontSize: '2.5rem', fontWeight: 950, color: '#000', marginBottom: '1rem', letterSpacing: '-0.04em' }}>Upload John's Resume</h2>
-        <p style={{ color: '#6B7280', fontSize: '1.2rem', fontWeight: 600, margin: '0 auto 4rem', maxWidth: 500 }}>Let AI map your transition from frontline operations into Hertz corporate vertical leadership.</p>
-        <button style={{ background: '#000', color: '#fff', border: 'none', padding: '1.25rem 4rem', borderRadius: 20, fontWeight: 950, fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '0.15em' }}>Analyze Transition</button>
+        <h2 style={{ fontSize: '2.5rem', fontWeight: 950, color: '#000', marginBottom: '1rem', letterSpacing: '-0.04em' }}>Upload Your Resume</h2>
+        <p style={{ color: '#6B7280', fontSize: '1.1rem', fontWeight: 600, margin: '0 auto 4rem', maxWidth: 500 }}>Unlock intelligent career mapping from frontline operations into Hertz corporate vertical leadership.</p>
+        <button style={{ background: '#000', color: '#fff', border: 'none', padding: '1.25rem 4rem', borderRadius: 20, fontWeight: 950, fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '0.15em' }}>Identify Opportunities</button>
       </div>
     );
   }
@@ -216,13 +216,13 @@ export function AIProfileAnalyzer() {
            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', padding: '0 6rem' }}>
               <div style={{ color: '#fff' }}>
                  <p style={{ fontSize: '0.9rem', fontWeight: 950, color: '#FFC900', letterSpacing: '0.3em', marginBottom: '1.25rem', textTransform: 'uppercase' }}>Hertz Enterprise Propulsion</p>
-                 <h2 style={{ fontSize: '4rem', fontWeight: 950, letterSpacing: '-0.02em', color: '#fff', margin: 0, lineHeight: 1 }}>CHART YOUR<br/>TRAJECTORY, JOHN.</h2>
+                 <h2 style={{ fontSize: '4rem', fontWeight: 950, letterSpacing: '-0.02em', color: '#fff', margin: 0, lineHeight: 1 }}>YOUR MOVE,<br/>IDENTIFIED.</h2>
               </div>
            </div>
            
            <div style={{ position: 'absolute', right: '6rem', top: '50%', transform: 'translateY(-50%)', background: '#fff', padding: '2rem 3.5rem', borderRadius: 32, display: 'flex', alignItems: 'center', gap: '2rem', boxShadow: '0 25px 80px rgba(0,0,0,0.2)' }}>
               <div style={{ textAlign: 'right' }}>
-                 <p style={{ fontSize: '1.5rem', fontWeight: 950, color: '#000', margin: 0 }}>John</p>
+                 <p style={{ fontSize: '1.5rem', fontWeight: 950, color: '#000', margin: 0 }}>Strategic Profile</p>
                  <p style={{ fontSize: '0.9rem', color: '#6B7280', margin: '0.3rem 0', fontWeight: 700 }}>Management Trainee @ Hertz</p>
               </div>
               <div style={{ width: 80, height: 80, borderRadius: '50%', border: '5px solid #FFC900', overflow: 'hidden' }}>
