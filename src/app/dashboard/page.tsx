@@ -54,7 +54,7 @@ export default function DashboardPage() {
                 onClick={() => setActiveTab('career')}
                 style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0 0 1rem 0', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.9rem', fontWeight: 800, color: activeTab === 'career' ? '#000' : '#9CA3AF', borderBottom: activeTab === 'career' ? '3px solid #FFC900' : '3px solid transparent', transition: 'all 0.2s', textTransform: 'uppercase', letterSpacing: '0.05em' }}
              >
-                <Map size={18} /> AI Career Mapping
+                <Map size={18} /> Your Move
              </button>
           </div>
         </div>
