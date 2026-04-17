@@ -9,11 +9,10 @@ import { Sparkles, ChevronDown, User, BarChart3, ShieldCheck, LogOut } from 'luc
 const mainLinks = [
   { href: '/', label: 'Home' },
   { href: '/career-tree', label: 'Journeys' },
-  { href: '/gigs', label: 'Gigs' },
   { href: '/mentors', label: 'Mentors' },
   { href: '/learn', label: 'Learn' },
+  { href: '/jobs', label: 'Careers' },
   { href: '/skills', label: 'Skills' },
-  { href: '/jobs', label: 'Vacancies' },
 ]
 
 const userMenuItems = [
