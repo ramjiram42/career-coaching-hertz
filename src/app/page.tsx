@@ -86,8 +86,8 @@ export default function HomePage() {
               Give it some more love <ArrowRight size={12} />
             </Link>
           </div>
-          <div style={{ width: 52, height: 52, background: '#FFD100', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1.4rem', color: '#000', flexShrink: 0 }}>
-            R
+          <div style={{ width: 52, height: 52, background: '#FFD100', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden' }}>
+            <Image src="/ram_profile.png" alt="Ram" width={52} height={52} style={{ objectFit: 'cover' }} />
           </div>
         </div>
       </div>
@@ -128,7 +128,9 @@ export default function HomePage() {
           {/* YOU TODAY */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 200 }}>
             <div style={{ background: '#6B7280', color: '#fff', padding: '0.2rem 0.75rem', borderRadius: 999, fontSize: '0.6rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '0.75rem' }}>You Today</div>
-            <div style={{ width: 68, height: 68, borderRadius: '50%', border: '3px solid #E5E7EB', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1.5rem', color: '#000', marginBottom: '0.75rem', boxShadow: '0 4px 16px rgba(0,0,0,0.1)' }}>R</div>
+            <div style={{ width: 68, height: 68, borderRadius: '50%', border: '3px solid #E5E7EB', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.75rem', boxShadow: '0 4px 16px rgba(0,0,0,0.1)', overflow: 'hidden' }}>
+              <Image src="/ram_profile.png" alt="Ram" width={68} height={68} style={{ objectFit: 'cover' }} />
+            </div>
             <p style={{ color: '#374151', fontWeight: 700, fontSize: '0.8rem', textAlign: 'center', margin: 0 }}>Branch Manager / Operations</p>
           </div>
 
@@ -192,7 +194,9 @@ export default function HomePage() {
                 {/* Role progression row */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
                   {/* User avatar */}
-                  <div style={{ width: 44, height: 44, borderRadius: '50%', background: '#FFD100', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1.1rem', color: '#000', flexShrink: 0, border: '2px solid #E5E7EB' }}>R</div>
+                  <div style={{ width: 44, height: 44, borderRadius: '50%', background: '#FFD100', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '2px solid #E5E7EB', overflow: 'hidden' }}>
+                    <Image src="/ram_profile.png" alt="Ram" width={44} height={44} style={{ objectFit: 'cover' }} />
+                  </div>
                   <div style={{ width: 24, height: 2, background: '#D1D5DB' }} />
 
                   {path.roles.map((role, ri) => (
