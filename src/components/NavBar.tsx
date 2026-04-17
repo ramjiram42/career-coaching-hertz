@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState, useRef, useEffect } from 'react'
 import { Sparkles, ChevronDown, User, BarChart3, ShieldCheck, LogOut } from 'lucide-react'
@@ -80,7 +81,9 @@ export function NavBar() {
           {/* User Avatar dropdown */}
           <div ref={menuRef} style={{ position: 'relative' }}>
             <button onClick={() => setMenuOpen(!menuOpen)} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#F9FAFB', border: '1.5px solid #E5E7EB', borderRadius: 999, padding: '0.3rem 0.75rem 0.3rem 0.3rem', cursor: 'pointer', transition: 'border-color 0.15s', borderColor: menuOpen ? '#FFD100' : '#E5E7EB' }}>
-              <div style={{ width: 30, height: 30, background: '#FFD100', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '0.85rem', color: '#000' }}>R</div>
+              <div style={{ width: 30, height: 30, background: '#FFD100', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '0.85rem', color: '#000', overflow: 'hidden' }}>
+                <Image src="/ram_profile.png" alt="Ram" width={30} height={30} style={{ objectFit: 'cover' }} />
+              </div>
               <span style={{ fontWeight: 700, fontSize: '0.82rem', color: '#374151' }}>Ram</span>
               <ChevronDown size={14} color="#6B7280" style={{ transform: menuOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }} />
             </button>
