@@ -1,10 +1,8 @@
 'use client';
 
-import { CheckCircle, Clock, BookOpen, Star, User, TrendingUp, LayoutGrid, Map } from 'lucide-react'
+import { CheckCircle, Clock, BookOpen, Star, User, TrendingUp } from 'lucide-react'
 import Link from 'next/link'
-import { useState } from 'react'
 import { ReadinessChart } from './RechartsClient'
-import { AIProfileAnalyzer } from '@/components/AIProfileAnalyzer'
 
 // Static mock data
 const MODULES = [
@@ -15,8 +13,6 @@ const MODULES = [
 ]
 
 export default function DashboardPage() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'career'>('overview');
-
   const completedModules = MODULES.filter(m => m.status === 'COMPLETED').length
   const totalModules = MODULES.length
   const learningScore = Math.round((completedModules / totalModules) * 100)
@@ -26,9 +22,9 @@ export default function DashboardPage() {
     <main style={{ background: '#F8FAFC', minHeight: '100vh' }}>
 
       {/* Header Banner */}
-      <div style={{ background: '#fff', borderBottom: '1px solid #F1F5F9', padding: '2.5rem 0 0' }}>
+      <div style={{ background: '#fff', borderBottom: '1px solid #F1F5F9', padding: '2.5rem 0' }}>
         <div className="container">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <p style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.15em', color: '#FFB800', marginBottom: '0.4rem' }}>Employee Dashboard</p>
               <h1 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#000', letterSpacing: '-0.04em', marginBottom: '0.5rem' }}>Welcome Back, Ram</h1>
@@ -36,39 +32,17 @@ export default function DashboardPage() {
                  RPA Solution Architect — <span style={{ color: '#FFB800' }}>Hertz Technology</span>
               </p>
             </div>
-            <div style={{ textAlign: 'right', display: activeTab === 'overview' ? 'block' : 'none' }}>
-              <div style={{ fontSize: '3rem', fontWeight: 900, color: '#FFD100', letterSpacing: '-0.04em', lineHeight: 1 }}>{readinessScore}%</div>
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontSize: '3.5rem', fontWeight: 900, color: '#FFD100', letterSpacing: '-0.04em', lineHeight: 1 }}>{readinessScore}%</div>
               <p style={{ fontSize: '0.6rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.15em', color: '#9CA3AF', marginTop: '0.25rem' }}>Current Path Readiness</p>
             </div>
-          </div>
-
-          {/* TAB NAV */}
-          <div style={{ display: 'flex', gap: '2.5rem' }}>
-             <button 
-                onClick={() => setActiveTab('overview')}
-                style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0 0 1rem 0', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.9rem', fontWeight: 800, color: activeTab === 'overview' ? '#000' : '#9CA3AF', borderBottom: activeTab === 'overview' ? '3px solid #FFC900' : '3px solid transparent', transition: 'all 0.2s', textTransform: 'uppercase', letterSpacing: '0.05em' }}
-             >
-                <LayoutGrid size={18} /> Overview
-             </button>
-             <button 
-                onClick={() => setActiveTab('career')}
-                style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0 0 1rem 0', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.9rem', fontWeight: 800, color: activeTab === 'career' ? '#000' : '#9CA3AF', borderBottom: activeTab === 'career' ? '3px solid #FFC900' : '3px solid transparent', transition: 'all 0.2s', textTransform: 'uppercase', letterSpacing: '0.05em' }}
-             >
-                <Map size={18} /> Your Move
-             </button>
           </div>
         </div>
       </div>
 
       <div className="container" style={{ paddingTop: '2.5rem', paddingBottom: '5rem' }}>
-        
-        {activeTab === 'career' ? (
-          <div style={{ animation: 'fadeIn 0.4s ease-out' }}>
-             <AIProfileAnalyzer />
-          </div>
-        ) : (
-          <div style={{ animation: 'fadeIn 0.4s ease-out' }}>
-            {/* Stats Row */}
+        <div style={{ animation: 'fadeIn 0.4s ease-out' }}>
+          {/* Stats Row */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem', marginBottom: '2.5rem' }}>
               <div className="card">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
@@ -171,7 +145,6 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
-        )}
       </div>
     </main>
   )

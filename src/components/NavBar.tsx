@@ -8,6 +8,7 @@ import { Sparkles, ChevronDown, User, BarChart3, ShieldCheck, LogOut } from 'luc
 
 const mainLinks = [
   { href: '/', label: 'Home' },
+  { href: '/your-move', label: 'Your Move' },
   { href: '/career-tree', label: 'Journeys' },
   { href: '/mentors', label: 'Mentors' },
   { href: '/learn', label: 'Learn' },
