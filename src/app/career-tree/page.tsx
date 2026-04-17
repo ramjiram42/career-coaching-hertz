@@ -217,6 +217,14 @@ export default function CareerTreePage() {
 
   // View 2: Role Details (Before Journey)
   if (selectedMove && !journeyStarted) {
+    const selectedMoveIndex = suggestedMoves.findIndex(m => m.id === selectedMove.id);
+    const activeTheme = [
+      { badgeBg: '#EC4899', bg: '#FDF2F8', border: '#FBCFE8' },
+      { badgeBg: '#14B8A6', bg: '#F0FDFA', border: '#CCFBF1' },
+      { badgeBg: '#3B82F6', bg: '#EFF6FF', border: '#BFDBFE' },
+      { badgeBg: '#8B5CF6', bg: '#F5F3FF', border: '#DDD6FE' }
+    ][selectedMoveIndex % 4] || { badgeBg: '#14B8A6', bg: '#F0FDFA', border: '#CCFBF1' };
+
     return (
       <main style={{ background: '#F8FAFC', minHeight: '100vh', padding: '3rem 0' }}>
         <div className="container" style={{ maxWidth: 800, margin: '0 auto' }}>
@@ -227,8 +235,8 @@ export default function CareerTreePage() {
             <ArrowLeft size={16} /> Back to Suggestions
           </button>
           
-          <div style={{ background: '#fff', borderRadius: 24, padding: '3rem', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', border: '1px solid #E5E7EB' }}>
-            <div style={{ display: 'inline-block', background: '#FFFBEB', color: '#92400E', padding: '0.35rem 1rem', borderRadius: 999, fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem' }}>
+          <div style={{ background: '#fff', borderRadius: 24, padding: '3rem', boxShadow: `0 10px 40px ${activeTheme.badgeBg}15`, border: `1px solid ${activeTheme.border}` }}>
+            <div style={{ display: 'inline-block', background: activeTheme.bg, color: activeTheme.badgeBg, padding: '0.35rem 1rem', borderRadius: 999, fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', border: `1px solid ${activeTheme.badgeBg}33` }}>
               {selectedMove.vertical}
             </div>
             <h2 style={{ fontSize: '2.5rem', fontWeight: 900, color: '#111827', letterSpacing: '-0.04em', margin: '0 0 1rem 0' }}>{selectedMove.role}</h2>
@@ -257,7 +265,7 @@ export default function CareerTreePage() {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <button 
                 onClick={() => setJourneyStarted(true)}
-                style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', background: '#000', color: '#FFD100', padding: '1rem 2rem', borderRadius: 12, fontWeight: 900, fontSize: '1.05rem', textTransform: 'uppercase', letterSpacing: '0.05em', border: 'none', cursor: 'pointer', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', background: activeTheme.badgeBg, color: '#fff', padding: '1rem 2rem', borderRadius: 12, fontWeight: 900, fontSize: '1.05rem', textTransform: 'uppercase', letterSpacing: '0.05em', border: 'none', cursor: 'pointer', boxShadow: `0 8px 25px ${activeTheme.badgeBg}40`, transition: 'all 0.2s', textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}
               >
                 Decide to Move with Role <ChevronRight size={20} />
               </button>
@@ -270,6 +278,13 @@ export default function CareerTreePage() {
 
   // View 3: The Interactive Tree Structure
   const progress = calculateProgress(selectedMove.learningPath);
+  const selectedMoveIndexView3 = suggestedMoves.findIndex(m => m.id === selectedMove.id);
+  const activeTheme = [
+    { badgeBg: '#EC4899', bg: '#FDF2F8', border: '#FBCFE8' },
+    { badgeBg: '#14B8A6', bg: '#F0FDFA', border: '#CCFBF1' },
+    { badgeBg: '#3B82F6', bg: '#EFF6FF', border: '#BFDBFE' },
+    { badgeBg: '#8B5CF6', bg: '#F5F3FF', border: '#DDD6FE' }
+  ][selectedMoveIndexView3 % 4] || { badgeBg: '#14B8A6', bg: '#F0FDFA', border: '#CCFBF1' };
 
   const getYouTubeId = (title) => {
     const t = title.toLowerCase();
@@ -301,16 +316,16 @@ export default function CareerTreePage() {
           <ArrowLeft size={16} /> Back to Role Details
         </button>
 
-        <div style={{ background: '#fff', borderRadius: 24, padding: '2.5rem', marginBottom: '3rem', border: '1px solid #E5E7EB', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ background: activeTheme.bg, borderRadius: 24, padding: '2.5rem', marginBottom: '3rem', border: `1px solid ${activeTheme.border}`, boxShadow: `0 10px 40px ${activeTheme.badgeBg}15`, position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'relative', zIndex: 2 }}>
-            <p style={{ fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.15em', color: '#16A34A', marginBottom: '0.5rem' }}>Your Target Journey</p>
+            <p style={{ fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.15em', color: activeTheme.badgeBg, marginBottom: '0.5rem' }}>Your Target Journey</p>
             <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: '#000', letterSpacing: '-0.04em', margin: '0 0 2rem 0' }}>{selectedMove.role}</h1>
 
             {/* Progress Bar Area */}
-            <div style={{ background: '#F8FAFC', border: '1px solid #E5E7EB', borderRadius: 16, padding: '1.5rem' }}>
+            <div style={{ background: '#fff', border: `1px solid ${activeTheme.border}`, borderRadius: 16, padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.02)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '1rem' }}>
                 <div>
-                   <h3 style={{ fontSize: '1.5rem', fontWeight: 900, color: '#000', margin: 0 }}>{progress.completedPercentage}% Completed</h3>
+                   <h3 style={{ fontSize: '1.5rem', fontWeight: 900, color: activeTheme.badgeBg, margin: 0 }}>{progress.completedPercentage}% Completed</h3>
                    <p style={{ fontSize: '0.85rem', color: '#6B7280', margin: '0.2rem 0 0 0', fontWeight: 500 }}>{progress.pendingPercentage}% Pending • {progress.pendingWeeks.toFixed(1)} weeks needed</p>
                 </div>
                 <div style={{ textAlign: 'right' }}>
@@ -318,13 +333,13 @@ export default function CareerTreePage() {
                    <p style={{ fontSize: '1.5rem', fontWeight: 900, color: '#000', margin: 0 }}>{progress.totalWeeks} Weeks</p>
                 </div>
               </div>
-              <div style={{ width: '100%', height: 12, background: '#E5E7EB', borderRadius: 99, overflow: 'hidden', display: 'flex' }}>
-                 <div style={{ width: `${progress.completedPercentage}%`, background: '#16A34A', height: '100%', borderRadius: 99 }} />
+              <div style={{ width: '100%', height: 12, background: activeTheme.border, borderRadius: 99, overflow: 'hidden', display: 'flex' }}>
+                 <div style={{ width: `${progress.completedPercentage}%`, background: activeTheme.badgeBg, height: '100%', borderRadius: 99 }} />
               </div>
             </div>
           </div>
           {/* Decorative graphic */}
-          <Target size={200} color="#F1F5F9" style={{ position: 'absolute', right: -30, top: -30, zIndex: 1 }} />
+          <Target size={200} color={activeTheme.badgeBg} style={{ position: 'absolute', right: -30, top: -30, zIndex: 1, opacity: 0.1 }} />
         </div>        {/* Tree Structure */}
         <div style={{ padding: '0' }}>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 900, color: '#000', marginBottom: '2rem' }}>Learning Path & Modules</h2>
