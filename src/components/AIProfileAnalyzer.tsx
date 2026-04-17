@@ -1,335 +1,366 @@
 'use client';
 
-import { UploadCloud, Cpu, Search, X, CheckCircle2, ArrowRight, Target, TrendingUp, Info, Award, BookOpen, Layers, Zap, Sparkles, User, HelpCircle, Compass } from "lucide-react"
-import { useState } from 'react'
+import { UploadCloud, Cpu, Search, X, CheckCircle2, ArrowRight, Target, TrendingUp, Info, Award, BookOpen, Layers, Zap, Sparkles, User, HelpCircle, Compass, Heart, Share2, ChevronRight, BarChart2 } from "lucide-react"
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 
+type ViewMode = 'explore' | 'journey';
 type Step = 'upload' | 'analyzing' | 'results';
 
-interface JourneyStep {
-  title: string;
-  duration: string;
-  status: 'completed' | 'current' | 'future';
-  description: string;
+interface Skill {
+  name: string;
+  status: 'mastered' | 'missing';
 }
 
-interface AIPath {
+interface PathNode {
+  role: string;
+  match: string;
+  tag?: string;
+}
+
+interface JourneyPath {
   id: string;
   title: string;
-  matchLevel: string;
-  matchScore: number;
   color: string;
-  statusBadge: string;
-  description: string;
-  rationale: string;
-  skillsFound: string[];
-  skillsToAcquire: string[];
-  journey: JourneyStep[];
-  image: string;
+  nodes: PathNode[];
 }
 
 export function AIProfileAnalyzer() {
   const [step, setStep] = useState<Step>('upload');
-  const [analyzingText, setAnalyzingText] = useState('Initializing Neural Engine...');
-  const [selectedPath, setSelectedPath] = useState<AIPath | null>(null);
-  const [results, setResults] = useState<AIPath[]>([]);
+  const [viewMode, setViewMode] = useState<ViewMode>('explore');
+  const [analyzingText, setAnalyzingText] = useState('Parsing resume...');
+  
+  const skills: Skill[] = [
+    { name: 'RPA (UiPath/AA)', status: 'mastered' },
+    { name: 'Architecture', status: 'mastered' },
+    { name: 'Stakeholder Mgmt', status: 'mastered' },
+    { name: 'Team Leadership', status: 'mastered' },
+    { name: 'Agile/PMP', status: 'mastered' },
+    { name: 'AI/ML Foundations', status: 'missing' },
+    { name: 'System Design', status: 'missing' },
+    { name: 'Cloud Architecture', status: 'missing' },
+    { name: 'Product Growth', status: 'missing' },
+  ];
 
-  // ADVANCED AI LOGIC: Maps specific resume traits to logical Hertz & Enterprise evolutions
-  const generatePaths = () => {
-    const paths: AIPath[] = [
-      {
-        id: '1',
-        title: 'Operations Excellence Manager',
-        matchLevel: 'HIGH MATCH',
-        matchScore: 96,
-        color: '#82C91E',
-        statusBadge: 'NEXT STEP',
-        image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=400&fit=crop',
-        description: 'Implementing global operational standards and lean efficiencies across North American stations.',
-        rationale: 'Your direct experience as a Management Trainee provides the ground-level insight needed to realistically audit and improve corporate SOPs.',
-        skillsFound: ['Field Leadership', 'Operational Discipline', 'Station Logistics'],
-        skillsToAcquire: ['Lean Six Sigma', 'P&L Strategy', 'Multi-Unit Oversight'],
-        journey: [
-          { title: 'Management Trainee', duration: 'Current', status: 'current', description: 'Frontline station operations and team leadership.' },
-          { title: 'Senior Station Manager', duration: '12 Months', status: 'future', description: 'Full P&L ownership of a Tier-1 airport hub.' },
-          { title: 'Operations Excellence Leader', duration: '3 Years', status: 'future', description: 'Directing regional process standardizations.' }
-        ]
-      },
-      {
-        id: '2',
-        title: 'Talent Development Specialist',
-        matchLevel: 'MEDIUM MATCH',
-        matchScore: 88,
-        color: '#F39C12',
-        statusBadge: 'FUTURE MOVE',
-        image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=400&fit=crop',
-        description: 'Designing and delivering training programs for the next generation of Hertz leaders.',
-        rationale: 'Your extensive background in tutoring and academic support maps perfectly to corporate training and people development roles.',
-        skillsFound: ['Educational Coaching', 'Public Speaking', 'Curriculum Execution'],
-        skillsToAcquire: ['Instructional Design', 'LMS Management', 'Performance Consulting'],
-        journey: [
-          { title: 'Management Trainee', duration: 'Current', status: 'current', description: 'Onboarding new hires at the counter.' },
-          { title: 'Regional Training Lead', duration: '18 Months', status: 'future', description: 'Facilitating MT onboarding and leadership workshops.' },
-          { title: 'Global L&D Director', duration: '5 Years', status: 'future', description: 'Shaping the workforce development strategy.' }
-        ]
-      },
-      {
-        id: '3',
-        title: 'Global Fleet Logistics Analyst',
-        matchLevel: 'HIGH MATCH',
-        matchScore: 91,
-        color: '#E74C3C',
-        statusBadge: 'FUTURE MOVE',
-        image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=400&fit=crop',
-        description: 'Utilizing data to optimize vehicle utilization, lifecycle, and readiness metrics globally.',
-        rationale: 'Your "Success in fast-paced environments" and experience with vehicle prep mapping makes you highly suited for fleet analytics.',
-        skillsFound: ['Inventory Management', 'Utilization Tracking', 'High-Pressure Decisioning'],
-        skillsToAcquire: ['SQL / Data Science', 'Predictive Modeling', 'Asset Lifecycle Tech'],
-        journey: [
-          { title: 'Management Trainee', duration: 'Current', status: 'current', description: 'Managing daily vehicle readiness and prep.' },
-          { title: 'Fleet Logistics Specialist', duration: '2 Years', status: 'future', description: 'Optimizing fleet allocation in local markers.' },
-          { title: 'Global Fleet Strategist', duration: '4 Years', status: 'future', description: 'Managing the $1B+ North American asset lifecycle.' }
-        ]
-      },
-      {
-        id: '4',
-        title: 'Global Sales & Solutions Lead',
-        matchLevel: 'WILD CARD',
-        matchScore: 74,
-        color: '#8E44AD',
-        statusBadge: 'WILD CARD',
-        image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=400&fit=crop',
-        description: 'Developing mobility solutions and strategic accounts for enterprise-level clients.',
-        rationale: 'Your ability to "keep teams engaged and focused" translates to strong client relationship management and solutions selling.',
-        skillsFound: ['Performance Coaching', 'Conflict Management', 'Customer Relationship Drive'],
-        skillsToAcquire: ['Solution Selling', 'Account Strategy', 'Negotiation Mastery'],
-        journey: [
-          { title: 'Management Trainee', duration: 'Current', status: 'current', description: 'Driving ancillary sales at the counter.' },
-          { title: 'Account Executive', duration: '12 Months', status: 'future', description: 'Managing mid-sized regional corporate accounts.' },
-          { title: 'Global Sales Director', duration: '6 Years', status: 'future', description: 'Directing the enterprise mobility sales division.' }
-        ]
-      }
-    ];
-    setResults(paths);
-  };
+  const journeys: JourneyPath[] = [
+    {
+      id: 'desired',
+      title: 'Desired Path',
+      color: '#FF5A3C',
+      nodes: [
+        { role: 'RPA Solution Architect', match: '15/15' },
+        { role: 'AI Automation Lead', match: '12/15', tag: 'Leadership Role' },
+        { role: 'Head of Intelligent Auto', match: '9/15', tag: 'Leadership Role' },
+        { role: 'Head of Engineering', match: '7/15', tag: 'Executive' },
+        { role: 'CTO', match: '5/15', tag: 'Ultimate Goal' }
+      ]
+    },
+    {
+      id: 'popular',
+      title: 'Popular Path',
+      color: '#00C2A8',
+      nodes: [
+        { role: 'RPA Solution Architect', match: '15/15' },
+        { role: 'Engineering Manager', match: '11/15' },
+        { role: 'Sr. Engineering Manager', match: '8/15' },
+        { role: 'VP Engineering', match: '6/15' },
+        { role: 'CTO', match: '5/15' }
+      ]
+    },
+    {
+      id: 'promoted',
+      title: 'Promoted Lane (Cross Domain)',
+      color: '#3B82F6',
+      nodes: [
+        { role: 'RPA Solution Architect', match: '15/15' },
+        { role: 'Data Analyst', match: '8/15' },
+        { role: 'AI Engineer', match: '6/15' },
+        { role: 'AI Architect', match: '4/15' },
+        { role: 'CTO', match: '5/15' }
+      ]
+    }
+  ];
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setStep('analyzing');
-      const filename = e.target.files[0].name;
-      setTimeout(() => setAnalyzingText(`Analyzing Resume: ${filename}...`), 800);
-      setTimeout(() => setAnalyzingText('Extracting Management Trainee Competencies...'), 1600);
-      setTimeout(() => setAnalyzingText('Mapping Tutoring Experience to Talent Roles...'), 2400);
-      setTimeout(() => setAnalyzingText('Cross-Referencing Fleet Operations Data...'), 3200);
-      setTimeout(() => {
-        generatePaths();
-        setStep('results');
-      }, 4000);
+      setTimeout(() => setAnalyzingText('Analyzing 10+ years experience...'), 800);
+      setTimeout(() => setAnalyzingText('Identifying RPA & Architecture strengths...'), 1600);
+      setTimeout(() => setAnalyzingText('Calculating Executive Trajectory...'), 2400);
+      setTimeout(() => setStep('results'), 3500);
     }
-  };
-
-  const triggerUpload = () => {
-    const input = document.getElementById('resume-upload') as HTMLInputElement;
-    if (input) input.click();
   };
 
   if (step === 'upload') {
     return (
-      <div 
-        onClick={triggerUpload}
-        style={{ padding: '6rem 3rem', background: '#fff', border: '3px dashed #F1F5F9', borderRadius: 48, textAlign: 'center', cursor: 'pointer', transition: 'all 0.3s', boxShadow: '0 10px 40px rgba(0,0,0,0.02)' }}
-      >
-        <input type="file" id="resume-upload" hidden onChange={handleFileSelect} accept=".pdf,.doc,.docx" />
-        <div style={{ width: 100, height: 100, background: '#000', borderRadius: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 2.5rem', boxShadow: '0 15px 45px rgba(0,0,0,0.2)' }}>
-          <Sparkles size={40} color="#FFC900" />
+      <div className="max-w-4xl mx-auto mt-20">
+        <div 
+          onClick={() => document.getElementById('resume-upload')?.click()}
+          className="bg-white border-2 border-dashed border-gray-200 rounded-[48px] p-20 text-center cursor-pointer hover:border-[#FF5A3C] transition-all group shadow-xl shadow-gray-200/50"
+        >
+          <input type="file" id="resume-upload" hidden onChange={handleFileSelect} accept=".pdf,.doc,.docx" />
+          <div className="w-24 h-24 bg-[#FF5A3C] rounded-[32px] flex items-center justify-center mx-auto mb-10 shadow-lg shadow-[#FF5A3C]33 group-hover:scale-110 transition-transform">
+            <UploadCloud size={48} color="white" />
+          </div>
+          <h2 className="text-4xl font-black text-gray-900 mb-4 tracking-tight">Upload Your Resume</h2>
+          <p className="text-xl text-gray-500 font-medium mb-12 max-w-lg mx-auto">
+            Let AI map your journey from RPA Architect to CTO in 3–5 years.
+          </p>
+          <button className="bg-[#FF5A3C] text-white px-12 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-[#FF5A3C]44 transition-all">
+            Analyze My Trajectory
+          </button>
         </div>
-        <h2 style={{ fontSize: '2.25rem', fontWeight: 950, color: '#000', marginBottom: '0.75rem', letterSpacing: '-0.03em' }}>Generate Future Moves</h2>
-        <p style={{ color: '#64748B', fontSize: '1.1rem', fontWeight: 600, margin: '0 auto 3.5rem', maxWidth: 450 }}>Upload your resume to reveal your intelligent career tree based on your skills and trajectory.</p>
-        <button style={{ background: '#FFC900', color: '#000', border: 'none', padding: '1.25rem 3.5rem', borderRadius: 20, fontWeight: 950, fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.12em' }}>Identify Opportunities</button>
       </div>
     );
   }
 
   if (step === 'analyzing') {
     return (
-      <div style={{ padding: '8rem 3rem', background: '#fff', borderRadius: 48, border: '1px solid #F1F5F9', textAlign: 'center' }}>
-        <div style={{ position: 'relative', width: 120, height: 120, margin: '0 auto 3rem' }}>
-          <div style={{ position: 'absolute', inset: 0, border: '6px solid #F8FAFC', borderRadius: '50%' }} />
-          <div style={{ position: 'absolute', inset: 0, border: '6px solid #000', borderRadius: '50%', borderTopColor: 'transparent', animation: 'spin 1s linear infinite' }} />
-          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-             <Cpu size={50} color="#000" />
+      <div className="max-w-4xl mx-auto mt-40 text-center">
+        <div className="relative w-32 h-32 mx-auto mb-10">
+          <div className="absolute inset-0 border-8 border-gray-100 rounded-full"></div>
+          <div className="absolute inset-0 border-8 border-[#FF5A3C] rounded-full border-t-transparent animate-spin"></div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Cpu size={48} className="text-gray-900" />
           </div>
         </div>
-        <h3 style={{ fontSize: '1.75rem', fontWeight: 950, color: '#000', marginBottom: '0.75rem' }}>AI Neural Analysis...</h3>
-        <p style={{ color: '#64748B', fontWeight: 800, fontSize: '1.1rem' }}>{analyzingText}</p>
+        <h3 className="text-3xl font-black text-gray-900 mb-4">Neural Strategy Map</h3>
+        <p className="text-xl text-gray-500 font-bold animate-pulse">{analyzingText}</p>
       </div>
     );
   }
 
-  if (step === 'results') {
-    return (
-      <div style={{ background: '#F8F9FA', minHeight: '100vh', paddingBottom: '10rem', width: '100%' }}>
-        
-        {/* TOP NAV BANNER */}
-        <div style={{ position: 'relative', width: '100%', height: 200, overflow: 'hidden', borderRadius: 24, marginBottom: '4rem', background: '#fff', borderBottom: '1px solid #E5E7EB' }}>
-           <div style={{ position: 'absolute', left: 40, bottom: 40, display: 'flex', alignItems: 'center', gap: '3rem' }}>
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                 <p style={{ fontSize: '1.25rem', fontWeight: 950, color: '#000', margin: 0, letterSpacing: '0.02em', textTransform: 'uppercase' }}>OPPORTUNITIES CURATED<br/>FOR YOU.</p>
-              </div>
-           </div>
-           
-           {/* Profile Bubble on Right */}
-           <div style={{ position: 'absolute', right: 40, top: '50%', transform: 'translateY(-50%)', background: '#fff', padding: '1rem 2rem', borderRadius: 20, display: 'flex', alignItems: 'center', gap: '1.5rem', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', border: '1px solid #F1F5F9' }}>
-              <div style={{ textAlign: 'right' }}>
-                 <p style={{ fontSize: '1.1rem', fontWeight: 900, color: '#000', margin: 0 }}>Strategic Profile</p>
-                 <p style={{ fontSize: '0.7rem', color: '#6B7280', margin: '0.1rem 0', fontWeight: 700 }}>Analysis complete based on your resume</p>
-                 <button style={{ background: 'none', border: 'none', color: '#007AFF', fontSize: '0.7rem', fontWeight: 800, padding: 0, cursor: 'pointer' }}>Refine Talent Data</button>
-              </div>
-              <div style={{ width: 56, height: 56, borderRadius: '50%', border: '3px solid #FFC900', overflow: 'hidden' }}>
-                 <Image src="/ram_profile.png" alt="Profile" width={56} height={56} style={{ objectFit: 'cover' }} />
-              </div>
-           </div>
+  return (
+    <div className="min-h-screen bg-[#F5F7FA] pb-20">
+      
+      {/* Sub Header / Tab Bar */}
+      <div className="bg-white border-b border-gray-100 px-8 py-4 sticky top-20 z-40 flex items-center justify-center">
+        <div className="flex bg-gray-100 p-1.5 rounded-2xl border border-gray-100">
+           <button 
+            onClick={() => setViewMode('explore')}
+            className={`px-8 py-3 rounded-xl text-sm font-black transition-all ${viewMode === 'explore' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-800'}`}
+           >
+            Explore Future Moves
+           </button>
+           <button 
+            onClick={() => setViewMode('journey')}
+            className={`px-8 py-3 rounded-xl text-sm font-black transition-all ${viewMode === 'journey' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-800'}`}
+           >
+            Career Journey
+           </button>
         </div>
+      </div>
 
-        <div style={{ textAlign: 'center', maxWidth: 1400, margin: '0 auto', padding: '0 2rem' }}>
-           <h1 style={{ fontSize: '2.5rem', fontWeight: 700, color: '#4B5563', marginBottom: '8rem', letterSpacing: '-0.02em' }}>Explore Future Moves</h1>
+      <div className="container mx-auto px-8 py-12">
+        {viewMode === 'explore' ? (
+          <div className="animate-in fade-in duration-500">
+            <div className="text-center mb-20">
+               <h1 className="text-5xl font-black text-gray-900 mb-4 tracking-tight">Explore Future Moves</h1>
+               <p className="text-xl text-gray-500 font-semibold">Strategic transitions calculated for your RPA mastery.</p>
+            </div>
 
-           {/* TREE STRUCTURE ROOT SECTION */}
-           <div style={{ position: 'relative', marginBottom: '14rem', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: '10rem' }}>
-              
-              {/* NEXT STEP (Left) */}
-              <div style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}>
-                 <div style={{ width: 90, height: 90, borderRadius: '50%', margin: '0 auto 1rem', border: '4px solid #82C91E', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 10px 25px rgba(130,201,30,0.1)' }}>
-                    <HelpCircle size={40} color="#82C91E" />
-                 </div>
-                 <span style={{ background: '#82C91E', color: '#fff', fontSize: '0.65rem', fontWeight: 950, padding: '0.35rem 0.8rem', borderRadius: 6, position: 'absolute', top: 75, left: '50%', transform: 'translateX(-50%)', whiteSpace: 'nowrap' }}>NEXT STEP</span>
-                 <p style={{ fontSize: '0.8rem', fontWeight: 800, color: '#007AFF', marginTop: '2rem', cursor: 'pointer' }}>Suggested Moves<br/>Internal Growth</p>
-              </div>
+            {/* Top Node Flow */}
+            <div className="relative flex justify-center items-start gap-32 mb-32">
+               {/* Left: Next Step */}
+               <div className="text-center relative z-10 w-64 group">
+                  <div className="w-24 h-24 bg-white border-4 border-[#00C2A8] rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-[#00C2A8]11 group-hover:scale-110 transition-transform">
+                     <Target size={40} className="text-[#00C2A8]" />
+                  </div>
+                  <span className="bg-[#00C2A8] text-white text-[10px] font-black px-3 py-1 rounded-md tracking-wider uppercase mb-3 inline-block">Next Step</span>
+                  <h4 className="text-xl font-black text-gray-900 mb-1 leading-tight">AI Automation Lead</h4>
+                  <p className="text-sm text-gray-500 font-bold">Suggested Move</p>
+               </div>
 
-              {/* YOU TODAY (Center) */}
-              <div style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}>
-                 <div style={{ width: 130, height: 130, borderRadius: '50%', margin: '0 auto 1.5rem', border: '5px solid #fff', boxShadow: '0 15px 40px rgba(0,0,0,0.08)', position: 'relative', overflow: 'hidden' }}>
-                    <Image src="/ram_profile.png" alt="You" width={130} height={130} style={{ objectFit: 'cover' }} />
-                 </div>
-                 <p style={{ fontSize: '0.65rem', fontWeight: 950, color: '#9CA3AF', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '0.2rem' }}>YOU TODAY</p>
-                 <p style={{ fontSize: '1rem', fontWeight: 800, color: '#374151' }}>Management Trainee</p>
-              </div>
+               {/* Center: You Today */}
+               <div className="text-center relative z-10 w-80">
+                  <div className="w-32 h-32 bg-white p-1 rounded-full border-4 border-[#FF5A3C] mx-auto mb-6 shadow-2xl shadow-[#FF5A3C]22">
+                     <div className="w-full h-full rounded-full overflow-hidden">
+                        <Image src="/ram_profile.png" width={128} height={128} alt="You" className="object-cover" />
+                     </div>
+                  </div>
+                  <span className="bg-[#FF5A3C] text-white text-[10px] font-black px-3 py-1 rounded-md tracking-wider uppercase mb-3 inline-block">You Today</span>
+                  <h4 className="text-2xl font-black text-gray-900 mb-1 leading-tight">RPA Solution Architect</h4>
+                  <p className="text-sm text-gray-500 font-bold">10+ Years Experience</p>
+               </div>
 
-              {/* FUTURE MOVE (Right) */}
-              <div style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}>
-                 <div style={{ width: 90, height: 90, borderRadius: '50%', margin: '0 auto 1rem', border: '4px solid #E67E22', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 10px 25px rgba(230,126,34,0.1)' }}>
-                    <Compass size={40} color="#E67E22" />
-                 </div>
-                 <span style={{ background: '#E67E22', color: '#fff', fontSize: '0.65rem', fontWeight: 950, padding: '0.35rem 0.8rem', borderRadius: 6, position: 'absolute', top: 75, left: '50%', transform: 'translateX(-50%)', whiteSpace: 'nowrap' }}>FUTURE MOVE</span>
-                 <p style={{ fontSize: '0.8rem', fontWeight: 800, color: '#007AFF', marginTop: '2rem', cursor: 'pointer' }}>Strategic Long-Term<br/>Journey</p>
-              </div>
+               {/* Right: Future Move */}
+               <div className="text-center relative z-10 w-64 group">
+                  <div className="w-24 h-24 bg-white border-4 border-[#6C63FF] rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-[#6C63FF]11 group-hover:scale-110 transition-transform">
+                     <Award size={40} className="text-[#6C63FF]" />
+                  </div>
+                  <span className="bg-[#6C63FF] text-white text-[10px] font-black px-3 py-1 rounded-md tracking-wider uppercase mb-3 inline-block">Future Move</span>
+                  <h4 className="text-xl font-black text-gray-900 mb-1 leading-tight">CTO / Head of Eng</h4>
+                  <p className="text-sm text-gray-500 font-bold">Target Role</p>
+               </div>
 
-              {/* BRANCHING LINES - PRECISE SVG */}
-              <div style={{ position: 'absolute', left: '50%', top: '100px', transform: 'translateX(-50%)', width: '1000px', height: '220px', pointerEvents: 'none' }}>
-                 <svg width="1000" height="220" viewBox="0 0 1000 220" fill="none">
-                    <path d="M500 30 C500 120, 125 120, 125 220" stroke="#CBD5E1" strokeWidth="3" strokeDasharray="8 8" />
-                    <path d="M500 30 C500 120, 375 120, 375 220" stroke="#CBD5E1" strokeWidth="3" strokeDasharray="8 8" />
-                    <path d="M500 30 C500 120, 625 120, 625 220" stroke="#CBD5E1" strokeWidth="3" strokeDasharray="8 8" />
-                    <path d="M500 30 C500 120, 875 120, 875 220" stroke="#CBD5E1" strokeWidth="3" strokeDasharray="8 8" />
-                 </svg>
-              </div>
-           </div>
+               {/* SVG Lines */}
+               <div className="absolute left-0 top-12 w-full h-12 pointer-events-none opacity-30">
+                  <svg width="100%" height="60" className="path-line">
+                    <path d="M400 30 Q500 30, 600 30" stroke="#CBD5E1" strokeWidth="4" strokeDasharray="10 10" fill="none" />
+                    <path d="M600 30 Q700 30, 800 30" stroke="#CBD5E1" strokeWidth="4" strokeDasharray="10 10" fill="none" />
+                  </svg>
+               </div>
+            </div>
 
-           {/* RESULTS GRID - DYNAMIC BASED ON RESUME */}
-           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2.5rem', marginBottom: '10rem' }}>
-              {results.map((path) => (
-                <div key={path.id} onClick={() => setSelectedPath(path)} style={{ cursor: 'pointer', textAlign: 'center' }}>
-                   
-                   <div style={{ display: 'inline-block', background: path.color, color: '#fff', fontSize: '0.65rem', fontWeight: 950, padding: '0.35rem 1rem', borderRadius: 6, marginBottom: '1.25rem', boxShadow: `0 8px 20px ${path.color}33` }}>
-                      {path.matchLevel}
-                   </div>
-                   
-                   <div className="card-hover" style={{ background: '#fff', borderRadius: 24, padding: '2.5rem 1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid #E5E7EB', boxShadow: '0 4px 20px rgba(0,0,0,0.02)', position: 'relative', height: 440 }}>
-                      <p style={{ position: 'absolute', top: 20, left: 24, fontSize: '0.6rem', color: '#9CA3AF', fontWeight: 950, textTransform: 'uppercase', letterSpacing: '0.1em' }}>JOURNEY</p>
-                      <div style={{ position: 'absolute', top: 20, right: 24, width: 32, height: 32, borderRadius: '50%', background: '#F9FAFB', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#D1D5DB' }}>
-                         <Search size={16} />
-                      </div>
+            {/* Cards Grid */}
+            <div className="flex flex-wrap justify-center gap-8 relative z-10">
+               {/* Card 1 */}
+               <div className="bg-white rounded-[40px] p-10 w-80 shadow-xl border border-gray-100 hover:scale-105 transition-transform">
+                  <div className="bg-[#00C2A8] text-white text-[10px] font-black px-4 py-1.5 rounded-lg inline-block mb-6 uppercase tracking-widest">High Match</div>
+                  <h5 className="text-2xl font-black text-gray-900 mb-4 leading-tight">Intelligent Automation Architect</h5>
+                  <p className="text-[#64748B] font-semibold text-sm mb-10 leading-relaxed">Advanced automation architecture with AI integration & ML deployment.</p>
+                  <button className="w-full bg-[#00C2A8] text-white py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:brightness-110 transition-all">Next Step</button>
+               </div>
 
-                      <div style={{ width: 140, height: 140, borderRadius: '50%', overflow: 'hidden', margin: '2rem 0', border: '1px solid #F1F5F9', padding: '6px' }}>
-                         <Image src={path.image} alt={path.title} width={140} height={140} style={{ borderRadius: '50%', objectFit: 'cover' }} />
-                      </div>
-                      
-                      <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#374151', margin: '0 0 2rem 0', minHeight: '3.5rem', lineHeight: 1.2 }}>{path.title}</h4>
-                      
-                      <div style={{ marginTop: 'auto', width: '100%', paddingTop: '1.5rem', borderTop: '1px solid #F9FAFB' }}>
-                         <span style={{ background: path.color, color: '#fff', fontSize: '0.65rem', fontWeight: 950, padding: '0.4rem 1.25rem', borderRadius: 6, textTransform: 'uppercase' }}>{path.statusBadge}</span>
-                      </div>
-                   </div>
-                </div>
-              ))}
-           </div>
-        </div>
+               {/* Card 2 */}
+               <div className="bg-white rounded-[40px] p-10 w-80 shadow-xl border border-gray-100 hover:scale-105 transition-transform">
+                  <div className="bg-[#F39C12] text-white text-[10px] font-black px-4 py-1.5 rounded-lg inline-block mb-6 uppercase tracking-widest">Medium Match</div>
+                  <h5 className="text-2xl font-black text-gray-900 mb-4 leading-tight">Technical Program Manager</h5>
+                  <p className="text-[#64748B] font-semibold text-sm mb-10 leading-relaxed">Manage large-scale automation & digital transformation programs for enterprise.</p>
+                  <button className="w-full border-2 border-[#F39C12] text-[#F39C12] py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-[#F39C12] hover:text-white transition-all">Explore</button>
+               </div>
 
-        {/* Modal: Same as before but with better styling */}
-        {selectedPath && (
-          <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(15px)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-             <div style={{ background: '#fff', width: '100%', maxWidth: 1000, maxHeight: '90vh', borderRadius: 40, overflowY: 'auto', position: 'relative', animation: 'slideUp 0.3s ease-out' }}>
-                <button onClick={() => setSelectedPath(null)} style={{ position: 'absolute', top: '2rem', right: '2rem', width: 48, height: 48, borderRadius: '50%', background: '#F3F4F6', border: 'none', cursor: 'pointer', zIndex: 10 }}><X /></button>
-                
-                <div style={{ background: '#000', padding: '4rem', color: '#fff' }}>
-                   <div style={{ display: 'flex', alignItems: 'center', gap: '3rem' }}>
-                      <div style={{ width: 140, height: 140, borderRadius: 32, overflow: 'hidden', border: `4px solid ${selectedPath.color}` }}>
-                         <Image src={selectedPath.image} alt="Path" width={140} height={140} style={{ objectFit: 'cover' }} />
-                      </div>
-                      <div>
-                         <span style={{ fontSize: '0.8rem', fontWeight: 900, color: selectedPath.color, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Resume Synthesis Engine</span>
-                         <h2 style={{ fontSize: '3rem', fontWeight: 900, margin: '0.5rem 0' }}>{selectedPath.title}</h2>
-                         <p style={{ color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>Skill-Match Sync: {selectedPath.matchScore}%</p>
-                      </div>
-                   </div>
-                </div>
+               {/* Card 3 */}
+               <div className="bg-white rounded-[40px] p-10 w-80 shadow-xl border border-gray-100 hover:scale-105 transition-transform">
+                  <div className="bg-[#FF5A3C] text-white text-[10px] font-black px-4 py-1.5 rounded-lg inline-block mb-6 uppercase tracking-widest">High Match</div>
+                  <h5 className="text-2xl font-black text-gray-900 mb-4 leading-tight">Engineering Manager (Automation)</h5>
+                  <p className="text-[#64748B] font-semibold text-sm mb-10 leading-relaxed">Lead scalable automation teams and define the platform architecture.</p>
+                  <button className="w-full bg-[#FF5A3C] text-white py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:brightness-110 transition-all">Next Step</button>
+               </div>
 
-                <div style={{ padding: '4rem' }}>
-                   <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '5rem' }}>
-                      <div>
-                         <h3 style={{ fontSize: '1.5rem', fontWeight: 900, marginBottom: '3rem', display: 'flex', alignItems: 'center', gap: '1rem' }}><TrendingUp /> Personalized Progression</h3>
-                         <div style={{ position: 'relative', paddingLeft: '4rem' }}>
-                            <div style={{ position: 'absolute', left: 16, top: 10, bottom: 10, width: 2, background: '#E5E7EB' }} />
-                            {selectedPath.journey.map((s, i) => (
-                               <div key={i} style={{ marginBottom: '4rem', position: 'relative' }}>
-                                  <div style={{ position: 'absolute', left: -36, top: 0, width: 44, height: 44, borderRadius: '50%', background: s.status === 'current' ? '#000' : '#fff', border: '3px solid #E5E7EB', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                     {s.status === 'current' ? <Award size={24} color="#FFC900" /> : <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#D1D5DB' }} />}
+               {/* Card 4 */}
+               <div className="bg-white rounded-[40px] p-10 w-80 shadow-xl border border-gray-100 hover:scale-105 transition-transform">
+                  <div className="bg-[#6C63FF] text-white text-[10px] font-black px-4 py-1.5 rounded-lg inline-block mb-6 uppercase tracking-widest">Wild Card</div>
+                  <h5 className="text-2xl font-black text-gray-900 mb-4 leading-tight">AI Engineer / Data Engineer</h5>
+                  <p className="text-[#64748B] font-semibold text-sm mb-10 leading-relaxed">Pivotal transition into Core AI/ML domain leveraging your logic skills.</p>
+                  <button className="w-full bg-[#6C63FF] text-white py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:brightness-110 transition-all">Explore</button>
+               </div>
+            </div>
+          </div>
+        ) : (
+          <div className="animate-in slide-in-from-right duration-500 flex gap-12">
+            
+            {/* Left Main Pillar: Journey Paths */}
+            <div className="flex-1">
+               <div className="mb-12">
+                  <h1 className="text-4xl font-black text-gray-900 mb-2">Recommended for you</h1>
+                  <p className="text-lg text-gray-500 font-bold">Based on your profile and skills (RPA Solution Architect)</p>
+               </div>
+
+               <div className="space-y-12">
+                  {journeys.map((path) => (
+                    <div key={path.id} className="relative">
+                       <div className="flex items-center gap-4 mb-6">
+                          <div className="w-3 h-8 rounded-full" style={{ backgroundColor: path.color }}></div>
+                          <h3 className="text-xl font-black text-gray-900">{path.title}</h3>
+                       </div>
+
+                       <div className="flex items-stretch gap-6 overflow-x-auto pb-6">
+                          {path.nodes.map((node, i) => (
+                            <div key={i} className="flex items-center gap-6 flex-shrink-0">
+                               <div className="bg-white rounded-[32px] p-8 min-w-[280px] shadow-lg border border-gray-50 hover:border-gray-200 transition-all group relative">
+                                  <div className="flex justify-between items-start mb-6">
+                                     <div className="text-[10px] font-black text-[#FF5A3C] uppercase tracking-wider">{node.match} Skills</div>
+                                     <Heart size={18} className="text-gray-200 hover:text-[#FF5A3C] cursor-pointer transition-colors" />
                                   </div>
-                                  <h4 style={{ fontSize: '1.2rem', fontWeight: 900, margin: '0 0 0.5rem 0' }}>{s.title}</h4>
-                                  <p style={{ color: '#6B7280', fontSize: '0.95rem', lineHeight: 1.5 }}>{s.description}</p>
+                                  <h4 className="text-xl font-bold text-gray-900 mb-2 leading-tight">{node.role}</h4>
+                                  {node.tag && (
+                                    <div className="flex items-center gap-2 mt-4">
+                                       <div className="w-1.5 h-1.5 rounded-full bg-gray-400"></div>
+                                       <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{node.tag}</span>
+                                    </div>
+                                  )}
                                </div>
-                            ))}
-                         </div>
-                      </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
-                         <div style={{ background: '#F9FAFB', padding: '2.5rem', borderRadius: 32 }}>
-                            <h4 style={{ fontWeight: 900, marginBottom: '1rem' }}>AI Skill Rationale</h4>
-                            <p style={{ color: '#4B5563', lineHeight: 1.6 }}>{selectedPath.rationale}</p>
-                         </div>
-                         <div style={{ background: '#000', color: '#fff', padding: '2.5rem', borderRadius: 32 }}>
-                            <h4 style={{ fontWeight: 900, marginBottom: '1.5rem', color: '#FFC900' }}>Skills Detected from Resume</h4>
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                               {selectedPath.skillsFound.map(sk => <span key={sk} style={{ padding: '0.4rem 1rem', background: 'rgba(255,255,255,0.1)', borderRadius: 8, fontSize: '0.8rem', fontWeight: 700 }}>{sk}</span>)}
+                               {i < path.nodes.length - 1 && (
+                                 <div className="text-gray-300">
+                                    <ChevronRight size={32} />
+                                 </div>
+                               )}
                             </div>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-             </div>
+                          ))}
+                       </div>
+                    </div>
+                  ))}
+               </div>
+            </div>
+
+            {/* Right Side Panel: Analysis */}
+            <div className="w-[400px] flex flex-shrink-0 flex-col gap-8 sticky top-48 h-fit">
+               {/* Analysis Card */}
+               <div className="bg-white rounded-[40px] p-10 shadow-xl border border-gray-50">
+                  <div className="flex items-center gap-4 mb-8">
+                     <div className="w-12 h-12 bg-[#FF5A3C]11 rounded-2xl flex items-center justify-center">
+                        <BarChart2 className="text-[#FF5A3C]" />
+                     </div>
+                     <h4 className="text-xl font-black text-gray-900 m-0">Skill Gap Analysis</h4>
+                  </div>
+                  
+                  <div className="space-y-6">
+                     <div>
+                        <div className="flex justify-between mb-2">
+                           <span className="text-sm font-bold text-gray-700">RPA Mastery</span>
+                           <span className="text-sm font-black text-[#00C2A8]">100%</span>
+                        </div>
+                        <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+                           <div className="h-full bg-[#00C2A8] w-full"></div>
+                        </div>
+                     </div>
+                     <div>
+                        <div className="flex justify-between mb-2">
+                           <span className="text-sm font-bold text-gray-700">Cloud Architecture</span>
+                           <span className="text-sm font-black text-[#FF5A3C]">40%</span>
+                        </div>
+                        <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+                           <div className="h-full bg-[#FF5A3C] w-[40%] transition-all duration-1000"></div>
+                        </div>
+                     </div>
+                     <div>
+                        <div className="flex justify-between mb-2">
+                           <span className="text-sm font-bold text-gray-700">AI/ML Strategy</span>
+                           <span className="text-sm font-black text-gray-300">10%</span>
+                        </div>
+                        <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+                           <div className="h-full bg-gray-300 w-[10%]"></div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div className="mt-10 pt-10 border-t border-gray-50">
+                     <h5 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-6">Recommended Learning</h5>
+                     <div className="space-y-4">
+                        {['Python for AI (Stanford)', 'Cloud Native Cert', 'Product Leadership'].map((course, i) => (
+                           <div key={i} className="flex items-center gap-4 p-4 hover:bg-gray-50 rounded-2xl transition-colors cursor-pointer group">
+                              <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center group-hover:bg-white border border-transparent group-hover:border-gray-200">
+                                 <BookOpen size={18} className="text-gray-400 group-hover:text-[#FF5A3C]" />
+                              </div>
+                              <span className="text-sm font-bold text-gray-700">{course}</span>
+                           </div>
+                        ))}
+                     </div>
+                  </div>
+               </div>
+
+               {/* Salary Card */}
+               <div className="bg-[#1A1D23] rounded-[40px] p-10 text-white shadow-2xl relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#FF5A3C] rounded-full blur-[80px] opacity-20"></div>
+                  <h4 className="text-lg font-bold text-gray-400 mb-2 uppercase tracking-widest">Est. CTO Salary</h4>
+                  <div className="text-5xl font-black mb-6 tracking-tight">$320k - $450k</div>
+                  <div className="flex items-center gap-2 text-[#00C2A8] font-bold">
+                     <TrendingUp size={20} />
+                     <span>+45% Career Growth</span>
+                  </div>
+               </div>
+            </div>
+
           </div>
         )}
-
-        <style jsx>{`
-          .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
-            border-color: #D1D5DB;
-          }
-          @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        `}</style>
       </div>
-    );
-  }
 
-  return null;
+      <style jsx>{`
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .animate-spin { animation: spin 1.5s linear infinite; }
+        .path-line { filter: drop-shadow(0 0 10px rgba(0,0,0,0.05)); }
+      `}</style>
+    </div>
+  );
 }

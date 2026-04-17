@@ -1,120 +1,130 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import Image from 'next/image'
-import { usePathname } from 'next/navigation'
-import { useState, useRef, useEffect } from 'react'
-import { Sparkles, ChevronDown, User, BarChart3, ShieldCheck, LogOut } from 'lucide-react'
-
-const mainLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/your-move', label: 'Your Move' },
-  { href: '/career-tree', label: 'Journeys' },
-  { href: '/mentors', label: 'Mentors' },
-  { href: '/learn', label: 'Learn' },
-  { href: '/jobs', label: 'Careers' },
-  { href: '/skills', label: 'Skills' },
-]
-
-const userMenuItems = [
-  { href: '/profile', label: 'My Profile', icon: User },
-  { href: '/dashboard', label: 'My Dashboard', icon: BarChart3 },
-  { href: '/manager', label: 'Manager View', icon: ShieldCheck },
-  { href: '/admin', label: 'Admin Console', icon: ShieldCheck },
-]
+import { TrendingUp, User, Bell, Search, Menu, Map, Briefcase, BookOpen, Users, Zap, Compass, ChevronDown, Sparkles, LogOut, BarChart3, ShieldCheck } from "lucide-react";
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { useState, useRef, useEffect } from 'react';
 
 export function NavBar() {
-  const pathname = usePathname()
-  const [menuOpen, setMenuOpen] = useState(false)
-  const menuRef = useRef<HTMLDivElement>(null)
+  const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false)
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false);
     }
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
-  }, [])
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
+
+  const mainLinks = [
+    { name: 'Home', href: '/dashboard', icon: TrendingUp },
+    { name: 'Journeys', href: '/your-move', icon: Compass },
+    { name: 'Skills', href: '#', icon: Zap },
+    { name: 'Mentors', href: '#', icon: Users },
+    { name: 'Learn', href: '#', icon: BookOpen },
+  ];
 
   return (
-    <nav style={{ background: '#fff', borderBottom: '1px solid #F1F5F9', height: 64, display: 'flex', alignItems: 'center', position: 'sticky', top: 0, zIndex: 100, boxShadow: '0 1px 0 rgba(0,0,0,0.06)' }}>
-      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '100%' }}>
-
-        {/* Brand */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', textDecoration: 'none', flexShrink: 0 }}>
-          <div style={{ width: 36, height: 36, background: '#FFD100', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1.05rem', color: '#000', fontStyle: 'italic' }}>H</div>
-          <span style={{ fontWeight: 900, fontSize: '0.95rem', letterSpacing: '-0.03em', textTransform: 'uppercase', color: '#000', whiteSpace: 'nowrap' }}>
-            Hertz <span style={{ color: '#FFD100' }}>Career</span>
-          </span>
-        </Link>
-
-        {/* Nav links */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.75rem' }}>
-          {mainLinks.map(link => {
-            const active = pathname === link.href
-            return (
-              <Link key={link.href} href={link.href} style={{
-                color: active ? '#000' : '#6B7280',
-                fontWeight: active ? 800 : 600,
-                fontSize: '0.82rem',
-                textDecoration: 'none',
-                textTransform: 'uppercase',
-                letterSpacing: '0.06em',
-                borderBottom: active ? '2px solid #FFD100' : '2px solid transparent',
-                paddingBottom: '2px',
-                transition: 'all 0.15s',
-                whiteSpace: 'nowrap',
-              }}>
-                {link.label}
-              </Link>
-            )
-          })}
+    <nav className="sticky top-0 z-[100] bg-white border-b border-gray-100 px-8 h-20 flex items-center justify-between shadow-sm">
+      {/* Brand */}
+      <Link href="/dashboard" className="flex items-center gap-3 decoration-none no-underline">
+        <div className="w-10 h-10 bg-[#FF5A3C] rounded-xl flex items-center justify-center shadow-lg shadow-[#FF5A3C]44">
+          <TrendingUp size={24} color="white" />
         </div>
+        <div>
+          <h1 className="text-xl font-bold text-gray-900 tracking-tight m-0 leading-none">Career Coaching</h1>
+          <p className="text-[10px] font-bold text-[#FF5A3C] uppercase tracking-[0.2rem] m-0 mt-1">AI Growth Platform</p>
+        </div>
+      </Link>
 
-        {/* Right side */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
-          {/* Advisor pill */}
-          <Link href="/advisor" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: '#000', color: '#FFD100', padding: '0.45rem 1.1rem', borderRadius: 999, fontWeight: 800, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.08em', textDecoration: 'none', whiteSpace: 'nowrap' }}>
-            <Sparkles size={13} /> Advisor
-          </Link>
+      {/* Main Nav */}
+      <div className="hidden lg:flex items-center gap-2">
+        {mainLinks.map((link) => {
+          const Icon = link.icon;
+          const isActive = pathname === link.href;
+          return (
+            <Link
+              key={link.name}
+              href={link.href}
+              className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-[14px] transition-all no-underline ${
+                isActive 
+                  ? 'bg-[#FF5A3C] text-white shadow-md shadow-[#FF5A3C]33' 
+                  : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
+              }`}
+            >
+              <Icon size={18} />
+              {link.name}
+            </Link>
+          );
+        })}
+      </div>
 
-          {/* User Avatar dropdown */}
-          <div ref={menuRef} style={{ position: 'relative' }}>
-            <button onClick={() => setMenuOpen(!menuOpen)} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#F9FAFB', border: '1.5px solid #E5E7EB', borderRadius: 999, padding: '0.3rem 0.75rem 0.3rem 0.3rem', cursor: 'pointer', transition: 'border-color 0.15s', borderColor: menuOpen ? '#FFD100' : '#E5E7EB' }}>
-              <div style={{ width: 30, height: 30, background: '#FFD100', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '0.85rem', color: '#000', overflow: 'hidden' }}>
-                <Image src="/ram_profile.png" alt="Ram" width={30} height={30} style={{ objectFit: 'cover' }} />
+      {/* Right Side */}
+      <div className="flex items-center gap-6">
+        <div className="hidden xl:flex items-center bg-gray-50 px-4 py-2.5 rounded-xl border border-gray-100">
+          <Search size={18} className="text-gray-400" />
+          <input 
+            type="text" 
+            placeholder="Search roles, skills..." 
+            className="bg-transparent border-none outline-none px-3 text-sm font-semibold w-56 text-gray-700 placeholder:text-gray-400"
+          />
+        </div>
+        
+        <div className="flex items-center gap-4">
+          <button className="p-2.5 rounded-xl hover:bg-gray-50 text-gray-500 relative transition-colors">
+            <Bell size={20} />
+            <span className="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-[#FF5A3C] rounded-full border-2 border-white"></span>
+          </button>
+          
+          {/* User Menu */}
+          <div ref={menuRef} className="relative">
+            <button 
+              onClick={() => setMenuOpen(!menuOpen)}
+              className={`flex items-center gap-3 p-1 pr-4 rounded-2xl bg-gray-50 border transition-all ${menuOpen ? 'border-[#FF5A3C] outline-none ring-2 ring-[#FF5A3C]22' : 'border-gray-100 hover:border-gray-200'}`}
+            >
+              <div className="h-10 w-10 rounded-xl bg-gray-200 overflow-hidden border-2 border-white">
+                <Image 
+                  src="/ram_profile.png" 
+                  alt="Profile" 
+                  width={40} 
+                  height={40}
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <span style={{ fontWeight: 700, fontSize: '0.82rem', color: '#374151' }}>Ram</span>
-              <ChevronDown size={14} color="#6B7280" style={{ transform: menuOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }} />
+              <div className="text-left hidden sm:block">
+                <p className="text-xs font-bold text-gray-900 leading-none">Strategic Profile</p>
+                <p className="text-[10px] font-semibold text-gray-500 mt-1 uppercase tracking-wider">Expert Mode</p>
+              </div>
+              <ChevronDown size={14} className={`text-gray-400 transition-transform ${menuOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {menuOpen && (
-              <div style={{ position: 'absolute', top: '100%', right: 0, marginTop: '0.5rem', background: '#fff', border: '1px solid #E5E7EB', borderRadius: 16, boxShadow: '0 8px 32px rgba(0,0,0,0.12)', minWidth: 200, overflow: 'hidden', zIndex: 200 }}>
-                <div style={{ padding: '1rem 1rem 0.75rem', borderBottom: '1px solid #F1F5F9' }}>
-                  <p style={{ fontWeight: 900, fontSize: '0.875rem', color: '#000', margin: 0 }}>Ram</p>
-                  <p style={{ fontSize: '0.75rem', color: '#9CA3AF', margin: '0.15rem 0 0' }}>Branch Manager / Operations</p>
+              <div className="absolute top-[calc(100%+12px)] right-0 w-64 bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden py-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="px-5 py-4 border-b border-gray-50">
+                  <p className="font-bold text-gray-900">Expert Analyst</p>
+                  <p className="text-xs text-gray-500 font-medium">10+ Years Experience</p>
                 </div>
-                {userMenuItems.map(item => {
-                  const Icon = item.icon
-                  return (
-                    <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1rem', textDecoration: 'none', color: '#374151', fontSize: '0.875rem', fontWeight: 600, borderBottom: '1px solid #F9FAFB', transition: 'background 0.1s' }}
-                      onMouseEnter={e => (e.currentTarget.style.background = '#F9FAFB')}
-                      onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
-                      <Icon size={15} color="#6B7280" />
-                      {item.label}
-                    </Link>
-                  )
-                })}
-                <button style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1rem', width: '100%', background: 'none', border: 'none', cursor: 'pointer', color: '#EF4444', fontSize: '0.875rem', fontWeight: 700, textAlign: 'left' }}
-                  onMouseEnter={e => (e.currentTarget.style.background = '#FEF2F2')}
-                  onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
-                  <LogOut size={15} color="#EF4444" /> Sign Out
-                </button>
+                <div className="py-2">
+                  <button className="w-full flex items-center gap-3 px-5 py-3 text-sm font-bold text-gray-700 hover:bg-gray-50 transition-colors">
+                    <User size={18} className="text-gray-400" /> View Profile
+                  </button>
+                  <button className="w-full flex items-center gap-3 px-5 py-3 text-sm font-bold text-gray-700 hover:bg-gray-50 transition-colors">
+                    <BarChart3 size={18} className="text-gray-400" /> Statistics
+                  </button>
+                </div>
+                <div className="pt-2 border-t border-gray-100">
+                  <button className="w-full flex items-center gap-3 px-5 py-3 text-sm font-bold text-[#FF5A3C] hover:bg-[#FF5A3C]08 transition-colors">
+                    <LogOut size={18} /> Sign Out
+                  </button>
+                </div>
               </div>
             )}
           </div>
         </div>
       </div>
     </nav>
-  )
+  );
 }
