@@ -1,6 +1,6 @@
 'use client';
 
-import { UploadCloud, Cpu, Search, X, CheckCircle2, ArrowRight, Target, TrendingUp, Info, Award, BookOpen, Layers, Zap, Sparkles, User, HelpCircle, Compass, Heart, Share2, ChevronRight, BarChart3, ChevronDown, UserCheck } from "lucide-react"
+import { UploadCloud, Cpu, Search, X, CheckCircle2, ArrowRight, Target, TrendingUp, Info, Award, BookOpen, Layers, Zap, Sparkles, User, HelpCircle, Compass, Heart, Share2, ChevronRight, BarChart3, ChevronDown, UserCheck, Briefcase } from "lucide-react"
 import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 
@@ -152,33 +152,74 @@ export function AIProfileAnalyzer() {
     return (
       <div 
         onClick={() => setSelectedNode(data)}
-        className="bg-white rounded-2xl p-4 shadow-md border border-gray-100 min-w-[200px] cursor-pointer hover:shadow-xl transition-all group relative"
+        style={{
+          background: '#fff',
+          borderRadius: 24,
+          padding: '1.5rem',
+          boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+          border: '1px solid #F1F5F9',
+          minWidth: 220,
+          cursor: 'pointer',
+          position: 'relative',
+          transition: 'all 0.2s',
+        }}
+        className="group"
       >
         {data.tag && (
-          <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[9px] font-black text-white uppercase tracking-wider" style={{ background: color }}>
+          <span style={{
+            position: 'absolute',
+            top: -12,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            padding: '4px 12px',
+            borderRadius: 999,
+            fontSize: 9,
+            fontWeight: 900,
+            color: '#fff',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+            background: color
+          }}>
             {data.tag}
           </span>
         )}
-        <h5 className="text-[12px] font-bold text-gray-900 mb-2 leading-tight flex items-center justify-between">
+        <h5 style={{ fontSize: 13, fontWeight: 800, color: '#111827', marginBottom: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           {data.role}
-          {data.isTarget && <Target size={12} className="text-[#FF5A3C]" />}
+          {data.isTarget && <Target size={14} color="#FF5A3C" />}
         </h5>
         
-        <div className="space-y-1">
-          <div className="flex justify-between items-center text-[10px] font-bold text-gray-400">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, fontWeight: 800, color: '#94A3B8' }}>
             <span>Skill Match</span>
             <span style={{ color }}>{data.skills}</span>
           </div>
-          <div className="h-1 bg-gray-50 rounded-full overflow-hidden">
-             <div className="h-full transition-all duration-1000" style={{ width: `${progress}%`, background: color }}></div>
+          <div style={{ height: 4, background: '#F8FAFC', borderRadius: 999, overflow: 'hidden' }}>
+             <div style={{ height: '100%', width: `${progress}%`, background: color, transition: 'width 1s' }}></div>
           </div>
         </div>
 
-        {/* Tooltip on Hover */}
-        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-gray-900 text-white p-3 rounded-xl text-[10px] opacity-0 group-hover:opacity-100 transition-opacity z-50 pointer-events-none shadow-2xl">
-           <p className="font-bold mb-1">Skill Gap Analysis</p>
-           <p className="opacity-70 mb-2">Missing: AI/ML Strategy, Cloud Arch</p>
-           <div className="flex items-center gap-1 text-[#FFC900] font-black uppercase tracking-tighter">
+        {/* Tooltip */}
+        <div style={{
+          position: 'absolute',
+          top: '100%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          marginTop: 12,
+          width: 200,
+          background: '#1A1D23',
+          color: '#fff',
+          padding: '12px',
+          borderRadius: 16,
+          fontSize: 10,
+          zIndex: 50,
+          pointerEvents: 'none',
+          boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)',
+          opacity: 0,
+          transition: 'opacity 0.2s'
+        }} className="group-hover:opacity-100">
+           <p style={{ fontWeight: 800, marginBottom: 4 }}>Skill Gap Analysis</p>
+           <p style={{ opacity: 0.6, marginBottom: 8 }}>Missing: AI/ML Strategy, Cloud Arch</p>
+           <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#FFD100', fontWeight: 900 }}>
               <Zap size={10} /> Next Steps: Python for AI
            </div>
         </div>
@@ -188,23 +229,54 @@ export function AIProfileAnalyzer() {
 
   if (step === 'upload') {
     return (
-      <div className="max-w-4xl mx-auto mt-20 px-8">
+      <div style={{ maxWidth: 800, margin: '80px auto', padding: '0 24px' }}>
         <div 
           onClick={(e) => {
             if (e.target instanceof HTMLInputElement) return;
             document.getElementById('resume-upload')?.click();
           }}
-          className="bg-white border-2 border-dashed border-gray-200 rounded-[48px] p-20 text-center cursor-pointer hover:border-[#FF5A3C] transition-all group shadow-xl shadow-gray-200/50"
+          style={{
+            background: '#fff',
+            border: '2px dashed #E2E8F0',
+            borderRadius: 48,
+            padding: '80px 40px',
+            textAlign: 'center',
+            cursor: 'pointer',
+            boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.05)',
+            transition: 'all 0.2s'
+          }}
+          className="hover:border-[#FF5A3C] group"
         >
           <input type="file" id="resume-upload" hidden onChange={handleFileSelect} onClick={(e) => e.stopPropagation()} accept=".pdf,.doc,.docx" />
-          <div className="w-24 h-24 bg-[#FF5A3C] rounded-[32px] flex items-center justify-center mx-auto mb-10 shadow-lg shadow-[#FF5A3C]33 group-hover:scale-110 transition-transform">
-            <UploadCloud size={48} color="white" />
+          <div style={{
+            width: 80,
+            height: 80,
+            background: '#FF5A3C',
+            borderRadius: 24,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 40px',
+            boxShadow: '0 10px 15px -3px rgba(255, 90, 60, 0.4)'
+          }}>
+            <UploadCloud size={32} color="white" />
           </div>
-          <h2 className="text-4xl font-black text-gray-900 mb-4 tracking-tight">Generate Future Moves</h2>
-          <p className="text-xl text-gray-500 font-medium mb-12 max-w-lg mx-auto">
+          <h2 style={{ fontSize: 32, fontWeight: 900, color: '#111827', marginBottom: 16 }}>Generate Future Moves</h2>
+          <p style={{ fontSize: 18, color: '#64748B', fontWeight: 600, marginBottom: 48, maxWidth: 500, margin: '0 auto 48px' }}>
             Upload your resume to reveal your holistic RPA-to-CTO career tree.
           </p>
-          <button className="bg-[#FF5A3C] text-white px-12 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-[#FF5A3C]44 transition-all">
+          <button style={{
+            background: '#FF5A3C',
+            color: '#white',
+            border: 'none',
+            padding: '16px 40px',
+            borderRadius: 16,
+            fontWeight: 800,
+            fontSize: 16,
+            cursor: 'pointer',
+            boxShadow: '0 10px 15px -3px rgba(255, 90, 60, 0.2)',
+            transition: 'all 0.2s'
+          }} className="hover:scale-105">
             Analyze My Trajectory
           </button>
         </div>
@@ -214,87 +286,84 @@ export function AIProfileAnalyzer() {
 
   if (step === 'analyzing') {
     return (
-      <div className="max-w-4xl mx-auto mt-40 text-center px-8">
-        <div className="relative w-32 h-32 mx-auto mb-10">
-          <div className="absolute inset-0 border-8 border-gray-100 rounded-full"></div>
-          <div className="absolute inset-0 border-8 border-[#FF5A3C] rounded-full border-t-transparent animate-spin-custom"></div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Cpu size={48} className="text-gray-900" />
+      <div style={{ maxWidth: 600, margin: '160px auto', textAlign: 'center' }}>
+        <div style={{ position: 'relative', width: 100, height: 100, margin: '0 auto 40px' }}>
+          <div style={{ position: 'absolute', inset: 0, border: '6px solid #F1F5F9', borderRadius: '50%' }} />
+          <div style={{ position: 'absolute', inset: 0, border: '6px solid #FF5A3C', borderRadius: '50%', borderTopColor: 'transparent', animation: 'spin 1.2s linear infinite' }} />
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Cpu size={40} color="#111827" />
           </div>
         </div>
-        <h3 className="text-3xl font-black text-gray-900 mb-4">Neural Strategy Mapping...</h3>
-        <p className="text-xl text-gray-500 font-bold animate-pulse">{analyzingText}</p>
+        <h3 style={{ fontSize: 24, fontWeight: 900, color: '#111827', marginBottom: 16 }}>Neural Strategy Mapping...</h3>
+        <p style={{ fontSize: 18, color: '#64748B', fontWeight: 800 }}>{analyzingText}</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] pb-40 overflow-x-hidden">
+    <div style={{ minHeight: '100vh', background: '#F8FAFC', paddingBottom: 160 }}>
       
-      {/* HEADER SECTION */}
-      <div className="max-w-[1600px] mx-auto pt-16 px-8 text-center mb-24">
-         <h1 className="text-5xl font-black text-gray-900 mb-3 tracking-tighter">Explore Future Moves</h1>
-         <p className="text-xl text-gray-500 font-bold">Personalized career paths based on your RPA Solution Architect profile</p>
+      {/* Header */}
+      <div style={{ maxWidth: 1400, margin: '0 auto', paddingTop: 80, paddingLeft: 40, paddingRight: 40, textAlign: 'center', marginBottom: 100 }}>
+         <h1 style={{ fontSize: 48, fontWeight: 900, color: '#111827', marginBottom: 12, letterSpacing: '-0.02em' }}>Explore Future Moves</h1>
+         <p style={{ fontSize: 20, color: '#64748B', fontWeight: 700 }}>Personalized career paths based on your RPA Solution Architect profile</p>
       </div>
 
-      <div className="max-w-[1600px] mx-auto px-8">
-         <div className="flex flex-col items-center">
+      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 40px' }}>
+         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             
-            {/* ROOT NODE (CENTERED) */}
-            <div id="root-node" className="mb-24 relative z-20">
-               <div className="bg-white rounded-[40px] p-8 shadow-2xl border-4 border-[#FF5A3C] flex items-center gap-6 min-w-[380px] hover:scale-105 transition-transform">
-                  <div className="w-20 h-20 rounded-[24px] bg-gray-100 overflow-hidden border-2 border-white shadow-lg">
-                     <Image src="/ram_profile.png" width={80} height={80} alt="Ram" className="object-cover" />
+            {/* Root Node */}
+            <div style={{ marginBottom: 100, position: 'relative', zIndex: 10 }}>
+               <div style={{
+                  background: '#fff',
+                  borderRadius: 40,
+                  padding: '32px',
+                  boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.1)',
+                  border: '4px solid #FF5A3C',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 24,
+                  minWidth: 380
+               }}>
+                  <div style={{ width: 80, height: 80, borderRadius: 24, background: '#F1F5F9', overflow: 'hidden', border: '2px solid #fff', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}>
+                     <Image src="/ram_profile.png" width={80} height={80} alt="Ram" style={{ objectFit: 'cover' }} />
                   </div>
-                  <div className="text-left">
-                     <span className="bg-[#FF5A3C] text-white text-[10px] font-black px-3 py-1 rounded-lg tracking-widest uppercase mb-2 inline-block">YOU TODAY</span>
-                     <h4 className="text-2xl font-black text-gray-900 m-0 leading-tight">RPA Solution Architect</h4>
-                     <p className="text-sm font-bold text-gray-400 mt-1">10+ Years Experience</p>
+                  <div style={{ textAlign: 'left' }}>
+                     <span style={{ background: '#FF5A3C', color: '#fff', fontSize: 10, fontWeight: 900, padding: '4px 12px', borderRadius: 8, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8, display: 'inline-block' }}>YOU TODAY</span>
+                     <h4 style={{ fontSize: 24, fontWeight: 900, color: '#111827', margin: 0, lineHeight: 1.1 }}>RPA Solution Architect</h4>
+                     <p style={{ fontSize: 14, fontWeight: 700, color: '#94A3B8', marginTop: 4 }}>10+ Years Experience</p>
                   </div>
                </div>
             </div>
 
-            {/* SVG CONNECTORS BACKGROUND */}
-            <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-               <svg width="100%" height="2000" viewBox="0 0 1600 2000" fill="none" opacity="0.3">
-                  {/* Desired Path Connection */}
-                  <path d="M800 200 C800 300, 400 300, 100 500" stroke="#10B981" strokeWidth="3" strokeDasharray="10 10" className="path-line" />
-                  <path d="M800 200 C800 350, 400 350, 100 1000" stroke="#F59E0B" strokeWidth="3" strokeDasharray="10 10" className="path-line" />
-                  <path d="M800 200 C800 400, 400 400, 100 1500" stroke="#8B5CF6" strokeWidth="3" strokeDasharray="10 10" className="path-line" />
-               </svg>
+            {/* SVG Background Connections (Simplified for reliability) */}
+            <div style={{ position: 'absolute', top: 500, left: '50%', transform: 'translateX(-50%)', width: '100%', maxWidth: 1200, height: 1000, pointerEvents: 'none', opacity: 0.1 }}>
+                <svg width="100%" height="100%" viewBox="0 0 1200 1000">
+                   <path d="M600 0 Q600 200, 300 400" stroke="#FF5A3C" strokeWidth="4" strokeDasharray="10 10" fill="none" />
+                   <path d="M600 0 Q600 200, 900 400" stroke="#FF5A3C" strokeWidth="4" strokeDasharray="10 10" fill="none" />
+                </svg>
             </div>
 
-            {/* TREE SECTIONS */}
-            <div className="w-full space-y-32 relative z-10">
-               {sections.map((section, sIdx) => (
-                 <div key={section.title} className="relative">
-                    
-                    {/* Section Label */}
-                    <div className="flex items-center gap-4 mb-12">
-                       <span className="px-4 py-1.5 rounded-xl text-[10px] font-black text-white uppercase tracking-[0.15em]" style={{ background: section.tagColor }}>{section.tag}</span>
-                       <h3 className="text-2xl font-black text-gray-900">{section.title}</h3>
+            {/* Tree Sections */}
+            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 120, position: 'relative', zIndex: 10 }}>
+               {sections.map((section) => (
+                 <div key={section.title}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 40 }}>
+                       <span style={{ background: section.tagColor, color: '#fff', fontSize: 10, fontWeight: 900, padding: '4px 16px', borderRadius: 12, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{section.tag}</span>
+                       <h3 style={{ fontSize: 24, fontWeight: 900, color: '#111827' }}>{section.title}</h3>
                     </div>
 
-                    {/* Branches Grid */}
-                    <div className="space-y-16">
-                       {section.branches.map((branch, bIdx) => (
-                         <div key={branch.id} className="relative flex items-center">
-                            
-                            {/* Branch Wrapper for alignment */}
-                            <div className="flex items-center gap-8 overflow-x-auto no-scrollbar py-4 px-2">
-                               {branch.nodes.map((node, nIdx) => (
-                                 <div key={nIdx} className="flex items-center gap-8 flex-shrink-0">
-                                    <Node data={node} color={section.tagColor} />
-                                    {nIdx < branch.nodes.length - 1 && (
-                                      <div className="text-gray-300">
-                                         <ArrowRight size={20} strokeWidth={3} />
-                                      </div>
-                                    )}
-                                 </div>
-                               ))}
-                            </div>
-
-                            {/* SVG PATHS will be drawn here if needed, simplified with relative layout for now */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 60 }}>
+                       {section.branches.map((branch) => (
+                         <div key={branch.id} style={{ display: 'flex', alignItems: 'center', gap: 32, overflowX: 'auto', padding: '16px 0' }} className="no-scrollbar">
+                            {branch.nodes.map((node, nIdx) => (
+                              <div key={nIdx} style={{ display: 'flex', alignItems: 'center', gap: 32, flexShrink: 0 }}>
+                                 <Node data={node} color={section.tagColor} />
+                                 {nIdx < branch.nodes.length - 1 && (
+                                   <ArrowRight size={20} color="#CBD5E1" strokeWidth={3} />
+                                 )}
+                              </div>
+                            ))}
                          </div>
                        ))}
                     </div>
@@ -305,61 +374,52 @@ export function AIProfileAnalyzer() {
          </div>
       </div>
 
-      {/* MODAL / PANEL (Same as before but refined) */}
+      {/* Modal */}
       {selectedNode && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-2xl z-[1000] flex items-center justify-center p-8 animate-in fade-in duration-300">
-           <div className="bg-white w-full max-w-4xl rounded-[48px] overflow-hidden shadow-2xl relative animate-in slide-in-from-bottom-8">
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(20px)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
+           <div style={{ background: '#fff', width: '100%', maxWidth: 900, borderRadius: 48, overflow: 'hidden', position: 'relative' }}>
               <button 
                 onClick={() => setSelectedNode(null)}
-                className="absolute top-8 right-8 w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center hover:bg-gray-100 transition-colors"
+                style={{ position: 'absolute', top: 32, right: 32, width: 48, height: 48, borderRadius: '50%', background: '#F8FAFC', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyCenter: 'center' }}
               >
-                <X />
+                <X size={20} color="#111827" />
               </button>
 
-              <div className="p-16">
-                 <div className="flex items-start gap-10 mb-12">
-                    <div className="w-32 h-32 bg-gray-100 rounded-[32px] flex items-center justify-center">
-                       <Briefcase size={64} className="text-gray-400" />
+              <div style={{ padding: 64 }}>
+                 <div style={{ display: 'flex', gap: 40, marginBottom: 48 }}>
+                    <div style={{ width: 120, height: 120, background: '#F1F5F9', borderRadius: 32, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                       <Briefcase size={64} color="#94A3B8" />
                     </div>
                     <div>
-                       <span className="text-xs font-black text-[#FF5A3C] uppercase tracking-widest">AI Journey Mapping</span>
-                       <h2 className="text-5xl font-black text-gray-900 mt-2 mb-4">{selectedNode.role}</h2>
-                       <div className="flex items-center gap-6">
-                          <div className="flex items-center gap-2">
-                             <TrendingUp size={18} className="text-[#10B981]" />
-                             <span className="text-sm font-bold text-gray-500">Match Level: {selectedNode.skills}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                             <UserCheck size={18} className="text-[#6C63FF]" />
-                             <span className="text-sm font-bold text-gray-500">10+ Open Roles</span>
-                          </div>
+                       <p style={{ fontSize: 12, fontWeight: 900, color: '#FF5A3C', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>AI Career Architecture</p>
+                       <h2 style={{ fontSize: 40, fontWeight: 900, color: '#111827', margin: 0 }}>{selectedNode.role}</h2>
+                       <div style={{ display: 'flex', gap: 24, marginTop: 16 }}>
+                          <span style={{ fontSize: 14, fontWeight: 700, color: '#64748B' }}>Match: {selectedNode.skills}</span>
+                          <span style={{ fontSize: 14, fontWeight: 700, color: '#64748B' }}>Growth Potential: 95%</span>
                        </div>
                     </div>
                  </div>
 
-                 <div className="grid grid-cols-2 gap-10">
-                    <div className="bg-gray-50 rounded-[32px] p-10">
-                       <h4 className="text-xl font-black text-gray-900 mb-6">Required Skillset</h4>
-                       <div className="space-y-4">
-                          {[
-                            { name: 'System Design', status: 'missing' },
-                            { name: 'Cloud Architecture', status: 'missing' },
-                            { name: 'RPA Mastery', status: 'mastered' },
-                            { name: 'Stakeholder Mgmt', status: 'mastered' }
-                          ].map(s => (
-                             <div key={s.name} className="flex items-center justify-between p-4 bg-white rounded-2xl border border-gray-100">
-                                <span className="text-sm font-bold text-gray-700">{s.name}</span>
-                                {s.status === 'mastered' ? <CheckCircle2 size={18} className="text-[#10B981]" /> : <div className="w-4 h-4 rounded-full border-2 border-gray-200" />}
+                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40 }}>
+                    <div style={{ background: '#F8FAFC', padding: 40, borderRadius: 32 }}>
+                       <h4 style={{ fontSize: 18, fontWeight: 900, color: '#111827', marginBottom: 24 }}>Skill Comparison</h4>
+                       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                          {['System Design', 'Cloud Architecture', 'RPA Logic', 'Stakeholder Mgt'].map((s, i) => (
+                             <div key={s} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', background: '#fff', borderRadius: 12, border: '1px solid #E2E8F0' }}>
+                                <span style={{ fontSize: 14, fontWeight: 700, color: '#334155' }}>{s}</span>
+                                {i > 1 ? <CheckCircle2 size={18} color="#10B981" /> : <div style={{ width: 16, height: 16, border: '2px solid #E2E8F0', borderRadius: '50%' }} />}
                              </div>
                           ))}
                        </div>
                     </div>
-                    <div className="bg-[#1A1D23] rounded-[32px] p-10 text-white">
-                       <h4 className="text-xl font-black mb-6">AI Career Insight</h4>
-                       <p className="text-gray-400 leading-relaxed font-medium mb-8">
-                          Your extensive architecture background makes you 80% ready for this transition. Focus on cloud-native patterns to close the gap within 6 months.
+                    <div style={{ background: '#111827', padding: 40, borderRadius: 32, color: '#fff' }}>
+                       <h4 style={{ fontSize: 18, fontWeight: 900, marginBottom: 16 }}>AI Strategic Insight</h4>
+                       <p style={{ fontSize: 15, color: '#94A3B8', lineHeight: 1.6, marginBottom: 24 }}>
+                          You have 10+ years of logic mastery. By adding AWS/Azure certification, you can achieve the CTO role within 36 months via this journey.
                        </p>
-                       <button className="w-full bg-[#FF5A3C] py-4 rounded-2xl font-black text-sm uppercase tracking-widest">Enroll in Transition Program</button>
+                       <button style={{ background: '#FF5A3C', width: '100%', color: '#fff', border: 'none', padding: 16, borderRadius: 16, fontWeight: 900, fontSize: 14, textTransform: 'uppercase', cursor: 'pointer' }}>
+                          Start Roadmap
+                       </button>
                     </div>
                  </div>
               </div>
@@ -370,10 +430,8 @@ export function AIProfileAnalyzer() {
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .animate-spin-custom { animation: spin 1.5s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
       `}</style>
-
     </div>
   );
 }
