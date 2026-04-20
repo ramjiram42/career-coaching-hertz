@@ -69,16 +69,16 @@ export const NavBar = () => {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 3px)', gap: 2, padding: 10, cursor: 'pointer' }}>
                {[...Array(9)].map((_, i) => <div key={i} style={{ width: 3, height: 3, background: '#64748B', borderRadius: 1 }} />)}
             </div>
-            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 16, textDecoration: 'none' }}>
-               <div style={{ position: 'relative', width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* CAREER UPGRADE ICON: ASCENDING STEPS + UPWARD ARROW */}
-                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    {/* ASCENDING STEPS */}
-                    <path d="M4 20h4v-4h4v-4h4v-4h4" stroke="url(#logoGradient)" />
-                    {/* SOARING ARROW */}
-                    <path d="M12 20l7-7 M19 13l-4 0 M19 13l0 4" stroke="#fff" strokeWidth="2.5" />
+            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 20, textDecoration: 'none' }}>
+               <div style={{ position: 'relative', width: 48, height: 48, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {/* CREATIVE PROFESSIONAL LOGO: THE ELEVATED PATHWAY */}
+                  <svg width="40" height="40" viewBox="0 0 100 100" fill="none">
+                    {/* OUTER ARC (VISION) */}
+                    <path d="M30 70 A40 40 0 1 1 70 30" stroke="url(#creativeGradient)" strokeWidth="8" strokeLinecap="round" />
+                    {/* INNER TRAJECTORY (THE UPGRADE) */}
+                    <path d="M30 70 L75 25 M75 25 L55 25 M75 25 L75 45" stroke="#fff" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
                     <defs>
-                      <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <linearGradient id="creativeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                         <stop offset="0%" stopColor="#2A60E4" />
                         <stop offset="100%" stopColor="#E1128F" />
                       </linearGradient>
@@ -86,28 +86,29 @@ export const NavBar = () => {
                   </svg>
                </div>
                
-               <div style={{ width: 1, height: 28, background: 'rgba(255,255,255,0.15)', margin: '0 4px' }} />
+               <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)', margin: '0 8px' }} />
 
                <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <h1 style={{ 
-                    fontSize: 26, 
+                    fontSize: 28, 
                     fontWeight: 900, 
                     color: '#fff', 
                     margin: 0, 
-                    letterSpacing: '-0.05em',
-                    lineHeight: 0.9,
-                    fontFamily: '"Inter", "Inter Tight", system-ui, sans-serif'
+                    letterSpacing: '0.02em', // Slightly more width/breathing room
+                    lineHeight: 1,
+                    fontFamily: '"Outfit", "Inter", sans-serif',
+                    textTransform: 'none'
                   }}>
-                    Career<span style={{ fontWeight: 400 }}>Coaching</span>
+                    Career<span style={{ fontWeight: 300, opacity: 0.8 }}>Coaching</span>
                   </h1>
                   <p style={{ 
                     fontSize: 9, 
                     fontWeight: 900, 
                     color: '#E1128F', 
                     margin: '4px 0 0', 
-                    letterSpacing: '0.25em', 
+                    letterSpacing: '0.3em', 
                     textTransform: 'uppercase',
-                    fontStyle: 'italic'
+                    textAlign: 'left'
                   }}>
                     POWERED BY HERTZ
                   </p>
