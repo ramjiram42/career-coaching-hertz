@@ -70,12 +70,61 @@ export const NavBar = () => {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 3px)', gap: 2, padding: 10, cursor: 'pointer' }}>
                {[...Array(9)].map((_, i) => <div key={i} style={{ width: 3, height: 3, background: '#64748B', borderRadius: 1 }} />)}
             </div>
-            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-               <div style={{ background: '#FFD100', width: 32, height: 32, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Rocket size={18} color="#000" />
+            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 16, textDecoration: 'none', group: 'true' }}>
+               <div style={{ position: 'relative', width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {/* ANIMATED GLOW BACKGROUND */}
+                  <div style={{ position: 'absolute', inset: 0, background: '#FFD100', borderRadius: 12, opacity: 0.2, animation: 'pulseLogo 3s infinite' }} />
+                  {/* CUSTOM SVG LOGO MARK */}
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ animation: 'floatIcon 4s ease-in-out infinite' }}>
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                  </svg>
                </div>
-               <h1 style={{ fontSize: 16, fontWeight: 950, color: '#000', margin: 0, textTransform: 'uppercase', letterSpacing: '-0.02em' }}>CAREER COACHING</h1>
+               
+               <div style={{ width: 1, height: 24, background: '#E2E8F0', margin: '0 4px' }} />
+
+               <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <h1 style={{ 
+                    fontSize: 18, 
+                    fontWeight: 1000, 
+                    color: '#000', 
+                    margin: 0, 
+                    textTransform: 'uppercase', 
+                    letterSpacing: '-0.02em',
+                    lineHeight: 1,
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                    CAREER <span style={{ color: '#64748B' }}>COACHING</span>
+                    {/* SHIMMER EFFECT ON TEXT */}
+                    <div style={{ 
+                      position: 'absolute', 
+                      top: 0, 
+                      left: '-100%', 
+                      width: '100%', 
+                      height: '100%', 
+                      background: 'linear-gradient(90deg, transparent, rgba(255,209,0,0.4), transparent)', 
+                      animation: 'shimmerText 3s infinite' 
+                    }} />
+                  </h1>
+                  <p style={{ fontSize: 10, fontWeight: 800, color: '#FFD100', margin: 0, letterSpacing: '0.2em' }}>HERTZ NAVIGATOR</p>
+               </div>
             </Link>
+
+            <style>{`
+              @keyframes pulseLogo {
+                0% { transform: scale(1); opacity: 0.2; }
+                50% { transform: scale(1.1); opacity: 0.4; }
+                100% { transform: scale(1); opacity: 0.2; }
+              }
+              @keyframes floatIcon {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-3px); }
+              }
+              @keyframes shimmerText {
+                0% { left: -100%; }
+                50%, 100% { left: 100%; }
+              }
+            `}</style>
          </div>
 
          <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
