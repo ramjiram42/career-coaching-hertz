@@ -14,6 +14,7 @@ export const NavBar = () => {
   const navRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   
   const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const [dropdownTab, setDropdownTab] = useState<'hubs' | 'lang'>('hubs');
   const locales = [
     { 
       name: 'United States', 
@@ -181,34 +182,108 @@ export const NavBar = () => {
                     position: 'absolute',
                     top: '120%',
                     right: 0,
-                    width: 220,
-                    background: 'rgba(10, 20, 40, 0.95)',
-                    backdropFilter: 'blur(20px)',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: 16,
-                    padding: '12px 8px',
-                    boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+                    width: 260,
+                    background: 'rgba(10, 20, 40, 0.98)',
+                    backdropFilter: 'blur(30px)',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    borderRadius: 20,
+                    padding: '16px',
+                    boxShadow: '0 30px 60px rgba(0,0,0,0.5)',
                     zIndex: 1000,
                   }}>
-                    {locales.map((loc) => (
-                      <div 
-                        key={loc.name}
-                        onClick={() => { setSelectedLocale(loc); setIsLocationOpen(false); }}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 12,
-                          padding: '10px 12px',
-                          borderRadius: 8,
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease',
-                          background: selectedLocale.name === loc.name ? 'rgba(245, 158, 11, 0.1)' : 'transparent'
-                        }}
-                      >
-                        {loc.flag}
-                        <span style={{ fontSize: 13, fontWeight: 700, color: selectedLocale.name === loc.name ? '#f59e0b' : '#CBD5E1' }}>{loc.name}</span>
+                    {/* DROPDOWN TABS */}
+                    <div style={{ display: 'flex', background: 'rgba(255,255,255,0.05)', borderRadius: 12, padding: 4, marginBottom: 16 }}>
+                       <button 
+                         onClick={(e) => { e.stopPropagation(); setDropdownTab('hubs'); }}
+                         style={{ 
+                           flex: 1, 
+                           padding: '8px', 
+                           borderRadius: 8, 
+                           border: 'none', 
+                           fontSize: 11, 
+                           fontWeight: 800, 
+                           cursor: 'pointer', 
+                           transition: 'all 0.3s',
+                           background: dropdownTab === 'hubs' ? 'linear-gradient(135deg, #f59e0b, #ec4899)' : 'transparent',
+                           color: dropdownTab === 'hubs' ? '#fff' : '#64748B'
+                         }}
+                       >
+                         HUBS
+                       </button>
+                       <button 
+                         onClick={(e) => { e.stopPropagation(); setDropdownTab('lang'); }}
+                         style={{ 
+                           flex: 1, 
+                           padding: '8px', 
+                           borderRadius: 8, 
+                           border: 'none', 
+                           fontSize: 11, 
+                           fontWeight: 800, 
+                           cursor: 'pointer', 
+                           transition: 'all 0.3s',
+                           background: dropdownTab === 'lang' ? 'linear-gradient(135deg, #f59e0b, #ec4899)' : 'transparent',
+                           color: dropdownTab === 'lang' ? '#fff' : '#64748B'
+                         }}
+                       >
+                         LANGUAGE
+                       </button>
+                    </div>
+
+                    {dropdownTab === 'hubs' ? (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                        {locales.map((loc) => (
+                          <div 
+                            key={loc.name}
+                            onClick={() => { setSelectedLocale(loc); setIsLocationOpen(false); }}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 12,
+                              padding: '10px 12px',
+                              borderRadius: 10,
+                              cursor: 'pointer',
+                              transition: 'all 0.2s ease',
+                              background: selectedLocale.name === loc.name ? 'rgba(245, 158, 11, 0.1)' : 'transparent'
+                            }}
+                          >
+                            {loc.flag}
+                            <span style={{ fontSize: 13, fontWeight: 700, color: selectedLocale.name === loc.name ? '#f59e0b' : '#CBD5E1' }}>{loc.name}</span>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    ) : (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                         {[
+                           { name: 'English', sub: 'USA / UK', code: 'EN' },
+                           { name: 'Deutsch', sub: 'Germany', code: 'DE' },
+                           { name: 'Français', sub: 'France', code: 'FR' },
+                           { name: 'Español', sub: 'Spain / LATAM', code: 'ES' },
+                           { name: 'Italiano', sub: 'Italy', code: 'IT' }
+                         ].map(lang => (
+                           <div 
+                            key={lang.name}
+                            onClick={() => setIsLocationOpen(false)}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              padding: '10px 12px',
+                              borderRadius: 10,
+                              cursor: 'pointer',
+                              transition: 'all 0.2s ease',
+                            }}
+                            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                            onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                          >
+                             <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <span style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>{lang.name}</span>
+                                <span style={{ fontSize: 9, fontWeight: 600, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{lang.sub}</span>
+                             </div>
+                             <span style={{ fontSize: 10, fontWeight: 900, color: '#ec4899', background: 'rgba(236, 72, 153, 0.1)', padding: '2px 6px', borderRadius: 4 }}>{lang.code}</span>
+                          </div>
+                         ))}
+                      </div>
+                    )}
                   </div>
                 )}
              </div>
