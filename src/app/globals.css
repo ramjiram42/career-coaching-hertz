@@ -1,14 +1,14 @@
 :root {
   --primary: #2563EB;
-  --secondary: #9333EA;
+  --secondary: #FFD100;
   --accent: #2563EB;
-  --background: #030B17;
-  --card-bg: rgba(255, 255, 255, 0.03);
-  --text-main: #FFFFFF;
-  --text-muted: #94A3B8;
-  --shadow-soft: 0 10px 40px rgba(0,0,0,0.4);
-  --shadow-medium: 0 20px 60px rgba(0,0,0,0.6);
-  --brand-gradient: linear-gradient(90deg, #2563EB, #9333EA);
+  --background: #F9FAFB;
+  --card-bg: #FFFFFF;
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --shadow-soft: 0 10px 40px rgba(0,0,0,0.05);
+  --shadow-medium: 0 20px 60px rgba(0,0,0,0.1);
+  --brand-gradient: linear-gradient(90deg, #2563EB, #FFD100);
 }
 
 @import "tailwindcss";
@@ -20,7 +20,7 @@
 }
 
 body {
-  font-family: 'Outfit', 'Inter', sans-serif;
+  font-family: 'Inter', 'Outfit', sans-serif;
   background-color: var(--background);
   color: var(--text-main);
   line-height: 1.5;
