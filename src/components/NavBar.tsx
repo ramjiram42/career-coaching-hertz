@@ -119,26 +119,26 @@ export const NavBar = () => {
          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             {/* GRID ICON AS SEEN IN SCREENSHOT */}
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 36, textDecoration: 'none' }}>
-               <div style={{ position: 'relative', width: 100, height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* DYNAMIC 'CC' SWOOSH LOGO BASED ON USER REFERENCE */}
-                  <svg width="90" height="70" viewBox="0 0 120 80" fill="none">
-                    {/* THE 'CC' LETTERFORMS */}
-                    <text x="5" y="60" fontFamily='"Outfit", sans-serif' fontSize="65" fontWeight="1000" fill="url(#dynamicGradient)" letterSpacing="-8">CC</text>
+               <div style={{ position: 'relative', width: 90, height: 90, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {/* HIGH-FIDELITY 'CC' MONOLINE LOGO BASED ON USER REFERENCE */}
+                  <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
+                    {/* OUTER ORBITAL RINGS */}
+                    <circle cx="50" cy="50" r="45" stroke="url(#spectrumGradient)" strokeWidth="1.5" />
+                    <circle cx="50" cy="50" r="40" stroke="url(#spectrumGradient)" strokeWidth="0.8" opacity="0.5" />
                     
-                    {/* DYNAMIC SWOOSH 1 (MAIN) */}
-                    <path d="M5 50 Q40 40 115 25 L110 30 Q40 45 5 55 Z" fill="url(#dynamicGradient)" opacity="0.9" />
+                    {/* THE 'C' LETTERFORMS (NESTED MONOLINE) */}
+                    <path d="M75 35 A25 25 0 1 0 75 65" stroke="url(#spectrumGradient)" strokeWidth="3" strokeLinecap="round" />
+                    <path d="M60 40 A15 15 0 1 0 60 60" stroke="url(#spectrumGradient)" strokeWidth="1.5" strokeLinecap="round" />
                     
-                    {/* DYNAMIC SWOOSH 2 (SECONDARY) */}
-                    <path d="M0 60 Q30 50 90 35 L85 40 Q30 55 0 65 Z" fill="url(#dynamicGradient)" opacity="0.6" />
-                    
-                    {/* DYNAMIC SWOOSH 3 (ACCENT) */}
-                    <path d="M10 70 Q25 65 60 55 L58 58 Q25 68 10 72 Z" fill="#fff" opacity="0.4" />
+                    {/* INNER ACCENT CORES */}
+                    <path d="M45 50 L55 40 M45 50 L55 60" stroke="url(#spectrumGradient)" strokeWidth="2" strokeLinecap="round" opacity="0.8" />
 
                     <defs>
-                      <linearGradient id="dynamicGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#0EA5E9" /> {/* CYAN */}
-                        <stop offset="60%" stopColor="#2563EB" /> {/* BLUE */}
-                        <stop offset="100%" stopColor="#E1128F" /> {/* MAGENTA */}
+                      <linearGradient id="spectrumGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#A8FF78" />  {/* LIME */}
+                        <stop offset="33%" stopColor="#FBD786" /> {/* GOLD */}
+                        <stop offset="66%" stopColor="#F77062" /> {/* CORAL */}
+                        <stop offset="100%" stopColor="#FE5196" /> {/* MAGENTA */}
                       </linearGradient>
                     </defs>
                   </svg>
