@@ -119,33 +119,36 @@ export const NavBar = () => {
          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             {/* GRID ICON AS SEEN IN SCREENSHOT */}
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 36, textDecoration: 'none' }}>
-               <div style={{ position: 'relative', width: 72, height: 72, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* MASTER SCALE ELITE ASCENDANT 'H' MONOGRAM */}
-                  <svg width="64" height="64" viewBox="0 0 100 100" fill="none">
-                    {/* LEFT PILLAR */}
-                    <rect x="24" y="10" width="14" height="80" rx="7" fill="url(#hGradientMaster)" />
-                    {/* RIGHT PILLAR */}
-                    <rect x="62" y="10" width="14" height="80" rx="7" fill="url(#hGradientMaster)" />
-                    {/* THE ASCENDANT CROSSBAR (ARROW) */}
-                    <path d="M37 55 L50 40 L63 55" stroke="#fff" strokeWidth="14" strokeLinecap="round" strokeLinejoin="round" />
+               <div style={{ position: 'relative', width: 80, height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {/* FUTURISTIC 'CAREERFORGE' AI LOGO: THE VECTOR C */}
+                  <svg width="72" height="72" viewBox="0 0 100 100" fill="none">
+                    {/* THE ORBITAL 'C' PATH */}
+                    <path d="M75 30 A35 35 0 1 0 75 70" stroke="url(#forgeGradient)" strokeWidth="10" strokeLinecap="round" />
+                    {/* THE ACCELERATOR ARROW */}
+                    <path d="M75 30 L75 10 M75 10 L60 20 M75 10 L85 20" stroke="#fff" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
+                    {/* AI NODE ELEMENTS */}
+                    <circle cx="20" cy="50" r="4" fill="#fff" opacity="0.8" />
+                    <circle cx="75" cy="70" r="4" fill="#fff" opacity="0.8" />
+                    <circle cx="50" cy="85" r="4" fill="url(#forgeGradient)" />
+                    <path d="M20 50 L40 50 M75 70 L75 55 M50 85 L50 70" stroke="#fff" strokeWidth="1" opacity="0.3" />
                     <defs>
-                      <linearGradient id="hGradientMaster" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#E1128F" />
-                        <stop offset="100%" stopColor="#2A60E4" />
+                      <linearGradient id="forgeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#2563EB" /> {/* PRO BLUE */}
+                        <stop offset="100%" stopColor="#9333EA" /> {/* TECH PURPLE */}
                       </linearGradient>
                     </defs>
                   </svg>
                </div>
                
-               <div style={{ width: 2, height: 56, background: 'rgba(255,255,255,0.15)', margin: '0 8px' }} />
+               <div style={{ width: 2, height: 64, background: 'rgba(255,255,255,0.15)', margin: '0 8px' }} />
 
                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <h1 style={{ 
-                    fontSize: 34, 
+                    fontSize: 38, 
                     fontWeight: 1000, 
                     color: '#fff', 
                     margin: 0, 
-                    letterSpacing: '0.25em', 
+                    letterSpacing: '0.15em', 
                     lineHeight: 0.8,
                     fontFamily: '"Outfit", sans-serif',
                     textTransform: 'uppercase'
@@ -153,20 +156,21 @@ export const NavBar = () => {
                     Career
                   </h1>
                   <h1 style={{ 
-                    fontSize: 34, 
+                    fontSize: 26, // Reduced size
                     fontWeight: 300, 
+                    fontStyle: 'italic', // Italic as requested
                     color: '#fff', 
-                    margin: 0, 
-                    letterSpacing: '0.25em', 
+                    margin: '4px 0 0', 
+                    letterSpacing: '0.3em', 
                     lineHeight: 0.8,
                     fontFamily: '"Outfit", sans-serif',
                     textTransform: 'uppercase',
-                    background: 'linear-gradient(90deg, #2A60E4, #E1128F)',
+                    background: 'linear-gradient(90deg, #2563EB, #9333EA)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
-                    opacity: 0.95
+                    opacity: 0.9
                   }}>
-                    Coaching
+                    Forge
                   </h1>
                </div>
             </Link>
