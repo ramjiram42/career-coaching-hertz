@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import { User } from 'lucide-react';
 
-export default function NavBar() {
+export function NavBar() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
