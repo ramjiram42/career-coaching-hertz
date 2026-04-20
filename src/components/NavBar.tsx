@@ -1,26 +1,28 @@
 'use client';
 
 import { Menu, X, Bell, User, ChevronDown, Rocket, Compass, Target, GraduationCap, Zap, Sparkles, LayoutDashboard, Map, Users } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export const NavBar = () => {
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '/', icon: LayoutDashboard },
-    { name: 'Journeys', href: '/your-move', icon: Map, active: true },
-    { name: 'Pathfinder', href: '#', icon: Compass },
-    { name: 'Skills Lab', href: '#', icon: Target },
-    { name: 'Mentors', href: '#', icon: Users },
-    { name: 'Growth', href: '#', icon: Zap },
+    { name: 'Home', href: '/', active: false },
+    { name: 'Journeys', href: '/your-move', active: true },
+    { name: 'Pathfinder', href: '#', active: false },
+    { name: 'Skills', href: '#', active: false },
+    { name: 'Mentors', href: '#', active: false },
+    { name: 'Growth', href: '#', active: false },
   ];
 
   return (
@@ -28,92 +30,143 @@ export const NavBar = () => {
       style={{
         position: 'sticky',
         top: 0,
-        zIndex: 100,
-        background: '#ffffff',
-        borderBottom: '1px solid #F1F5F9',
-        transition: 'all 0.3s ease',
-        boxShadow: scrolled ? '0 1px 3px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.06)' : 'none',
-        height: 72,
+        zIndex: 200,
+        background: scrolled ? 'rgba(255, 255, 255, 0.85)' : 'transparent',
+        backdropFilter: 'blur(16px)',
+        transition: 'all 0.5s cubic-bezier(0.19, 1, 0.22, 1)',
+        height: scrolled ? 70 : 90,
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        padding: '0 60px',
+        borderBottom: scrolled ? '1px solid rgba(0,0,0,0.05)' : 'none'
       }}
     >
-      <div style={{ width: '100%', maxWidth: 1440, margin: '0 auto', padding: '0 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         
-        {/* REFINED BRAND LOGO (STRIPE STYLE COLORS) */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-           <div style={{ background: '#FFD100', width: 36, height: 36, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(255,209,0,0.2)' }}>
-              <Rocket size={18} color="#000" />
+        {/* GEN-Z BRANDING - LIQUID SCALE */}
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }} className="group">
+           <div style={{ 
+              background: '#000', 
+              width: 48, 
+              height: 48, 
+              borderRadius: 16, 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              boxShadow: '0 15px 35px rgba(0,0,0,0.1)',
+              transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)'
+           }} className="group-hover:scale-110 group-hover:-rotate-6">
+              <Rocket size={24} color="#FFD100" />
            </div>
-           <div>
-              <h1 style={{ fontSize: 16, fontWeight: 850, color: '#0F172A', margin: 0, letterSpacing: '-0.01em', textTransform: 'uppercase' }}>CAREER COACHING</h1>
-              <p style={{ fontSize: 9, fontWeight: 700, color: '#64748B', margin: 0, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Intelligence by Hertz</p>
+           <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <h1 style={{ fontSize: 22, fontWeight: 950, color: '#000', margin: 0, letterSpacing: '-0.04em', textTransform: 'uppercase', lineHeight: 1 }}>CAREER <span style={{ color: '#FFD100' }}>COACH</span></h1>
+              <p style={{ fontSize: 10, fontWeight: 900, color: '#94A3B8', margin: '2px 0 0', textTransform: 'uppercase', letterSpacing: '0.2em' }}>High Performance</p>
            </div>
         </Link>
 
-        {/* STRIPE-THEMED TAB MENU (NO DROPDOWNS) */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          {navLinks.map((link) => (
+        {/* GEN-Z MAGNETIC NAV - LIQUID INDICATOR */}
+        <div style={{ 
+          display: 'flex', 
+          background: 'rgba(241, 245, 249, 0.5)', 
+          padding: '6px', 
+          borderRadius: 24, 
+          position: 'relative',
+          gap: 4
+        }}>
+          {navLinks.map((link, idx) => (
             <Link 
               key={link.name} 
               href={link.href}
-              className="stripe-nav-item"
+              onMouseEnter={() => setHoveredIdx(idx)}
+              onMouseLeave={() => setHoveredIdx(null)}
               style={{
+                padding: '12px 24px',
+                fontSize: 14,
+                fontWeight: 900,
+                color: link.active || hoveredIdx === idx ? '#000' : '#64748B',
+                textDecoration: 'none',
+                position: 'relative',
+                zIndex: 2,
+                transition: 'color 0.4s cubic-bezier(0.19, 1, 0.22, 1)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 8,
-                padding: '8px 16px',
-                borderRadius: 50,
-                textDecoration: 'none',
-                color: link.active ? '#0F172A' : '#475569',
-                background: link.active ? 'rgba(255, 209, 0, 0.15)' : 'transparent',
-                fontWeight: 800,
-                fontSize: 14,
-                transition: 'all 0.2s',
+                gap: 8
               }}
             >
-              <link.icon size={16} />
-              <span>{link.name}</span>
+              {link.active && <Sparkles size={12} color="#FFD100" fill="#FFD100" />}
+              {link.name}
             </Link>
           ))}
+          
+          {/* LIQUID SPRING INDICATOR */}
+          <div 
+            style={{
+              position: 'absolute',
+              top: 6,
+              bottom: 6,
+              left: 6 + (hoveredIdx ?? (navLinks.findIndex(l => l.active))) * 115, // Approximate jump
+              width: 110,
+              background: '#fff',
+              borderRadius: 18,
+              boxShadow: '0 10px 20px rgba(0,0,0,0.05)',
+              transition: 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+              zIndex: 1,
+              opacity: hoveredIdx !== null ? 1 : 1, // Keep it on active if not hovering
+            }}
+            className="liquid-pill"
+          />
         </div>
 
-        {/* REFINED STRIPE-STYLE PROFILE */}
+        {/* GEN-Z PREMIUM PROFILE - BENTO STYLE */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
-           <Bell size={20} color="#94A3B8" style={{ cursor: 'pointer' }} />
+           <div className="modern-bell">
+              <Bell size={24} color="#000" />
+              <div style={{ position: 'absolute', top: 0, right: 0, width: 8, height: 8, background: '#FFD100', borderRadius: '50%', border: '2px solid #fff' }} />
+           </div>
 
            <div style={{ 
               display: 'flex', 
               alignItems: 'center', 
-              gap: 12, 
-              background: '#fff', 
-              padding: '6px 14px 6px 6px', 
-              borderRadius: 50,
+              gap: 16, 
+              background: '#000', 
+              padding: '8px 24px 8px 8px', 
+              borderRadius: 20,
               cursor: 'pointer',
-              border: '1px solid #F1F5F9',
-              boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
-              transition: 'all 0.2s'
-           }} className="hover:shadow-md hover:border-slate-300">
-              <div style={{ width: 34, height: 34, borderRadius: '50%', overflow: 'hidden', border: '1px solid #E2E8F0' }}>
-                 <Image src="/ram_profile.png" width={34} height={34} alt="Profile" />
+              boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
+              transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+              border: '2px solid transparent'
+           }} className="hover:scale-105 active:scale-95 group">
+              <div style={{ 
+                width: 48, 
+                height: 48, 
+                borderRadius: 14, 
+                overflow: 'hidden', 
+                border: '2px solid #FFD100',
+                transition: 'transform 0.4s'
+              }} className="group-hover:rotate-6">
+                 <Image src="/ram_profile.png" width={48} height={48} alt="Profile" />
               </div>
-              <div style={{ whiteSpace: 'nowrap' }}>
-                 <p style={{ color: '#0F172A', fontSize: 13, fontWeight: 800, margin: 0 }}>Ram</p>
-                 <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                    <p style={{ color: '#64748B', fontSize: 10, fontWeight: 700, margin: 0 }}>Solution Architect</p>
-                    <Sparkles size={8} color="#FFD100" fill="#FFD100" />
-                 </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                 <p style={{ color: '#fff', fontSize: 16, fontWeight: 950, margin: 0, letterSpacing: '-0.02em' }}>Ram</p>
+                 <p style={{ color: '#FFD100', fontSize: 10, fontWeight: 900, margin: 0, textTransform: 'uppercase', opacity: 0.8 }}>Solution Architect</p>
               </div>
-              <ChevronDown size={14} color="#CBD5E1" />
+              <ChevronDown size={14} color="#FFD100" />
            </div>
         </div>
       </div>
 
       <style>{`
-        .stripe-nav-item:hover {
-          background: #F8FAFC;
-          color: #0F172A !important;
-          transform: translateY(-1px);
+        .modern-bell { position: relative; cursor: pointer; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .modern-bell:hover { transform: scale(1.1) rotate(15deg); }
+        
+        .liquid-pill {
+           /* Handle varying widths across different words if using real refs */
+        }
+
+        @keyframes float {
+          0% { transform: translateY(0); }
+          50% { transform: translateY(-3px); }
+          100% { transform: translateY(0); }
         }
       `}</style>
     </nav>
