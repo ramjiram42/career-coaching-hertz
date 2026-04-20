@@ -4,10 +4,10 @@ import { ArrowRight, ExternalLink, Heart } from 'lucide-react'
 import { ResumeUploadSection } from '@/components/ResumeUpload'
 
 const journeyCards = [
-  { title: 'Fleet Operations Coordinator', vertical: 'Fleet Management', topColor: '#22C55E', bottomBadge: 'NEXT STEP', bottomBg: '#DCFCE7', bottomText: '#16A34A', img: '🚗' },
-  { title: 'HR Learning Program Coordinator', vertical: 'People Development', topColor: '#F59E0B', bottomBadge: 'FUTURE MOVE', bottomBg: '#FEF3C7', bottomText: '#92400E', img: '👥' },
-  { title: 'Operations Supervisor', vertical: 'Core Operations', topColor: '#3B82F6', bottomBadge: 'FUTURE NOW', bottomBg: '#DBEAFE', bottomText: '#1D4ED8', img: '📊' },
-  { title: 'Technology Program Coordinator', vertical: 'Tech & Digital', topColor: '#8B5CF6', bottomBadge: 'WILD CARD', bottomBg: '#EDE9FE', bottomText: '#6D28D9', img: '💻' },
+  { title: 'Fleet Operations Coordinator', vertical: 'Fleet Management', topColor: '#2A60E4', bottomBadge: 'HIGH MATCH', bottomBg: 'rgba(42,96,228,0.1)', bottomText: '#2A60E4', img: '🚗' },
+  { title: 'HR Learning Program Coordinator', vertical: 'People Development', topColor: '#E1128F', bottomBadge: 'FUTURE MOVE', bottomBg: 'rgba(225,18,143,0.1)', bottomText: '#E1128F', img: '👥' },
+  { title: 'Operations Supervisor', vertical: 'Core Operations', topColor: '#2A60E4', bottomBadge: 'FAST TRACK', bottomBg: 'rgba(42,96,228,0.1)', bottomText: '#2A60E4', img: '📊' },
+  { title: 'Technology Program Coordinator', vertical: 'Tech & Digital', topColor: '#E1128F', bottomBadge: 'WILD CARD', bottomBg: 'rgba(225,18,143,0.1)', bottomText: '#E1128F', img: '💻' },
 ]
 
 const careerPaths = [
