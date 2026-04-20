@@ -434,38 +434,54 @@ export function AIProfileAnalyzer() {
   if (step === 'upload') {
     return (
       <div style={{ 
-        maxWidth: 700, 
+        maxWidth: 800, 
         margin: '120px auto', 
-        padding: '0 24px',
-        animation: 'fadeInUp 0.6s cubic-bezier(0.19, 1, 0.22, 1)' 
+        padding: '60px 24px',
+        position: 'relative',
+        overflow: 'visible'
       }}>
-        {/* MINIMALIST NAUKRI-STYLE CARD */}
+        {/* BACKGROUND GRAPHICAL BLOBS */}
+        <div style={{ position: 'absolute', top: -50, right: -50, width: 250, height: 250, background: 'radial-gradient(circle, rgba(255, 209, 0, 0.1), transparent)', borderRadius: '50%', zIndex: -1 }} />
+        <div style={{ position: 'absolute', bottom: -50, left: -100, width: 300, height: 300, background: 'radial-gradient(circle, rgba(30, 41, 59, 0.05), transparent)', borderRadius: '50%', zIndex: -1 }} />
+
+        {/* GLASSY NAUKRI-STYLE CARD */}
         <div style={{
-          background: '#fff',
-          borderRadius: 24,
-          padding: '40px 48px',
+          background: 'rgba(255, 255, 255, 0.7)',
+          backdropFilter: 'blur(16px)',
+          borderRadius: 32,
+          padding: '48px 60px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          boxShadow: '0 4px 30px rgba(0,0,0,0.04)',
-          border: '1px solid #E2E8F0',
-          position: 'relative'
-        }}>
-           <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
-              <div style={{ width: 80, height: 80, borderRadius: '50%', overflow: 'hidden', border: '3px solid #FFD100', flexShrink: 0 }}>
-                 <Image src="/ram_profile.png" width={80} height={80} alt="Ram" />
+          boxShadow: '0 20px 50px rgba(0,0,0,0.06), inset 0 0 0 1px rgba(255,255,255,0.8)',
+          border: '1px solid rgba(226, 232, 240, 0.5)',
+          position: 'relative',
+          transition: 'transform 0.4s cubic-bezier(0.19, 1, 0.22, 1)',
+          animation: 'fadeInUp 0.8s cubic-bezier(0.19, 1, 0.22, 1)'
+        }} className="hover:translate-y-[-8px]">
+           <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+              <div style={{ 
+                width: 100, 
+                height: 100, 
+                borderRadius: '50%', 
+                overflow: 'hidden', 
+                border: '4px solid #FFD100', 
+                flexShrink: 0,
+                boxShadow: '0 10px 25px rgba(255, 209, 0, 0.2)'
+              }}>
+                 <Image src="/ram_profile.png" width={100} height={100} alt="Ram" />
               </div>
               <div>
-                 <h2 style={{ fontSize: 24, fontWeight: 1000, color: '#000', margin: 0 }}>Ram</h2>
-                 <p style={{ fontSize: 13, fontWeight: 700, color: '#64748B', margin: '4px 0', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Solution Architect</p>
-                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 8 }}>
-                    <div style={{ width: 6, height: 6, background: '#10B981', borderRadius: '50%' }} />
-                    <span style={{ fontSize: 12, fontWeight: 800, color: '#10B981' }}>Resume Uploaded</span>
+                 <h2 style={{ fontSize: 32, fontWeight: 1000, color: '#000', margin: 0, letterSpacing: '-0.02em' }}>Ram</h2>
+                 <p style={{ fontSize: 14, fontWeight: 800, color: '#64748B', margin: '6px 0', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Solution Architect</p>
+                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 12 }}>
+                    <div style={{ width: 8, height: 8, background: '#10B981', borderRadius: '50%', boxShadow: '0 0 10px #10B981', animation: 'pulse 2s infinite' }} />
+                    <span style={{ fontSize: 13, fontWeight: 900, color: '#10B981' }}>RESUME ACTIVE</span>
                  </div>
               </div>
            </div>
 
-           <div style={{ display: 'flex', gap: 12 }}>
+           <div style={{ display: 'flex', gap: 16 }}>
               <input type="file" id="resume-upload" hidden onChange={handleFileChange} accept=".pdf,.doc,.docx" />
               <button 
                 onClick={() => document.getElementById('resume-upload')?.click()}
@@ -473,14 +489,15 @@ export function AIProfileAnalyzer() {
                   background: '#000', 
                   color: '#fff', 
                   border: 'none', 
-                  padding: '14px 28px', 
-                  borderRadius: 12, 
-                  fontSize: 13, 
+                  padding: '18px 36px', 
+                  borderRadius: 16, 
+                  fontSize: 14, 
                   fontWeight: 950, 
                   textTransform: 'uppercase', 
                   cursor: 'pointer',
-                  transition: 'all 0.2s',
-                  boxShadow: '0 10px 20px rgba(0,0,0,0.1)'
+                  transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
+                  letterSpacing: '0.05em'
                 }}
                 className="hover:scale-105 active:scale-95"
               >
@@ -494,33 +511,37 @@ export function AIProfileAnalyzer() {
                     background: '#FFD100', 
                     color: '#000', 
                     border: 'none', 
-                    padding: '14px 28px', 
-                    borderRadius: 12, 
-                    fontSize: 13, 
+                    padding: '18px 36px', 
+                    borderRadius: 16, 
+                    fontSize: 14, 
+                    fontWeight: 950, 
+                    textTransform: 'uppercase', 
+                    cursor: 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                    boxShadow: '0 15px 35px rgba(255, 209, 0, 0.4)',
+                    letterSpacing: '0.05em'
+                  }}
+                  className="hover:scale-105 active:scale-95"
+                >
+                  Analyze Path
+                </button>
+              ) : (
+                <button 
+                  onClick={() => setStep('results')} 
+                  style={{ 
+                    background: 'rgba(241, 245, 249, 0.5)', 
+                    color: '#64748B', 
+                    border: '1px solid rgba(226, 232, 240, 0.8)', 
+                    padding: '18px 36px', 
+                    borderRadius: 16, 
+                    fontSize: 14, 
                     fontWeight: 950, 
                     textTransform: 'uppercase', 
                     cursor: 'pointer',
                     transition: 'all 0.2s',
-                    boxShadow: '0 10px 20px rgba(255, 209, 0, 0.3)'
+                    letterSpacing: '0.05em'
                   }}
-                  className="hover:scale-105 active:scale-95"
-                >
-                  Analyze
-                </button>
-              ) : (
-                <button 
-                  onClick={() => setStep('results')} // Shortcut for demo purposes
-                  style={{ 
-                    background: '#F1F5F9', 
-                    color: '#64748B', 
-                    border: '1px solid #E2E8F0', 
-                    padding: '14px 28px', 
-                    borderRadius: 12, 
-                    fontSize: 13, 
-                    fontWeight: 950, 
-                    textTransform: 'uppercase', 
-                    cursor: 'pointer'
-                  }}
+                  className="hover:bg-white"
                 >
                   Skip to Results
                 </button>
@@ -528,14 +549,22 @@ export function AIProfileAnalyzer() {
            </div>
         </div>
 
-        <p style={{ textAlign: 'center', marginTop: 32, fontSize: 13, color: '#94A3B8', fontWeight: 600 }}>
-          Hertz Career Navigator is powered by Intelligent Neural Pathfinding.
+        <p style={{ textAlign: 'center', marginTop: 40, fontSize: 13, color: '#94A3B8', fontWeight: 700, letterSpacing: '0.02em' }}>
+          Hertz Career Navigator is powered by <span style={{ color: '#000' }}>Intelligent Neural Pathfinding.</span>
         </p>
 
         <style>{`
           @keyframes fadeInUp {
-            from { transform: translateY(20px); opacity: 0; }
+            from { transform: translateY(40px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
+          }
+          @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+          }
+          .shadow-glow:hover {
+            box-shadow: 0 0 20px rgba(255, 209, 0, 0.4);
           }
         `}</style>
       </div>
