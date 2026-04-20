@@ -71,11 +71,18 @@ export const NavBar = () => {
             </div>
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 16, textDecoration: 'none' }}>
                <div style={{ position: 'relative', width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* JIO HOTSTAR STAR + CAREER UP ARROW */}
-                  <svg width="40" height="40" viewBox="0 0 100 100" fill="none">
-                    <path d="M50 5 L56 38 L90 38 L62 58 L72 90 L50 70 L28 90 L38 58 L10 38 L44 38 Z" fill="#fff" />
-                    {/* CAREER UP INDICATOR */}
-                    <path d="M50 45 L50 15 M50 15 L40 25 M50 15 L60 25" stroke="#E1128F" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                  {/* CAREER UPGRADE ICON: ASCENDING STEPS + UPWARD ARROW */}
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    {/* ASCENDING STEPS */}
+                    <path d="M4 20h4v-4h4v-4h4v-4h4" stroke="url(#logoGradient)" />
+                    {/* SOARING ARROW */}
+                    <path d="M12 20l7-7 M19 13l-4 0 M19 13l0 4" stroke="#fff" strokeWidth="2.5" />
+                    <defs>
+                      <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#2A60E4" />
+                        <stop offset="100%" stopColor="#E1128F" />
+                      </linearGradient>
+                    </defs>
                   </svg>
                </div>
                
