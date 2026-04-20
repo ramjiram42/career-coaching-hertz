@@ -69,43 +69,30 @@ export const NavBar = () => {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 3px)', gap: 2, padding: 10, cursor: 'pointer' }}>
                {[...Array(9)].map((_, i) => <div key={i} style={{ width: 3, height: 3, background: '#64748B', borderRadius: 1 }} />)}
             </div>
-            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 16, textDecoration: 'none', group: 'true' }}>
+            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 16, textDecoration: 'none' }}>
                <div style={{ position: 'relative', width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* ANIMATED GLOW BACKGROUND */}
-                  <div style={{ position: 'absolute', inset: 0, background: '#1F80E0', borderRadius: 12, opacity: 0.2, animation: 'pulseLogo 3s infinite' }} />
-                  {/* CUSTOM SVG LOGO MARK */}
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1F80E0" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ animation: 'floatIcon 4s ease-in-out infinite' }}>
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                  {/* AUTHENTIC JIO HOTSTAR STAR SVG */}
+                  <svg width="40" height="40" viewBox="0 0 100 100" fill="none">
+                    <path d="M50 5 L56 38 L90 38 L62 58 L72 90 L50 70 L28 90 L38 58 L10 38 L44 38 Z" fill="#fff" />
+                    <circle cx="50" cy="50" r="1.5" fill="rgba(255,255,255,0.9)" />
                   </svg>
                </div>
                
-               <div style={{ width: 1, height: 24, background: 'rgba(255,255,255,0.1)', margin: '0 4px' }} />
+               <div style={{ width: 1, height: 28, background: 'rgba(255,255,255,0.15)', margin: '0 4px' }} />
 
                <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <h1 style={{ 
-                    fontSize: 18, 
-                    fontWeight: 1000, 
+                    fontSize: 22, 
+                    fontWeight: 800, 
                     color: '#fff', 
                     margin: 0, 
-                    textTransform: 'uppercase', 
                     letterSpacing: '-0.02em',
                     lineHeight: 1,
-                    position: 'relative',
-                    overflow: 'hidden'
+                    fontFamily: 'system-ui, -apple-system, sans-serif'
                   }}>
-                    CAREER <span style={{ color: '#1F80E0' }}>COACHING</span>
-                    {/* SHIMMER EFFECT ON TEXT */}
-                    <div style={{ 
-                      position: 'absolute', 
-                      top: 0, 
-                      left: '-100%', 
-                      width: '100%', 
-                      height: '100%', 
-                      background: 'linear-gradient(90deg, transparent, rgba(31,128,224,0.3), transparent)', 
-                      animation: 'shimmerText 3s infinite' 
-                    }} />
+                    Jio<span style={{ fontWeight: 400 }}>Hotstar</span>
                   </h1>
-                  <p style={{ fontSize: 10, fontWeight: 800, color: '#1F80E0', margin: 0, letterSpacing: '0.2em' }}>JIO HOTSTAR EDITION</p>
+                  <p style={{ fontSize: 9, fontWeight: 900, color: '#E1128F', margin: 0, letterSpacing: '0.15em', textTransform: 'uppercase' }}>CAREER NAVIGATOR</p>
                </div>
             </Link>
 
@@ -140,15 +127,15 @@ export const NavBar = () => {
                </svg>
                <ChevronDown size={14} color="#CBD5E1" />
             </div>
-             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <div style={{ textAlign: 'right' }}>
-                   <p style={{ fontSize: 13, fontWeight: 900, color: '#fff', margin: 0 }}>Ram</p>
-                   <p style={{ fontSize: 10, fontWeight: 700, color: '#1F80E0', margin: 0 }}>Solution Architect</p>
-                </div>
-                <div style={{ width: 36, height: 36, borderRadius: '50%', overflow: 'hidden', border: '2px solid #1F80E0' }}>
-                   <Image src="/ram_profile.png" width={36} height={36} alt="Profile" />
-                </div>
-             </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                 <div style={{ textAlign: 'right' }}>
+                    <p style={{ fontSize: 13, fontWeight: 900, color: '#fff', margin: 0 }}>Ram</p>
+                    <p style={{ fontSize: 10, fontWeight: 700, color: '#E1128F', margin: 0 }}>Solution Architect</p>
+                 </div>
+                 <div style={{ width: 36, height: 36, borderRadius: '50%', overflow: 'hidden', border: '2px solid #E1128F' }}>
+                    <Image src="/ram_profile.png" width={36} height={36} alt="Profile" />
+                 </div>
+              </div>
          </div>
       </div>
 
@@ -173,17 +160,17 @@ export const NavBar = () => {
            margin: '10px 0',
            border: '1px solid rgba(255,255,255,0.05)'
          }}>
-            {/* THE SOLID JIO HOTSTAR POWER PILL */}
+            {/* THE SOLID JIO HOTSTAR GRADIENT POWER PILL */}
             <div style={{
               position: 'absolute',
               height: 44,
               width: pillStyle.width,
-              background: '#1F80E0', // JIO HOTSTAR BLUE
+              background: 'linear-gradient(90deg, #2A60E4, #E1128F)', // JIO HOTSTAR GRADIENT
               borderRadius: 16,
               transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)', 
               left: pillStyle.left, 
               opacity: pillStyle.opacity,
-              boxShadow: '0 10px 25px rgba(31, 128, 224, 0.4)',
+              boxShadow: '0 10px 25px rgba(225, 18, 143, 0.4)',
               zIndex: 0,
               pointerEvents: 'none',
               transform: hoveredIdx !== null ? 'scale(1.1)' : 'scale(1)'

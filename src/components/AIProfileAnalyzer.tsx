@@ -508,8 +508,8 @@ export function AIProfileAnalyzer() {
                 <button 
                   onClick={handleAnalyze}
                   style={{ 
-                    background: '#FFD100', 
-                    color: '#000', 
+                    background: 'linear-gradient(90deg, #2A60E4, #E1128F)', 
+                    color: '#fff', 
                     border: 'none', 
                     padding: '18px 36px', 
                     borderRadius: 16, 
@@ -518,7 +518,7 @@ export function AIProfileAnalyzer() {
                     textTransform: 'uppercase', 
                     cursor: 'pointer',
                     transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                    boxShadow: '0 15px 35px rgba(255, 209, 0, 0.4)',
+                    boxShadow: '0 15px 35px rgba(225, 18, 143, 0.4)',
                     letterSpacing: '0.05em'
                   }}
                   className="hover:scale-105 active:scale-95"
@@ -588,18 +588,17 @@ export function AIProfileAnalyzer() {
   return (
     <div style={{ minHeight: '100vh', background: '#030B17', width: '100%', paddingBottom: 100, overflowX: 'hidden', color: '#fff' }}>
       
-      {/* FULL WIDTH JIO HOTSTAR BANNER */}
+      {/* FULL WIDTH JIO HOTSTAR GRADIENT BANNER */}
       <div style={{ 
         width: '100%', 
         position: 'relative', 
         height: 240, 
-        background: '#030B17', 
+        background: 'linear-gradient(90deg, #2A60E4, #E1128F)', 
         display: 'flex', 
         alignItems: 'center', 
         overflow: 'hidden', 
         margin: 0,
-        borderTop: '4px solid #1F80E0', 
-        borderBottom: '4px solid #1F80E0' 
+        boxShadow: 'inset 0 0 100px rgba(0,0,0,0.5)'
       }}>
          <img 
             src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=2000&auto=format&fit=crop&q=80" 
@@ -728,7 +727,7 @@ export function AIProfileAnalyzer() {
                       <div style={{ 
                         width: `${skill.value}%`, 
                         height: '100%', 
-                        background: 'linear-gradient(90deg, #1F80E0, #38BDF8, #22D3EE)', 
+                        background: 'linear-gradient(90deg, #2A60E4, #E1128F)', 
                         borderRadius: 10,
                         transition: 'width 1.5s cubic-bezier(0.19, 1, 0.22, 1)' 
                       }} />
@@ -745,9 +744,8 @@ export function AIProfileAnalyzer() {
                       <circle cx="140" cy="140" r="100" fill="none" stroke="url(#matchGradient)" strokeWidth="20" strokeLinecap="round" strokeDasharray="314 314" strokeDashoffset="45" transform="rotate(-180 140 140)" style={{ transition: 'stroke-dashoffset 1.5s ease' }} />
                       <defs>
                         <linearGradient id="matchGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor="#1F80E0" />
-                          <stop offset="50%" stopColor="#38BDF8" />
-                          <stop offset="100%" stopColor="#22D3EE" />
+                          <stop offset="0%" stopColor="#2A60E4" />
+                          <stop offset="100%" stopColor="#E1128F" />
                         </linearGradient>
                       </defs>
                    </svg>
@@ -757,7 +755,7 @@ export function AIProfileAnalyzer() {
                    </div>
                 </div>
                 <div style={{ marginTop: 20, textAlign: 'center' }}>
-                   <p style={{ color: '#1F80E0', fontSize: 13, fontWeight: 950 }}>jiohotstar.com</p>
+                   <p style={{ color: '#E1128F', fontSize: 13, fontWeight: 950 }}>jiohotstar.com</p>
                 </div>
              </div>
           </div>
