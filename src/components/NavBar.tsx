@@ -119,24 +119,26 @@ export const NavBar = () => {
          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             {/* GRID ICON AS SEEN IN SCREENSHOT */}
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 36, textDecoration: 'none' }}>
-               <div style={{ position: 'relative', width: 80, height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* THE 'ZENITH ASCENT' GEOMETRIC LOGO */}
-                  <svg width="72" height="72" viewBox="0 0 100 100" fill="none">
-                    {/* TIER 1: FOUNDATION */}
-                    <rect x="20" y="55" width="16" height="30" rx="4" fill="url(#zenithGradient)" opacity="0.4" />
-                    {/* TIER 2: MOMENTUM */}
-                    <rect x="42" y="35" width="16" height="50" rx="4" fill="url(#zenithGradient)" opacity="0.7" />
-                    {/* TIER 3: THE ZENITH (ARROW-LIKE) */}
-                    <path d="M64 15 L80 15 L80 85 L64 85 L64 15 Z" fill="url(#zenithGradient)" />
-                    <path d="M64 15 L80 15 L80 30 L64 15 Z" fill="#fff" opacity="0.3" />
+               <div style={{ position: 'relative', width: 100, height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {/* DYNAMIC 'CC' SWOOSH LOGO BASED ON USER REFERENCE */}
+                  <svg width="90" height="70" viewBox="0 0 120 80" fill="none">
+                    {/* THE 'CC' LETTERFORMS */}
+                    <text x="5" y="60" fontFamily='"Outfit", sans-serif' fontSize="65" fontWeight="1000" fill="url(#dynamicGradient)" letterSpacing="-8">CC</text>
                     
-                    {/* ACCENT POINT */}
-                    <circle cx="72" cy="15" r="4" fill="#fff" />
+                    {/* DYNAMIC SWOOSH 1 (MAIN) */}
+                    <path d="M5 50 Q40 40 115 25 L110 30 Q40 45 5 55 Z" fill="url(#dynamicGradient)" opacity="0.9" />
                     
+                    {/* DYNAMIC SWOOSH 2 (SECONDARY) */}
+                    <path d="M0 60 Q30 50 90 35 L85 40 Q30 55 0 65 Z" fill="url(#dynamicGradient)" opacity="0.6" />
+                    
+                    {/* DYNAMIC SWOOSH 3 (ACCENT) */}
+                    <path d="M10 70 Q25 65 60 55 L58 58 Q25 68 10 72 Z" fill="#fff" opacity="0.4" />
+
                     <defs>
-                      <linearGradient id="zenithGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#2563EB" />
-                        <stop offset="100%" stopColor="#9333EA" />
+                      <linearGradient id="dynamicGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#0EA5E9" /> {/* CYAN */}
+                        <stop offset="60%" stopColor="#2563EB" /> {/* BLUE */}
+                        <stop offset="100%" stopColor="#E1128F" /> {/* MAGENTA */}
                       </linearGradient>
                     </defs>
                   </svg>
