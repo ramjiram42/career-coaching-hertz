@@ -65,14 +65,15 @@ export const NavBar = () => {
          <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
             <Search size={20} color="#64748B" style={{ cursor: 'pointer' }} />
             <Bell size={20} color="#64748B" style={{ cursor: 'pointer' }} />
-            {/* FLAG PLACEHOLDER PREVIEWED IN SCREENSHOT */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, cursor: 'pointer' }}>
-               <div style={{ width: 22, height: 14, background: '#E2E8F0', borderRadius: 2, display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ height: '33%', background: '#ff0000' }} />
-                  <div style={{ height: '33%', background: '#ffffff' }} />
-                  <div style={{ height: '33%', background: '#0000ff' }} />
+            {/* USA FLAG LOGO */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer' }}>
+               <div style={{ width: 22, height: 14, background: '#fff', borderRadius: 2, position: 'relative', overflow: 'hidden', border: '1px solid #E2E8F0' }}>
+                  <div style={{ height: '50%', background: '#B22234' }} /> {/* Red top */}
+                  <div style={{ position: 'absolute', top: 0, left: 0, width: '40%', height: '60%', background: '#3C3B6E' }} /> {/* Blue Union */}
+                  <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '50%', background: '#fff' }} /> {/* White bottom */}
+                  <div style={{ position: 'absolute', top: '25%', left: 0, right: 0, height: '10%', background: '#fff', opacity: 0.8 }} />
                </div>
-               <ChevronDown size={12} color="#CBD5E1" />
+               <ChevronDown size={14} color="#CBD5E1" />
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                <div style={{ textAlign: 'right' }}>

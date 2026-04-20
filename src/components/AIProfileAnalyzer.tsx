@@ -653,10 +653,10 @@ export function AIProfileAnalyzer() {
                   <div style={{ position: 'relative' }}>
                      <p style={{ 
                        fontSize: 14, 
-                       color: '#4B5563', 
+                       color: '#1E293B', // Darkened for proper visibility as requested
                        margin: 0, 
                        fontStyle: 'italic', 
-                       fontWeight: 700, 
+                       fontWeight: 750, // Slightly bolder for crispness
                        lineHeight: 1.5, 
                        minHeight: 44,
                        position: 'relative',
