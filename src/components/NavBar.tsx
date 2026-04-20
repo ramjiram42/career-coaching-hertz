@@ -96,7 +96,7 @@ export const NavBar = () => {
       style={{
         position: 'sticky',
         top: 0,
-        zIndex: 50,
+        zIndex: 999,
         width: '100%',
         background: '#030B17',
         borderBottom: '1px solid rgba(255,255,255,0.1)',
@@ -109,7 +109,7 @@ export const NavBar = () => {
       {/* TOP TIER: BRANDING & PROFILE */}
       <div style={{ 
         width: '100%', 
-        height: '65%', 
+        height: '60%', 
         padding: '0 40px', 
         display: 'flex', 
         justifyContent: 'space-between', 
@@ -312,7 +312,7 @@ export const NavBar = () => {
 
       <div style={{ 
         width: '100%', 
-        height: '50%', 
+        height: '40%', 
         display: 'flex', 
         justifyContent: 'center', 
         alignItems: 'center',
