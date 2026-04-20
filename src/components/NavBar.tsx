@@ -150,11 +150,11 @@ export const NavBar = () => {
                     Career
                   </h1>
                   <h1 style={{ 
-                    fontSize: 28, // Same size
-                    fontWeight: 900, // Same weight
-                    color: '#fff', // Same color
-                    margin: '4px 0 0', // Tightened spacing
-                    letterSpacing: '0.05em', // Same spacing
+                    fontSize: 14, // Half of Career (28px)
+                    fontWeight: 800, 
+                    color: '#FFD100', // Yellow
+                    margin: '2px 0 0', 
+                    letterSpacing: '0.4em', 
                     lineHeight: 0.8,
                     fontFamily: '"Inter", sans-serif',
                     textTransform: 'uppercase'
