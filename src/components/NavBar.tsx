@@ -90,28 +90,35 @@ export const NavBar = () => {
                
                <div style={{ width: 1, height: 36, background: 'rgba(255,255,255,0.15)', margin: '0 4px' }} />
 
-               <div style={{ display: 'flex', flexDirection: 'column' }}>
+               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <h1 style={{ 
-                    fontSize: 30, 
-                    fontWeight: 900, 
+                    fontSize: 22, 
+                    fontWeight: 950, 
                     color: '#fff', 
                     margin: 0, 
-                    letterSpacing: '0.04em', 
-                    lineHeight: 0.8,
-                    fontFamily: '"Outfit", sans-serif'
-                  }}>
-                    Career<span style={{ fontWeight: 200, opacity: 0.7 }}>Coaching</span>
-                  </h1>
-                  <p style={{ 
-                    fontSize: 9, 
-                    fontWeight: 900, 
-                    color: '#E1128F', // JIO HOTSTAR MAGENTA
-                    margin: '8px 0 0', 
-                    letterSpacing: '0.35em', 
+                    letterSpacing: '0.15em', 
+                    lineHeight: 0.9,
+                    fontFamily: '"Outfit", sans-serif',
                     textTransform: 'uppercase'
                   }}>
-                    POWERED BY HERTZ
-                  </p>
+                    Career
+                  </h1>
+                  <h1 style={{ 
+                    fontSize: 22, 
+                    fontWeight: 300, 
+                    color: 'url(#hGradient)', // Will try to use a span with gradient later or just magenta
+                    margin: 0, 
+                    letterSpacing: '0.15em', 
+                    lineHeight: 0.9,
+                    fontFamily: '"Outfit", sans-serif',
+                    textTransform: 'uppercase',
+                    opacity: 0.9,
+                    background: 'linear-gradient(90deg, #2A60E4, #E1128F)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent'
+                  }}>
+                    Coaching
+                  </h1>
                </div>
             </Link>
 
