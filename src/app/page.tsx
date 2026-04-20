@@ -48,6 +48,14 @@ export default function HomePage() {
             Opportunities<br /><span style={{ color: '#FFD100' }}>Curated</span> For You.
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.7)', marginTop: 12, fontWeight: 500 }}>Your professional trajectory at Hertz, accelerated by AI.</p>
+           <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+            <Link href="/your-move" style={{ background: '#FFD100', color: '#0F172A', padding: '1rem 2rem', borderRadius: 12, fontWeight: 900, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.08em', textDecoration: 'none', boxShadow: '0 10px 30px rgba(255,209,0,0.3)' }}>
+              Explore Journeys
+            </Link>
+            <Link href="/jobs" style={{ background: '#fff', color: '#0F172A', padding: '1rem 2rem', borderRadius: 12, fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.08em', textDecoration: 'none', border: '1px solid #E2E8F0', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+              View Vacancies
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -62,21 +70,21 @@ export default function HomePage() {
                <section>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
                      <h3 style={{ fontSize: 24, fontWeight: 1000, color: '#0F172A', margin: 0 }}>Strategic Trajectories</h3>
-                     <Link href="/your-move" style={{ color: '#2563EB', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>View Detailed Tree <ArrowRight size={14} style={{ display: 'inline', marginLeft: 4 }} /></Link>
+                     <Link href="/your-move" style={{ color: '#0F172A', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>View Detailed Tree <ArrowRight size={14} style={{ display: 'inline', marginLeft: 4 }} /></Link>
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                      {careerPaths.map((path, idx) => (
                         <div key={idx} style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: 24, padding: 32, boxShadow: '0 10px 30px rgba(0,0,0,0.02)' }}>
                            <div style={{ display: 'flex', gap: 12, marginBottom: 20 }}>
-                              <span style={{ background: path.badgeBg, color: '#fff', padding: '4px 12px', borderRadius: 6, fontSize: 11, fontWeight: 900 }}>{path.badge}</span>
+                              <span style={{ background: path.badgeBg, color: '#0F172A', padding: '4px 12px', borderRadius: 6, fontSize: 11, fontWeight: 900 }}>{path.badge}</span>
                            </div>
                            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
                               {path.roles.map((role, ridx) => (
                                  <div key={ridx} style={{ display: 'flex', alignItems: 'center', flex: 1, gap: 16 }}>
                                     <div style={{ 
                                        flex: 1, 
-                                       background: role.completed ? '#F8FAFC' : (role.final ? 'linear-gradient(135deg, #2563EB, #1D4ED8)' : '#fff'),
+                                       background: role.completed ? '#F8FAFC' : (role.final ? 'linear-gradient(135deg, #0F172A, #1E293B)' : '#fff'),
                                        border: '1px solid #E2E8F0',
                                        borderRadius: 16,
                                        padding: 20,
@@ -107,10 +115,10 @@ export default function HomePage() {
                            <div key={i}>
                               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
                                  <span style={{ fontSize: 12, fontWeight: 800 }}>{s.label}</span>
-                                 <span style={{ fontSize: 12, fontWeight: 900, color: '#2563EB' }}>{s.val}%</span>
+                                 <span style={{ fontSize: 12, fontWeight: 900, color: '#0F172A' }}>{s.val}%</span>
                               </div>
                               <div style={{ height: 6, background: '#F1F5F9', borderRadius: 3 }}>
-                                 <div style={{ width: `${s.val}%`, height: '100%', background: '#2563EB', borderRadius: 3 }} />
+                                 <div style={{ width: `${s.val}%`, height: '100%', background: '#FFD100', borderRadius: 3 }} />
                               </div>
                            </div>
                         ))}
@@ -136,7 +144,7 @@ export default function HomePage() {
                            </div>
                            <h4 style={{ fontSize: 14, fontWeight: 800, margin: 0 }}>{job.title}</h4>
                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 12 }}>
-                              <span style={{ fontSize: 11, fontWeight: 900, color: '#2563EB' }}>{job.match}% MATCH</span>
+                              <span style={{ fontSize: 11, fontWeight: 900, color: '#0F172A', background: '#FFD100', padding: '2px 8px', borderRadius: 4 }}>{job.match}% MATCH</span>
                               <ChevronRight size={14} color="#CBD5E1" />
                            </div>
                         </div>

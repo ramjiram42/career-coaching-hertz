@@ -153,8 +153,8 @@ export function NavBar() {
                   )}
                </div>
 
-               <div style={{ width: 44, height: 44, borderRadius: 12, background: 'linear-gradient(135deg, #2563EB, #1D4ED8)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 10px 20px rgba(37,99,235,0.2)' }}>
-                  <User size={20} color="#fff" />
+               <div style={{ width: 44, height: 44, borderRadius: 12, background: '#FFD100', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 10px 20px rgba(255,209,0,0.2)' }}>
+                  <User size={20} color="#0F172A" />
                </div>
             </div>
          </div>
@@ -168,7 +168,7 @@ export function NavBar() {
                 style={{
                   position: 'relative',
                   padding: '12px 24px',
-                  color: pathname === (tab.id === 'home' ? '/' : `/${tab.id}`) ? '#2563EB' : '#64748B',
+                  color: pathname === (tab.id === 'home' ? '/' : `/${tab.id}`) ? '#0F172A' : '#64748B',
                   textDecoration: 'none',
                   fontSize: 13,
                   fontWeight: 900,
