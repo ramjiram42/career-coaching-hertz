@@ -120,17 +120,24 @@ export const NavBar = () => {
             {/* GRID ICON AS SEEN IN SCREENSHOT */}
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 24, textDecoration: 'none' }}>
                <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* SIMPLIFIED 'VELOCITY PILLARS' LOGO */}
-                  <svg width="56" height="56" viewBox="0 0 100 100" fill="none">
-                    {/* LEFT WING */}
-                    <rect x="25" y="25" width="25" height="10" rx="5" fill="#2563EB" />
-                    <rect x="35" y="40" width="20" height="10" rx="5" fill="#2563EB" opacity="0.8" />
-                    <rect x="45" y="55" width="15" height="10" rx="5" fill="#2563EB" opacity="0.6" />
+                  {/* HERTZ ORBITAL 'H' LOGO BASED ON USER REFERENCE */}
+                  <svg width="60" height="60" viewBox="0 0 100 100" fill="none">
+                    {/* OUTER KINETIC CIRCLES */}
+                    <circle cx="50" cy="50" r="45" stroke="url(#hertzGradient)" strokeWidth="2" strokeDasharray="120 40" opacity="0.6" />
+                    <circle cx="50" cy="50" r="38" stroke="url(#hertzGradient)" strokeWidth="1" strokeDasharray="80 20" opacity="0.4" />
                     
-                    {/* RIGHT WING */}
-                    <rect x="55" y="15" width="25" height="10" rx="5" fill="#9333EA" />
-                    <rect x="55" y="30" width="20" height="10" rx="5" fill="#9333EA" opacity="0.8" />
-                    <rect x="55" y="45" width="15" height="10" rx="5" fill="#9333EA" opacity="0.6" />
+                    {/* THE 'H' MONOGRAM */}
+                    <path d="M35 30 V70 M65 30 V70 M35 50 H65" stroke="url(#hertzGradient)" strokeWidth="8" strokeLinecap="round" />
+                    
+                    {/* CENTER DIAMOND ACCENT */}
+                    <rect x="47" y="47" width="6" height="6" fill="#fbbf24" transform="rotate(45 50 50)" />
+
+                    <defs>
+                      <linearGradient id="hertzGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#f59e0b" /> {/* ORANGE */}
+                        <stop offset="100%" stopColor="#ec4899" /> {/* PINK/MAGENTA */}
+                      </linearGradient>
+                    </defs>
                   </svg>
                </div>
                
@@ -141,11 +148,10 @@ export const NavBar = () => {
                     fontSize: 28, 
                     fontWeight: 900, 
                     margin: 0, 
-                    letterSpacing: '0.05em', 
+                    letterSpacing: '0.02em', 
                     lineHeight: 0.8,
                     fontFamily: '"Inter", sans-serif',
-                    textTransform: 'uppercase',
-                    background: 'linear-gradient(90deg, #2563EB, #9333EA)', // LOGO COLORS
+                    background: 'linear-gradient(90deg, #f59e0b, #ec4899)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                   }}>
@@ -153,17 +159,13 @@ export const NavBar = () => {
                   </h1>
                   <h1 style={{ 
                     fontSize: 16, 
-                    fontWeight: 400, 
-                    fontStyle: 'italic',
-                    margin: '8px 0 0', 
-                    letterSpacing: '0.3em', 
+                    fontWeight: 800, 
+                    color: '#94A3B8', // Slate/Grey from reference
+                    margin: '6px 0 0', 
+                    letterSpacing: '0.25em', 
                     lineHeight: 0.8,
                     fontFamily: '"Inter", sans-serif',
-                    textTransform: 'uppercase',
-                    background: 'linear-gradient(90deg, #FFD100, #F59E0B)', // YELLOW GRADIENT
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    opacity: 0.9
+                    textTransform: 'uppercase'
                   }}>
                     Coaching
                   </h1>
