@@ -69,46 +69,46 @@ export const NavBar = () => {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 3px)', gap: 2, padding: 10, cursor: 'pointer' }}>
                {[...Array(9)].map((_, i) => <div key={i} style={{ width: 3, height: 3, background: '#64748B', borderRadius: 1 }} />)}
             </div>
-            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 20, textDecoration: 'none' }}>
-               <div style={{ position: 'relative', width: 48, height: 48, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* CREATIVE PROFESSIONAL LOGO: THE ELEVATED PATHWAY */}
-                  <svg width="40" height="40" viewBox="0 0 100 100" fill="none">
-                    {/* OUTER ARC (VISION) */}
-                    <path d="M30 70 A40 40 0 1 1 70 30" stroke="url(#creativeGradient)" strokeWidth="8" strokeLinecap="round" />
-                    {/* INNER TRAJECTORY (THE UPGRADE) */}
-                    <path d="M30 70 L75 25 M75 25 L55 25 M75 25 L75 45" stroke="#fff" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
+            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 24, textDecoration: 'none' }}>
+               <div style={{ position: 'relative', width: 52, height: 52, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {/* ELITE ASCENDANT 'H' MONOGRAM */}
+                  <svg width="44" height="44" viewBox="0 0 100 100" fill="none">
+                    {/* LEFT PILLAR */}
+                    <rect x="25" y="20" width="10" height="60" rx="5" fill="url(#hGradient)" />
+                    {/* RIGHT PILLAR */}
+                    <rect x="65" y="20" width="10" height="60" rx="5" fill="url(#hGradient)" />
+                    {/* THE ASCENDANT CROSSBAR (ARROW) */}
+                    <path d="M35 55 L50 40 L65 55" stroke="#fff" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
                     <defs>
-                      <linearGradient id="creativeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#2A60E4" />
-                        <stop offset="100%" stopColor="#E1128F" />
+                      <linearGradient id="hGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#E1128F" />
+                        <stop offset="100%" stopColor="#2A60E4" />
                       </linearGradient>
                     </defs>
                   </svg>
                </div>
                
-               <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)', margin: '0 8px' }} />
+               <div style={{ width: 1, height: 36, background: 'rgba(255,255,255,0.15)', margin: '0 4px' }} />
 
                <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <h1 style={{ 
-                    fontSize: 28, 
+                    fontSize: 30, 
                     fontWeight: 900, 
                     color: '#fff', 
                     margin: 0, 
-                    letterSpacing: '0.02em', // Slightly more width/breathing room
-                    lineHeight: 1,
-                    fontFamily: '"Outfit", "Inter", sans-serif',
-                    textTransform: 'none'
+                    letterSpacing: '0.04em', 
+                    lineHeight: 0.8,
+                    fontFamily: '"Outfit", sans-serif'
                   }}>
-                    Career<span style={{ fontWeight: 300, opacity: 0.8 }}>Coaching</span>
+                    Career<span style={{ fontWeight: 200, opacity: 0.7 }}>Coaching</span>
                   </h1>
                   <p style={{ 
                     fontSize: 9, 
                     fontWeight: 900, 
-                    color: '#E1128F', 
-                    margin: '4px 0 0', 
-                    letterSpacing: '0.3em', 
-                    textTransform: 'uppercase',
-                    textAlign: 'left'
+                    color: '#E1128F', // JIO HOTSTAR MAGENTA
+                    margin: '8px 0 0', 
+                    letterSpacing: '0.35em', 
+                    textTransform: 'uppercase'
                   }}>
                     POWERED BY HERTZ
                   </p>
