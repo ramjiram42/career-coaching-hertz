@@ -1,14 +1,14 @@
 :root {
-  --primary: #2A60E4;
-  --secondary: #E1128F;
-  --accent: #1F80E0;
+  --primary: #2563EB;
+  --secondary: #9333EA;
+  --accent: #2563EB;
   --background: #030B17;
-  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-bg: rgba(255, 255, 255, 0.03);
   --text-main: #FFFFFF;
   --text-muted: #94A3B8;
   --shadow-soft: 0 10px 40px rgba(0,0,0,0.4);
   --shadow-medium: 0 20px 60px rgba(0,0,0,0.6);
-  --jio-gradient: linear-gradient(90deg, #2A60E4, #E1128F);
+  --brand-gradient: linear-gradient(90deg, #2563EB, #9333EA);
 }
 
 @import "tailwindcss";
@@ -20,7 +20,7 @@
 }
 
 body {
-  font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Outfit', 'Inter', sans-serif;
   background-color: var(--background);
   color: var(--text-main);
   line-height: 1.5;
@@ -28,8 +28,8 @@ body {
 }
 
 h1, h2, h3, h4 {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 900;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 950;
 }
 
 .hertz-nav-link {
