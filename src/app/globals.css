@@ -1,14 +1,14 @@
 :root {
-  --primary: #0F172A;
-  --secondary: #FFD100;
-  --accent: #FFD100;
-  --background: #F9FAFB;
-  --card-bg: #FFFFFF;
-  --text-main: #0F172A;
-  --text-muted: #64748B;
-  --shadow-soft: 0 10px 40px rgba(0,0,0,0.05);
-  --shadow-medium: 0 20px 60px rgba(0,0,0,0.1);
-  --brand-gradient: linear-gradient(90deg, #0F172A, #FFD100);
+  --primary: #2563EB;
+  --secondary: #9333EA;
+  --accent: #2563EB;
+  --background: #030B17;
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --text-main: #FFFFFF;
+  --text-muted: #94A3B8;
+  --shadow-soft: 0 10px 40px rgba(0,0,0,0.4);
+  --shadow-medium: 0 20px 60px rgba(0,0,0,0.6);
+  --brand-gradient: linear-gradient(90deg, #2563EB, #9333EA);
 }
 
 @import "tailwindcss";
@@ -20,56 +20,9 @@
 }
 
 body {
-  font-family: 'Inter', 'Outfit', sans-serif;
+  font-family: 'Outfit', 'Inter', sans-serif;
   background-color: var(--background);
   color: var(--text-main);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-}
-
-h1, h2, h3, h4 {
-  font-family: 'Outfit', sans-serif;
-  font-weight: 950;
-}
-
-.hertz-nav-link {
-  transition: all 0.2s;
-  border-bottom: 2px solid transparent;
-}
-
-.hertz-nav-link:hover {
-  color: var(--secondary) !important;
-  border-bottom-color: var(--primary);
-}
-
-.btn-hertz {
-  background: var(--primary);
-  color: var(--secondary);
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 12px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 0 #D1AB00;
-}
-
-.btn-hertz:active {
-  transform: translateY(2px);
-  box-shadow: 0 0px 0 #D1AB00;
-}
-
-.card-hertz {
-  background: var(--card-bg);
-  border-radius: 24px;
-  box-shadow: var(--shadow-soft);
-  border: 1px solid #E5E7EB;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.animate-spin-custom {
-  animation: spin 1s linear infinite;
 }

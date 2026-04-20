@@ -34,16 +34,6 @@ export function NavBar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
   return (
     <nav style={{ 
       position: 'fixed', 
@@ -51,54 +41,54 @@ export function NavBar() {
       left: 0, 
       right: 0, 
       height: 140, 
-      background: '#FFFFFF',
-      borderBottom: '1px solid #E2E8F0',
+      background: '#030B17',
+      borderBottom: '1px solid rgba(255,255,255,0.08)',
       zIndex: 1000,
       padding: '0 40px',
-      transition: 'all 0.4s ease',
-      boxShadow: isScrolled ? '0 10px 40px rgba(0,0,0,0.05)' : 'none'
+      transition: 'all 0.4s ease'
     }}>
       <div style={{ maxWidth: 1400, margin: '0 auto', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 20 }}>
          {/* TOP LEVEL: BRANDING & PROFILE */}
          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 24, textDecoration: 'none' }}>
                <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* YELLOW VELOCITY PILLARS */}
+                  {/* VELOCITY PILLARS - BLUE/PURPLE */}
                   <svg width="56" height="56" viewBox="0 0 100 100" fill="none">
-                    <rect x="25" y="25" width="25" height="10" rx="5" fill="#FFD100" />
-                    <rect x="35" y="40" width="20" height="10" rx="5" fill="#FFD100" opacity="0.8" />
-                    <rect x="45" y="55" width="15" height="10" rx="5" fill="#FFD100" opacity="0.6" />
+                    <rect x="25" y="25" width="25" height="10" rx="5" fill="#2563EB" />
+                    <rect x="35" y="40" width="20" height="10" rx="5" fill="#2563EB" opacity="0.8" />
+                    <rect x="45" y="55" width="15" height="10" rx="5" fill="#2563EB" opacity="0.6" />
                     
-                    <rect x="55" y="15" width="25" height="10" rx="5" fill="#F59E0B" />
-                    <rect x="55" y="30" width="20" height="10" rx="5" fill="#F59E0B" opacity="0.8" />
-                    <rect x="55" y="45" width="15" height="10" rx="5" fill="#F59E0B" opacity="0.6" />
+                    <rect x="55" y="15" width="25" height="10" rx="5" fill="#9333EA" />
+                    <rect x="55" y="30" width="20" height="10" rx="5" fill="#9333EA" opacity="0.8" />
+                    <rect x="55" y="45" width="15" height="10" rx="5" fill="#9333EA" opacity="0.6" />
                   </svg>
                </div>
                
-               <div style={{ width: 1, height: 40, background: '#E2E8F0', margin: '0 4px' }} />
+               <div style={{ width: 1, height: 40, background: 'rgba(255,255,255,0.1)', margin: '0 4px' }} />
 
                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <h1 style={{ 
                     fontSize: 28, 
                     fontWeight: 900, 
-                    color: '#0F172A', 
+                    color: '#fff', 
                     margin: 0, 
                     letterSpacing: '0.05em', 
                     lineHeight: 0.8,
-                    fontFamily: '"Inter", sans-serif',
+                    fontFamily: '"Outfit", sans-serif',
                     textTransform: 'uppercase'
                   }}>
                     Career
                   </h1>
                   <h1 style={{ 
-                    fontSize: 14, 
-                    fontWeight: 800, 
-                    color: '#FFD100', 
-                    margin: '4px 0 0', 
-                    letterSpacing: '0.4em', 
+                    fontSize: 16, 
+                    fontWeight: 400, 
+                    fontStyle: 'italic',
+                    margin: '2px 0 0', 
+                    letterSpacing: '0.3em', 
                     lineHeight: 0.8,
-                    fontFamily: '"Inter", sans-serif',
-                    textTransform: 'uppercase'
+                    fontFamily: '"Outfit", sans-serif',
+                    textTransform: 'uppercase',
+                    color: '#9333EA' // Back to Purple
                   }}>
                     Coaching
                   </h1>
@@ -106,15 +96,15 @@ export function NavBar() {
             </Link>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
-               <div style={{ position: 'relative' }} ref={dropdownRef}>
+               <div style={{ position: 'relative' }}>
                   <button 
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     style={{ 
-                      background: '#F1F5F9', 
-                      border: '1px solid #E2E8F0', 
+                      background: 'rgba(255,255,255,0.03)', 
+                      border: '1px solid rgba(255,255,255,0.1)', 
                       padding: '10px 20px', 
                       borderRadius: 12, 
-                      color: '#0F172A', 
+                      color: '#fff', 
                       fontWeight: 800, 
                       fontSize: 13, 
                       display: 'flex', 
@@ -125,42 +115,17 @@ export function NavBar() {
                   >
                      <span style={{ fontSize: 18 }}>{selectedCountry.flag}</span>
                      {selectedCountry.name}
-                     <div style={{ width: 8, height: 8, borderRight: '2px solid #0F172A', borderBottom: '2px solid #0F172A', transform: 'rotate(45deg)', marginBottom: 4 }} />
                   </button>
-
-                  {isDropdownOpen && (
-                    <div style={{ 
-                      position: 'absolute', 
-                      top: 'calc(100% + 10px)', 
-                      right: 0, 
-                      width: 200, 
-                      background: '#FFFFFF', 
-                      border: '1px solid #E2E8F0', 
-                      borderRadius: 16, 
-                      boxShadow: '0 20px 40px rgba(0,0,0,0.1)', 
-                      padding: 8, 
-                      display: 'flex', 
-                      flexDirection: 'column', 
-                      gap: 4 
-                    }}>
-                      {countries.map((c) => (
-                        <button key={c.id} onClick={() => { setSelectedCountry(c); setIsDropdownOpen(false); }} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', border: 'none', background: selectedCountry.id === c.id ? '#F1F5F9' : 'transparent', borderRadius: 10, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s' }}>
-                          <span style={{ fontSize: 18 }}>{c.flag}</span>
-                          <span style={{ color: '#0F172A', fontWeight: 700, fontSize: 14 }}>{c.name}</span>
-                        </button>
-                      ))}
-                    </div>
-                  )}
                </div>
 
-               <div style={{ width: 44, height: 44, borderRadius: 12, background: '#FFD100', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 10px 20px rgba(255,209,0,0.2)' }}>
-                  <User size={20} color="#0F172A" />
+               <div style={{ width: 44, height: 44, borderRadius: 12, background: 'linear-gradient(135deg, #2563EB, #9333EA)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <User size={20} color="#fff" />
                </div>
             </div>
          </div>
 
          {/* NAVIGATION LINKS */}
-         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 40, position: 'relative' }}>
+         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 40 }}>
             {tabs.map((tab) => (
               <Link
                 key={tab.id}
@@ -168,28 +133,19 @@ export function NavBar() {
                 style={{
                   position: 'relative',
                   padding: '12px 24px',
-                  color: pathname === (tab.id === 'home' ? '/' : `/${tab.id}`) ? '#0F172A' : '#64748B',
+                  color: pathname === (tab.id === 'home' ? '/' : `/${tab.id}`) ? '#fff' : '#64748B',
                   textDecoration: 'none',
                   fontSize: 13,
                   fontWeight: 900,
                   letterSpacing: '0.1em',
                   textTransform: 'uppercase',
                   zIndex: 2,
-                  transition: 'color 0.3s'
+                  transition: 'all 0.3s'
                 }}
               >
                 {tab.label}
                 {pathname === (tab.id === 'home' ? '/' : `/${tab.id}`) && (
-                  <div style={{
-                    position: 'absolute',
-                    bottom: -10,
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: 24,
-                    height: 4,
-                    background: '#FFD100', 
-                    borderRadius: 2
-                  }} />
+                  <div style={{ position: 'absolute', bottom: -10, left: '50%', transform: 'translateX(-50%)', width: 24, height: 4, background: '#2563EB', borderRadius: 2 }} />
                 )}
               </Link>
             ))}
