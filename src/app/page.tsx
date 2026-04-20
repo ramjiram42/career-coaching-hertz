@@ -4,16 +4,16 @@ import { ArrowRight, ExternalLink, Heart } from 'lucide-react'
 import { ResumeUploadSection } from '@/components/ResumeUpload'
 
 const journeyCards = [
-  { title: 'Fleet Operations Coordinator', vertical: 'Fleet Management', topColor: '#2A60E4', bottomBadge: 'HIGH MATCH', bottomBg: 'rgba(42,96,228,0.1)', bottomText: '#2A60E4', img: '🚗' },
-  { title: 'HR Learning Program Coordinator', vertical: 'People Development', topColor: '#E1128F', bottomBadge: 'FUTURE MOVE', bottomBg: 'rgba(225,18,143,0.1)', bottomText: '#E1128F', img: '👥' },
-  { title: 'Operations Supervisor', vertical: 'Core Operations', topColor: '#2A60E4', bottomBadge: 'FAST TRACK', bottomBg: 'rgba(42,96,228,0.1)', bottomText: '#2A60E4', img: '📊' },
-  { title: 'Technology Program Coordinator', vertical: 'Tech & Digital', topColor: '#E1128F', bottomBadge: 'WILD CARD', bottomBg: 'rgba(225,18,143,0.1)', bottomText: '#E1128F', img: '💻' },
+  { title: 'Fleet Operations Coordinator', vertical: 'Fleet Management', topColor: '#f59e0b', bottomBadge: 'HIGH MATCH', bottomBg: 'rgba(245,158,11,0.1)', bottomText: '#f59e0b', img: '🚗' },
+  { title: 'HR Learning Program Coordinator', vertical: 'People Development', topColor: '#ec4899', bottomBadge: 'FUTURE MOVE', bottomBg: 'rgba(236,72,153,0.1)', bottomText: '#ec4899', img: '👥' },
+  { title: 'Operations Supervisor', vertical: 'Core Operations', topColor: '#f59e0b', bottomBadge: 'FAST TRACK', bottomBg: 'rgba(245,158,11,0.1)', bottomText: '#f59e0b', img: '📊' },
+  { title: 'Technology Program Coordinator', vertical: 'Tech & Digital', topColor: '#ec4899', bottomBadge: 'WILD CARD', bottomBg: 'rgba(236,72,153,0.1)', bottomText: '#ec4899', img: '💻' },
 ]
 
 const careerPaths = [
   {
     badge: 'Desired path',
-    badgeBg: '#EC4899',
+    badgeBg: '#ec4899',
     steps: '5',
     label: 'Based on your Desired Role',
     target: 'Regional Operations Director',
@@ -27,7 +27,7 @@ const careerPaths = [
   },
   {
     badge: 'Popular path',
-    badgeBg: '#14B8A6',
+    badgeBg: '#f59e0b',
     steps: '6',
     label: 'Trending among Hertz employees like Ram',
     target: 'Fleet Operations Leader',
@@ -41,7 +41,7 @@ const careerPaths = [
   },
   {
     badge: 'Promoted Lane',
-    badgeBg: '#3B82F6',
+    badgeBg: '#f59e0b',
     steps: '5',
     label: 'Recommended by your manager',
     target: 'Enterprise Operations Executive',
@@ -69,7 +69,7 @@ export default function HomePage() {
             Opportunities<br />Curated For You.
           </h2>
           <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
-            <Link href="/your-move" style={{ background: 'linear-gradient(90deg, #2A60E4, #E1128F)', color: '#fff', padding: '0.5rem 1.25rem', borderRadius: 8, fontWeight: 900, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', textDecoration: 'none', boxShadow: '0 10px 20px rgba(225, 18, 143, 0.3)' }}>
+            <Link href="/your-move" style={{ background: 'linear-gradient(90deg, #f59e0b, #ec4899)', color: '#fff', padding: '0.5rem 1.25rem', borderRadius: 8, fontWeight: 900, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', textDecoration: 'none', boxShadow: '0 10px 20px rgba(236, 72, 153, 0.3)' }}>
               Explore Journeys
             </Link>
             <Link href="/jobs" style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', padding: '0.5rem 1.25rem', borderRadius: 8, fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)' }}>
@@ -82,11 +82,11 @@ export default function HomePage() {
           <div style={{ flex: 1 }}>
             <p style={{ fontWeight: 900, fontSize: '1.1rem', color: '#fff', margin: 0 }}>Ram</p>
             <p style={{ fontSize: '0.75rem', color: '#94A3B8', margin: '0.2rem 0 0.5rem' }}>Your profile is looking awesome</p>
-            <Link href="/your-move" style={{ color: '#E1128F', fontSize: '0.75rem', fontWeight: 800, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+            <Link href="/your-move" style={{ color: '#ec4899', fontSize: '0.75rem', fontWeight: 800, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
               Give it some more love <ArrowRight size={12} />
             </Link>
           </div>
-          <div style={{ width: 52, height: 52, background: 'linear-gradient(135deg, #2A60E4, #E1128F)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: 2 }}>
+          <div style={{ width: 52, height: 52, background: 'linear-gradient(135deg, #f59e0b, #ec4899)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: 2 }}>
             <div style={{ width: '100%', height: '100%', borderRadius: '50%', overflow: 'hidden' }}>
               <Image src="/ram_profile.png" alt="Ram" width={52} height={52} style={{ objectFit: 'cover' }} />
             </div>
@@ -105,7 +105,7 @@ export default function HomePage() {
             { label: 'Learn', href: '/dashboard' },
             { label: 'Vacancies', href: '/jobs' },
           ].map(tab => (
-            <Link key={tab.href} href={tab.href} style={{ padding: '1rem 1.5rem', fontWeight: 700, fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.08em', textDecoration: 'none', color: tab.active ? '#fff' : '#94A3B8', borderBottom: tab.active ? '3px solid #E1128F' : '3px solid transparent', whiteSpace: 'nowrap', transition: 'all 0.3s' }}>
+            <Link key={tab.href} href={tab.href} style={{ padding: '1rem 1.5rem', fontWeight: 700, fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.08em', textDecoration: 'none', color: tab.active ? '#fff' : '#94A3B8', borderBottom: tab.active ? '3px solid #ec4899' : '3px solid transparent', whiteSpace: 'nowrap', transition: 'all 0.3s' }}>
               {tab.label}
             </Link>
           ))}
@@ -120,9 +120,9 @@ export default function HomePage() {
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', marginBottom: '1rem' }}>
           {/* NEXT STEP */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 200 }}>
-            <div style={{ background: '#E1128F', color: '#fff', padding: '0.25rem 1rem', borderRadius: 999, fontSize: '0.6rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '0.75rem', boxShadow: '0 5px 15px rgba(225, 18, 143, 0.3)' }}>Next Step</div>
-            <div style={{ width: 80, height: 80, borderRadius: '50%', border: '4px solid #2A60E4', background: 'rgba(42,96,228,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', marginBottom: '0.75rem', boxShadow: '0 0 30px rgba(42,96,228,0.2)' }}>🎯</div>
-            <Link href="/your-move" style={{ color: '#2A60E4', fontWeight: 900, fontSize: '0.8rem', textDecoration: 'none', textAlign: 'center', letterSpacing: '0.05em' }}>FIND SUGGESTED MOVES</Link>
+            <div style={{ background: '#ec4899', color: '#fff', padding: '0.25rem 1rem', borderRadius: 999, fontSize: '0.6rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '0.75rem', boxShadow: '0 5px 15px rgba(236, 72, 153, 0.3)' }}>Next Step</div>
+            <div style={{ width: 80, height: 80, borderRadius: '50%', border: '4px solid #f59e0b', background: 'rgba(245,158,11,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', marginBottom: '0.75rem', boxShadow: '0 0 30px rgba(245,158,11,0.2)' }}>🎯</div>
+            <Link href="/your-move" style={{ color: '#f59e0b', fontWeight: 900, fontSize: '0.8rem', textDecoration: 'none', textAlign: 'center', letterSpacing: '0.05em' }}>FIND SUGGESTED MOVES</Link>
           </div>
 
           <div style={{ flex: 1, borderTop: '2px dashed rgba(255,255,255,0.1)', marginTop: 45 }} />
@@ -140,9 +140,9 @@ export default function HomePage() {
 
           {/* FUTURE MOVE */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 200 }}>
-            <div style={{ background: '#2A60E4', color: '#fff', padding: '0.25rem 1rem', borderRadius: 999, fontSize: '0.6rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '0.75rem', boxShadow: '0 5px 15px rgba(42,96,228,0.3)' }}>Future Move</div>
-            <div style={{ width: 80, height: 80, borderRadius: '50%', border: '4px solid #E1128F', background: 'rgba(225,18,143,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', marginBottom: '0.75rem', boxShadow: '0 0 30px rgba(225,18,143,0.2)' }}>📈</div>
-            <Link href="/your-move" style={{ color: '#E1128F', fontWeight: 900, fontSize: '0.8rem', textDecoration: 'none', textAlign: 'center', letterSpacing: '0.05em' }}>START A JOURNEY</Link>
+            <div style={{ background: '#f59e0b', color: '#fff', padding: '0.25rem 1rem', borderRadius: 999, fontSize: '0.6rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '0.75rem', boxShadow: '0 5px 15px rgba(245, 158, 11, 0.3)' }}>Future Move</div>
+            <div style={{ width: 80, height: 80, borderRadius: '50%', border: '4px solid #ec4899', background: 'rgba(236,72,153,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', marginBottom: '0.75rem', boxShadow: '0 0 30px rgba(236,72,153,0.2)' }}>📈</div>
+            <Link href="/your-move" style={{ color: '#ec4899', fontWeight: 900, fontSize: '0.8rem', textDecoration: 'none', textAlign: 'center', letterSpacing: '0.05em' }}>START A JOURNEY</Link>
           </div>
         </div>
 
@@ -177,7 +177,7 @@ export default function HomePage() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             {careerPaths.map((path, pi) => (
-              <div key={pi} style={{ background: path.bg, border: path.highlight ? '1px solid #BFDBFE' : '1px solid #F1F5F9', borderRadius: 20, padding: '1.5rem 2rem', boxShadow: path.highlight ? '0 4px 24px rgba(59,130,246,0.08)' : '0 2px 8px rgba(0,0,0,0.04)' }}>
+              <div key={pi} style={{ background: path.bg, border: path.highlight ? '1px solid #fbbf24' : '1px solid #F1F5F9', borderRadius: 20, padding: '1.5rem 2rem', boxShadow: path.highlight ? '0 4px 24px rgba(245,158,11,0.08)' : '0 2px 8px rgba(0,0,0,0.04)' }}>
                 {/* Path header */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -195,7 +195,6 @@ export default function HomePage() {
 
                 {/* Role progression row */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
-                  {/* User avatar */}
                   <div style={{ width: 44, height: 44, borderRadius: '50%', background: '#FFD100', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '2px solid #E5E7EB', overflow: 'hidden' }}>
                     <Image src="/ram_profile.png" alt="Ram" width={44} height={44} style={{ objectFit: 'cover' }} />
                   </div>
@@ -203,12 +202,10 @@ export default function HomePage() {
 
                   {path.roles.map((role, ri) => (
                     <div key={ri} style={{ display: 'flex', alignItems: 'center', flex: ri < path.roles.length - 1 ? 1 : 0 }}>
-                      {/* Node */}
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0' }}>
                         <div style={{ width: 12, height: 12, borderRadius: '50%', border: role.final ? '3px solid #000' : '2px solid #D1D5DB', background: role.final ? '#000' : '#fff', flexShrink: 0 }} />
                       </div>
 
-                      {/* Card */}
                       <div style={{ background: '#fff', border: '1px solid #E5E7EB', borderRadius: 12, padding: '0.85rem 1rem', marginLeft: 0, marginRight: 0, width: 180, flexShrink: 0, boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.4rem' }}>
                           <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#111827', lineHeight: 1.3, margin: 0 }}>{role.title}</p>
@@ -230,8 +227,6 @@ export default function HomePage() {
                         )}
                         {role.extra && <p style={{ fontSize: '0.7rem', color: '#9CA3AF', fontWeight: 700, margin: 0 }}>{role.extra}</p>}
                       </div>
-
-                      {/* Connecting line to next */}
                       {ri < path.roles.length - 1 && (
                         <div style={{ flex: 1, height: 2, background: '#E5E7EB', minWidth: 20 }} />
                       )}
