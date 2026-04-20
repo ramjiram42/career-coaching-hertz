@@ -118,51 +118,47 @@ export const NavBar = () => {
       }}>
          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             {/* GRID ICON AS SEEN IN SCREENSHOT */}
-            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 36, textDecoration: 'none' }}>
-               <div style={{ position: 'relative', width: 90, height: 90, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* THE 'VELOCITY PILLARS' LOGO BASED ON USER REFERENCE */}
-                  <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
-                    {/* LEFT WING (BLUE) */}
+            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 24, textDecoration: 'none' }}>
+               <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {/* SIMPLIFIED 'VELOCITY PILLARS' LOGO */}
+                  <svg width="56" height="56" viewBox="0 0 100 100" fill="none">
+                    {/* LEFT WING */}
                     <rect x="25" y="25" width="25" height="10" rx="5" fill="#2563EB" />
                     <rect x="35" y="40" width="20" height="10" rx="5" fill="#2563EB" opacity="0.8" />
                     <rect x="45" y="55" width="15" height="10" rx="5" fill="#2563EB" opacity="0.6" />
                     
-                    {/* RIGHT WING (PURPLE) */}
+                    {/* RIGHT WING */}
                     <rect x="55" y="15" width="25" height="10" rx="5" fill="#9333EA" />
                     <rect x="55" y="30" width="20" height="10" rx="5" fill="#9333EA" opacity="0.8" />
                     <rect x="55" y="45" width="15" height="10" rx="5" fill="#9333EA" opacity="0.6" />
                   </svg>
                </div>
                
-               <div style={{ width: 2, height: 64, background: 'rgba(255,255,255,0.15)', margin: '0 8px' }} />
+               <div style={{ width: 1, height: 40, background: 'rgba(255,255,255,0.1)', margin: '0 4px' }} />
 
                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <h1 style={{ 
-                    fontSize: 40, 
-                    fontWeight: 1000, 
+                    fontSize: 28, 
+                    fontWeight: 900, 
                     color: '#fff', 
                     margin: 0, 
-                    letterSpacing: '0.1em', 
+                    letterSpacing: '0.05em', 
                     lineHeight: 0.8,
-                    fontFamily: '"Outfit", sans-serif',
+                    fontFamily: '"Inter", sans-serif',
                     textTransform: 'uppercase'
                   }}>
                     Career
                   </h1>
                   <h1 style={{ 
-                    fontSize: 22, // Significantly reduced
-                    fontWeight: 300, 
+                    fontSize: 16, 
+                    fontWeight: 400, 
                     fontStyle: 'italic',
-                    color: '#fff', 
-                    margin: '6px 0 0', 
-                    letterSpacing: '0.4em', 
+                    color: '#94A3B8', 
+                    margin: '2px 0 0', 
+                    letterSpacing: '0.3em', 
                     lineHeight: 0.8,
-                    fontFamily: '"Outfit", sans-serif',
-                    textTransform: 'uppercase',
-                    background: 'linear-gradient(90deg, #2563EB, #9333EA)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    opacity: 0.9
+                    fontFamily: '"Inter", sans-serif',
+                    textTransform: 'uppercase'
                   }}>
                     Coaching
                   </h1>
