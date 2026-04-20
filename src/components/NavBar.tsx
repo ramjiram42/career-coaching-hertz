@@ -65,14 +65,15 @@ export const NavBar = () => {
          <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
             <Search size={20} color="#64748B" style={{ cursor: 'pointer' }} />
             <Bell size={20} color="#64748B" style={{ cursor: 'pointer' }} />
-            {/* USA FLAG LOGO */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer' }}>
-               <div style={{ width: 22, height: 14, background: '#fff', borderRadius: 2, position: 'relative', overflow: 'hidden', border: '1px solid #E2E8F0' }}>
-                  <div style={{ height: '50%', background: '#B22234' }} /> {/* Red top */}
-                  <div style={{ position: 'absolute', top: 0, left: 0, width: '40%', height: '60%', background: '#3C3B6E' }} /> {/* Blue Union */}
-                  <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '50%', background: '#fff' }} /> {/* White bottom */}
-                  <div style={{ position: 'absolute', top: '25%', left: 0, right: 0, height: '10%', background: '#fff', opacity: 0.8 }} />
-               </div>
+            {/* HIGH-FIDELITY USA SVG LOGO */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', marginLeft: 8 }}>
+               <svg width="24" height="13" viewBox="0 0 7410 3900" style={{ borderRadius: 2, boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+                  <rect width="7410" height="3900" fill="#b22234"/>
+                  <path d="M0,300H7410M0,900H7410M0,1500H7410M0,2100H7410M0,2700H7410M0,3300H7410" stroke="#fff" strokeWidth="300"/>
+                  <rect width="2964" height="2100" fill="#3c3b6e"/>
+                  <g fill="#fff">
+                    <g id="s18"><g id="s9"><g id="s5"><g id="s"><polygon id="star" points="0,-125 73,102 -119,-39 119,-39 -73,102"/></g><use href="#s" x="494"/><use href="#s" x="988"/><use href="#s" x="1482"/><use href="#s" x="1976"/></g><use href="#s5" x="247" y="175"/></g><use href="#s9" y="350"/></g><use href="#s18" y="700"/><use href="#s18" y="1400"/><use href="#s5" x="247" y="1925"/></g>
+               </svg>
                <ChevronDown size={14} color="#CBD5E1" />
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
