@@ -120,21 +120,23 @@ export const NavBar = () => {
             {/* GRID ICON AS SEEN IN SCREENSHOT */}
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 36, textDecoration: 'none' }}>
                <div style={{ position: 'relative', width: 80, height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* FUTURISTIC 'CAREERFORGE' AI LOGO: THE VECTOR C */}
+                  {/* THE 'ZENITH ASCENT' GEOMETRIC LOGO */}
                   <svg width="72" height="72" viewBox="0 0 100 100" fill="none">
-                    {/* THE ORBITAL 'C' PATH */}
-                    <path d="M75 30 A35 35 0 1 0 75 70" stroke="url(#forgeGradient)" strokeWidth="10" strokeLinecap="round" />
-                    {/* THE ACCELERATOR ARROW */}
-                    <path d="M75 30 L75 10 M75 10 L60 20 M75 10 L85 20" stroke="#fff" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-                    {/* AI NODE ELEMENTS */}
-                    <circle cx="20" cy="50" r="4" fill="#fff" opacity="0.8" />
-                    <circle cx="75" cy="70" r="4" fill="#fff" opacity="0.8" />
-                    <circle cx="50" cy="85" r="4" fill="url(#forgeGradient)" />
-                    <path d="M20 50 L40 50 M75 70 L75 55 M50 85 L50 70" stroke="#fff" strokeWidth="1" opacity="0.3" />
+                    {/* TIER 1: FOUNDATION */}
+                    <rect x="20" y="55" width="16" height="30" rx="4" fill="url(#zenithGradient)" opacity="0.4" />
+                    {/* TIER 2: MOMENTUM */}
+                    <rect x="42" y="35" width="16" height="50" rx="4" fill="url(#zenithGradient)" opacity="0.7" />
+                    {/* TIER 3: THE ZENITH (ARROW-LIKE) */}
+                    <path d="M64 15 L80 15 L80 85 L64 85 L64 15 Z" fill="url(#zenithGradient)" />
+                    <path d="M64 15 L80 15 L80 30 L64 15 Z" fill="#fff" opacity="0.3" />
+                    
+                    {/* ACCENT POINT */}
+                    <circle cx="72" cy="15" r="4" fill="#fff" />
+                    
                     <defs>
-                      <linearGradient id="forgeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#2563EB" /> {/* PRO BLUE */}
-                        <stop offset="100%" stopColor="#9333EA" /> {/* TECH PURPLE */}
+                      <linearGradient id="zenithGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#2563EB" />
+                        <stop offset="100%" stopColor="#9333EA" />
                       </linearGradient>
                     </defs>
                   </svg>
@@ -144,11 +146,11 @@ export const NavBar = () => {
 
                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <h1 style={{ 
-                    fontSize: 38, 
+                    fontSize: 40, 
                     fontWeight: 1000, 
                     color: '#fff', 
                     margin: 0, 
-                    letterSpacing: '0.15em', 
+                    letterSpacing: '0.1em', 
                     lineHeight: 0.8,
                     fontFamily: '"Outfit", sans-serif',
                     textTransform: 'uppercase'
@@ -156,12 +158,12 @@ export const NavBar = () => {
                     Career
                   </h1>
                   <h1 style={{ 
-                    fontSize: 26, // Reduced size
+                    fontSize: 22, // Significantly reduced
                     fontWeight: 300, 
-                    fontStyle: 'italic', // Italic as requested
+                    fontStyle: 'italic',
                     color: '#fff', 
-                    margin: '4px 0 0', 
-                    letterSpacing: '0.3em', 
+                    margin: '6px 0 0', 
+                    letterSpacing: '0.4em', 
                     lineHeight: 0.8,
                     fontFamily: '"Outfit", sans-serif',
                     textTransform: 'uppercase',
@@ -170,7 +172,7 @@ export const NavBar = () => {
                     WebkitTextFillColor: 'transparent',
                     opacity: 0.9
                   }}>
-                    Forge
+                    Coaching
                   </h1>
                </div>
             </Link>
