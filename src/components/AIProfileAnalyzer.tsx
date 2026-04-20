@@ -114,88 +114,104 @@ export function AIProfileAnalyzer() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F8FAFC', width: '100%', paddingBottom: 100, overflowX: 'hidden' }}>
+    <div style={{ minHeight: '100vh', background: '#fff', width: '100%', paddingBottom: 100, overflowX: 'hidden' }}>
       
-      {/* FULL WIDTH HERTZ BANNER AREA */}
-      <div style={{ width: '100%', position: 'relative', height: 320, background: '#000', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
+      {/* FULL WIDTH HERTZ BANNER AREA (MATCHING SECOND IMAGE EXACTLY) */}
+      <div style={{ 
+        width: '100%', 
+        position: 'relative', 
+        height: 300, 
+        background: '#000', 
+        display: 'flex', 
+        alignItems: 'center', 
+        overflow: 'hidden', 
+        borderTop: '5px solid #FFD100', 
+        borderBottom: '5px solid #FFD100' 
+      }}>
          <img 
             src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=2000&auto=format&fit=crop&q=80" 
             alt="Hertz Fleet" 
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5 }} 
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.7 }} 
          />
-         {/* Overlay Gradient for readability */}
-         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.8) 100%)' }} />
          
-         <div style={{ width: '100%', maxWidth: 1400, margin: '0 auto', padding: '0 80px', position: 'relative', zIndex: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-               <h2 style={{ fontSize: 44, fontWeight: 950, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', margin: 0, lineHeight: 1.1, borderLeft: '8px solid #FFD100', paddingLeft: 32 }}>
-                  OPPORTUNITIES CURATED<br/>FOR YOU.
+         <div style={{ width: '100%', maxWidth: 1400, margin: '0 auto', padding: '0 40px', position: 'relative', zIndex: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            {/* Left Side Content */}
+            <div style={{ textAlign: 'left' }}>
+               <h2 style={{ fontSize: 48, fontWeight: 950, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', margin: 0, lineHeight: 1 }}>
+                  OPPORTUNITIES<br/>CURATED FOR YOU.
                </h2>
-            </div>
-            {/* Profile Card Overlay */}
-            <div style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(10px)', borderRadius: 24, padding: '24px 40px', display: 'flex', alignItems: 'center', gap: 24, boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)', border: '2px solid #FFD100' }}>
-               <div style={{ textAlign: 'right' }}>
-                  <p style={{ fontSize: 20, fontWeight: 950, color: '#000', margin: 0 }}>RAM JIRAM</p>
-                  <p style={{ fontSize: 13, color: '#4B5563', margin: '4px 0', fontWeight: 700 }}>Your profile is looking awesome</p>
-                  <div style={{ height: 2, background: '#FFD100', width: '60%', marginLeft: 'auto', marginTop: 8 }} />
+               <div style={{ display: 'flex', gap: 16, marginTop: 32 }}>
+                  <button style={{ background: '#FFD100', color: '#000', border: 'none', padding: '12px 24px', borderRadius: 8, fontWeight: 900, fontSize: 14, textTransform: 'uppercase', cursor: 'pointer' }}>EXPLORE JOURNEYS</button>
+                  <button style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', border: '1px solid rgba(255,255,255,0.4)', padding: '12px 24px', borderRadius: 8, fontWeight: 900, fontSize: 14, textTransform: 'uppercase', cursor: 'pointer', backdropFilter: 'blur(5px)' }}>VIEW VACANCIES</button>
                </div>
-               <div style={{ width: 72, height: 72, borderRadius: '50%', overflow: 'hidden', border: '4px solid #FFD100', boxShadow: '0 0 20px rgba(255,209,0,0.3)' }}>
-                  <Image src="/ram_profile.png" width={72} height={72} alt="Profile" />
+            </div>
+
+            {/* Profile Card Overlay (Right Side) */}
+            <div style={{ background: '#fff', borderRadius: 20, padding: '24px 32px', display: 'flex', alignItems: 'center', gap: 24, boxShadow: '0 20px 40px rgba(0,0,0,0.2)', minWidth: 400 }}>
+               <div style={{ flex: 1 }}>
+                  <p style={{ fontSize: 24, fontWeight: 950, color: '#000', margin: 0 }}>Ram</p>
+                  <p style={{ fontSize: 14, color: '#64748B', margin: '4px 0', fontWeight: 600 }}>Your profile is looking awesome</p>
+                  <button style={{ background: 'none', border: 'none', color: '#FFD100', fontSize: 14, fontWeight: 900, padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, marginTop: 12 }}>
+                    Give it some more love <ArrowRight size={16} />
+                  </button>
+               </div>
+               <div style={{ width: 80, height: 80, borderRadius: '50%', overflow: 'hidden', border: '4px solid #E2E8F0' }}>
+                  <Image src="/ram_profile.png" width={80} height={80} alt="Profile" />
                </div>
             </div>
          </div>
       </div>
 
       <div style={{ maxWidth: 1400, margin: '0 auto', padding: '80px 40px' }}>
-         <h1 style={{ textAlign: 'center', fontSize: 48, fontWeight: 950, color: '#000', marginBottom: 120, textTransform: 'uppercase', letterSpacing: '-0.03em' }}>Explore Future Moves</h1>
+         <h1 style={{ textAlign: 'center', fontSize: 44, fontWeight: 950, color: '#000', marginBottom: 100, textTransform: 'uppercase', letterSpacing: '-0.03em' }}>Explore Future Moves</h1>
 
          {/* Tree Top Root Area */}
-         <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 140, marginBottom: 180 }}>
+         <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 140, marginBottom: 160 }}>
             
             {/* NEXT STEP (Left Node) */}
             <div style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}>
-               <div style={{ width: 110, height: 110, borderRadius: '50%', border: '5px solid #10B981', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24, overflow: 'hidden', boxShadow: '0 15px 30px rgba(16,185,129,0.2)' }}>
-                  <Image src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=110&h=110&fit=crop" width={110} height={110} alt="Next" />
+               <div style={{ width: 100, height: 100, borderRadius: '50%', border: '4px solid #10B981', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, overflow: 'hidden', boxShadow: '0 10px 25px rgba(16,185,129,0.15)' }}>
+                  <Image src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=100&h=100&fit=crop" width={100} height={100} alt="Next" />
                </div>
-               <span style={{ display: 'inline-block', background: '#10B981', color: '#fff', fontSize: 11, fontWeight: 950, padding: '6px 18px', borderRadius: 6, marginBottom: 16, textTransform: 'uppercase' }}>NEXT STEP</span>
-               <p style={{ fontSize: 14, fontWeight: 800, color: '#007AFF', cursor: 'pointer', maxWidth: 200, margin: '0 auto', lineHeight: 1.4 }}>Click Here to Find Suggested Moves</p>
+               <span style={{ display: 'inline-block', background: '#10B981', color: '#fff', fontSize: 10, fontWeight: 950, padding: '6px 16px', borderRadius: 6, marginBottom: 12, textTransform: 'uppercase' }}>NEXT STEP</span>
+               <p style={{ fontSize: 13, fontWeight: 800, color: '#007AFF', cursor: 'pointer', maxWidth: 180, margin: '0 auto', lineHeight: 1.4 }}>Click Here to Find Suggested Moves</p>
             </div>
 
             {/* YOU TODAY (Center) */}
             <div style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}>
                <div style={{ position: 'relative' }}>
-                  <div style={{ position: 'absolute', top: -15, left: -15, right: -15, bottom: -15, borderRadius: '50%', background: 'linear-gradient(135deg, #FFD100, transparent)', opacity: 0.4, filter: 'blur(20px)' }} />
-                  <div id="center-node-anchor" style={{ position: 'relative', width: 160, height: 160, borderRadius: '50%', border: '8px solid #FFD100', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 32, overflow: 'hidden', boxShadow: '0 25px 50px rgba(0,0,0,0.15)' }}>
-                     <Image src="/ram_profile.png" width={160} height={160} alt="You" />
+                  <div style={{ position: 'absolute', top: -10, left: -10, right: -10, bottom: -10, borderRadius: '50%', background: 'linear-gradient(135deg, #FFD100, transparent)', opacity: 0.3, filter: 'blur(15px)' }} />
+                  <div style={{ position: 'relative', width: 140, height: 140, borderRadius: '50%', border: '8px solid #fff', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 32, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.12)' }}>
+                     <Image src="/ram_profile.png" width={140} height={140} alt="You" />
                   </div>
                </div>
-               <div style={{ marginTop: 32 }}>
-                  <span style={{ display: 'block', fontSize: 12, fontWeight: 950, color: '#94A3B8', letterSpacing: '0.25em', marginBottom: 12, textTransform: 'uppercase' }}>YOU TODAY</span>
-                  <p style={{ fontSize: 24, fontWeight: 950, color: '#000', margin: 0, letterSpacing: '-0.02em', textTransform: 'uppercase' }}>RPA Solution Architect</p>
+               <div style={{ marginTop: 24 }}>
+                  <span style={{ display: 'block', fontSize: 11, fontWeight: 950, color: '#94A3B8', letterSpacing: '0.2rem', marginBottom: 8, textTransform: 'uppercase' }}>YOU TODAY</span>
+                  <p style={{ fontSize: 20, fontWeight: 950, color: '#000', margin: 0, letterSpacing: '-0.02em' }}>RPA Solution Architect</p>
                </div>
             </div>
 
             {/* FUTURE MOVE (Right Node) */}
             <div style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}>
-               <div style={{ width: 110, height: 110, borderRadius: '50%', border: '5px solid #F59E0B', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24, overflow: 'hidden', boxShadow: '0 15px 30px rgba(245,158,11,0.2)' }}>
-                  <Image src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=110&h=110&fit=crop" width={110} height={110} alt="Future" />
+               <div style={{ width: 100, height: 100, borderRadius: '50%', border: '4px solid #F59E0B', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, overflow: 'hidden', boxShadow: '0 10px 25px rgba(245,158,11,0.15)' }}>
+                  <Image src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=100&h=100&fit=crop" width={100} height={100} alt="Future" />
                </div>
-               <span style={{ display: 'inline-block', background: '#F59E0B', color: '#fff', fontSize: 11, fontWeight: 950, padding: '6px 18px', borderRadius: 6, marginBottom: 16, textTransform: 'uppercase' }}>FUTURE MOVE</span>
-               <p style={{ fontSize: 14, fontWeight: 800, color: '#007AFF', cursor: 'pointer', maxWidth: 200, margin: '0 auto', lineHeight: 1.4 }}>Click Here to Find a Journey</p>
+               <span style={{ display: 'inline-block', background: '#F59E0B', color: '#fff', fontSize: 10, fontWeight: 950, padding: '6px 16px', borderRadius: 6, marginBottom: 12, textTransform: 'uppercase' }}>FUTURE MOVE</span>
+               <p style={{ fontSize: 13, fontWeight: 800, color: '#007AFF', cursor: 'pointer', maxWidth: 180, margin: '0 auto', lineHeight: 1.4 }}>Click Here to Find a Journey</p>
             </div>
 
             {/* SVG Connector Arrows */}
-            <div style={{ position: 'absolute', top: 160, left: '50%', transform: 'translateX(-50%)', width: 1100, height: 350, zIndex: 0, pointerEvents: 'none' }}>
-               <svg width="1100" height="350" viewBox="0 0 1100 350">
+            <div style={{ position: 'absolute', top: 140, left: '50%', transform: 'translateX(-50%)', width: 1100, height: 320, zIndex: 0, pointerEvents: 'none' }}>
+               <svg width="1100" height="320" viewBox="0 0 1100 320">
                   <defs>
                      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                        <polygon points="0 0, 10 3.5, 0 7" fill="#000" />
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#007AFF" />
                      </marker>
                   </defs>
-                  <path d="M550 0 C550 175, 137 175, 137 340" stroke="#000" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.2} markerEnd="url(#arrowhead)" />
-                  <path d="M550 0 C550 175, 412 175, 412 340" stroke="#000" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.2} markerEnd="url(#arrowhead)" />
-                  <path d="M550 0 C550 175, 687 175, 687 340" stroke="#000" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.2} markerEnd="url(#arrowhead)" />
-                  <path d="M550 0 C550 175, 962 175, 962 340" stroke="#000" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.2} markerEnd="url(#arrowhead)" />
+                  <path d="M550 0 C550 150, 137 150, 137 300" stroke="#007AFF" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.4} markerEnd="url(#arrowhead)" />
+                  <path d="M550 0 C550 150, 412 150, 412 300" stroke="#007AFF" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.4} markerEnd="url(#arrowhead)" />
+                  <path d="M550 0 C550 150, 687 150, 687 300" stroke="#007AFF" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.4} markerEnd="url(#arrowhead)" />
+                  <path d="M550 0 C550 150, 962 150, 962 300" stroke="#007AFF" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.4} markerEnd="url(#arrowhead)" />
                </svg>
             </div>
          </div>
@@ -203,24 +219,24 @@ export function AIProfileAnalyzer() {
          {/* 4 Cards Grid */}
          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 32, position: 'relative', zIndex: 10 }}>
             {careerCards.map(card => (
-              <div key={card.id} style={{ background: '#fff', borderRadius: 32, padding: '60px 32px 40px', boxShadow: '0 4px 25px rgba(0,0,0,0.04)', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid #F1F5F9', position: 'relative', minHeight: 560, transition: 'all 0.3s ease' }} className="hover:-translate-y-2 hover:border-[#FFD100] hover:shadow-2xl">
+              <div key={card.id} style={{ background: '#fff', borderRadius: 32, padding: '56px 32px 40px', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid #F1F5F9', position: 'relative', minHeight: 520, transition: 'transform 0.3s ease' }} className="hover:-translate-y-2">
                  
-                 <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', background: card.matchColor === '#000000' ? '#000' : card.matchColor, color: card.matchColor === '#000000' ? '#FFD100' : '#fff', fontSize: 11, fontWeight: 950, padding: '6px 24px', borderRadius: 10, whiteSpace: 'nowrap', boxShadow: '0 10px 15px rgba(0,0,0,0.15)', textTransform: 'uppercase', border: '2px solid #fff' }}>{card.match}</div>
+                 <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', background: card.matchColor, color: '#fff', fontSize: 10, fontWeight: 950, padding: '6px 24px', borderRadius: 10, whiteSpace: 'nowrap', boxShadow: '0 10px 15px rgba(0,0,0,0.1)', textTransform: 'uppercase', border: '2px solid #fff' }}>{card.match}</div>
                  
-                 <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#94A3B8', marginBottom: 12 }}>
-                    <span style={{ fontSize: 11, fontWeight: 950, letterSpacing: '0.2rem' }}>HERTZ JOURNEY</span>
-                    <Search size={22} color="#000" />
+                 <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#CBD5E1', marginBottom: 12 }}>
+                    <span style={{ fontSize: 11, fontWeight: 950, letterSpacing: '0.15em' }}>JOURNEY</span>
+                    <Search size={20} />
                  </div>
 
-                 <div style={{ width: 180, height: 180, borderRadius: '50%', overflow: 'hidden', margin: '32px 0', border: '12px solid #F8FAFC', flexShrink: 0, boxShadow: '0 15px 30px rgba(0,0,0,0.05)' }}>
+                 <div style={{ width: 160, height: 160, borderRadius: '50%', overflow: 'hidden', margin: '32px 0', border: '10px solid #F8FAFC', flexShrink: 0, boxShadow: 'inset 0 0 0 4px rgba(0,0,0,0.02)' }}>
                     <img src={card.image} alt={card.role} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                  </div>
 
-                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', textAlign: 'center', marginBottom: 40 }}>
-                    <h4 style={{ fontSize: 24, fontWeight: 950, color: '#000', margin: 0, lineHeight: 1.1, textTransform: 'uppercase', letterSpacing: '-0.02em' }}>{card.role}</h4>
+                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', textAlign: 'center', marginBottom: 32 }}>
+                    <h4 style={{ fontSize: 22, fontWeight: 950, color: '#111827', margin: 0, lineHeight: 1.2 }}>{card.role}</h4>
                  </div>
                  
-                 <button style={{ background: '#000', color: '#FFD100', border: '3px solid #FFD100', padding: '16px 48px', borderRadius: 14, fontSize: 12, fontWeight: 950, textTransform: 'uppercase', letterSpacing: '0.15em', cursor: 'pointer', transition: 'all 0.2s' }}>{card.badge}</button>
+                 <button style={{ background: card.badgeColor, color: '#fff', border: 'none', padding: '14px 44px', borderRadius: 12, fontSize: 11, fontWeight: 950, textTransform: 'uppercase', letterSpacing: '0.15em', cursor: 'pointer', transition: 'all 0.2s', boxShadow: `0 8px 16px ${card.badgeColor}33` }}>{card.badge}</button>
               </div>
             ))}
          </div>
