@@ -4,8 +4,10 @@ import { Menu, X, Bell, User, ChevronDown, Rocket, Search, Briefcase } from 'luc
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 export const NavBar = () => {
+  const pathname = usePathname();
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 });
@@ -20,7 +22,7 @@ export const NavBar = () => {
   // EXACT OPTIONS FROM SCREENSHOT
   const navLinks = [
     { name: 'HOME', href: '/' },
-    { name: 'JOURNEYS', href: '/your-move', active: true },
+    { name: 'JOURNEYS', href: '/your-move' },
     { name: 'GIGS', href: '#' },
     { name: 'MENTORS', href: '#' },
     { name: 'LEARN', href: '#' },
@@ -28,18 +30,22 @@ export const NavBar = () => {
   ];
 
   useEffect(() => {
-    const activeIdx = navLinks.findIndex(l => l.active);
-    const targetIdx = hoveredIdx !== null ? hoveredIdx : activeIdx;
+    const activeIdx = navLinks.findIndex(l => l.href === pathname || (l.href !== '/' && pathname.startsWith(l.href)));
+    const targetIdx = hoveredIdx !== null ? hoveredIdx : (activeIdx !== -1 ? activeIdx : 0);
     
     if (navRefs.current[targetIdx]) {
       const el = navRefs.current[targetIdx];
-      setPillStyle({
-        left: el?.offsetLeft || 0,
-        width: el?.offsetWidth || 0,
-        opacity: 1
+      // Use requestAnimationFrame or timeout to ensure DOM metrics are stable
+      const frame = requestAnimationFrame(() => {
+        setPillStyle({
+          left: el?.offsetLeft || 0,
+          width: el?.offsetWidth || 0,
+          opacity: 1
+        });
       });
+      return () => cancelAnimationFrame(frame);
     }
-  }, [hoveredIdx]);
+  }, [hoveredIdx, pathname]);
 
   return (
     <nav 
@@ -66,18 +72,18 @@ export const NavBar = () => {
       }}>
          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             {/* GRID ICON AS SEEN IN SCREENSHOT */}
-            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 32, textDecoration: 'none' }}>
-               <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* SCALED ELITE ASCENDANT 'H' MONOGRAM */}
-                  <svg width="56" height="56" viewBox="0 0 100 100" fill="none">
+            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 36, textDecoration: 'none' }}>
+               <div style={{ position: 'relative', width: 72, height: 72, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {/* MASTER SCALE ELITE ASCENDANT 'H' MONOGRAM */}
+                  <svg width="64" height="64" viewBox="0 0 100 100" fill="none">
                     {/* LEFT PILLAR */}
-                    <rect x="25" y="15" width="12" height="70" rx="6" fill="url(#hGradientLarge)" />
+                    <rect x="24" y="10" width="14" height="80" rx="7" fill="url(#hGradientMaster)" />
                     {/* RIGHT PILLAR */}
-                    <rect x="63" y="15" width="12" height="70" rx="6" fill="url(#hGradientLarge)" />
+                    <rect x="62" y="10" width="14" height="80" rx="7" fill="url(#hGradientMaster)" />
                     {/* THE ASCENDANT CROSSBAR (ARROW) */}
-                    <path d="M37 55 L50 40 L63 55" stroke="#fff" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M37 55 L50 40 L63 55" stroke="#fff" strokeWidth="14" strokeLinecap="round" strokeLinejoin="round" />
                     <defs>
-                      <linearGradient id="hGradientLarge" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <linearGradient id="hGradientMaster" x1="0%" y1="0%" x2="0%" y2="100%">
                         <stop offset="0%" stopColor="#E1128F" />
                         <stop offset="100%" stopColor="#2A60E4" />
                       </linearGradient>
@@ -85,28 +91,28 @@ export const NavBar = () => {
                   </svg>
                </div>
                
-               <div style={{ width: 2, height: 48, background: 'rgba(255,255,255,0.15)', margin: '0 4px' }} />
+               <div style={{ width: 2, height: 56, background: 'rgba(255,255,255,0.15)', margin: '0 8px' }} />
 
                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <h1 style={{ 
-                    fontSize: 28, 
+                    fontSize: 34, 
                     fontWeight: 1000, 
                     color: '#fff', 
                     margin: 0, 
-                    letterSpacing: '0.2em', 
-                    lineHeight: 0.85,
+                    letterSpacing: '0.25em', 
+                    lineHeight: 0.8,
                     fontFamily: '"Outfit", sans-serif',
                     textTransform: 'uppercase'
                   }}>
                     Career
                   </h1>
                   <h1 style={{ 
-                    fontSize: 28, 
+                    fontSize: 34, 
                     fontWeight: 300, 
                     color: '#fff', 
                     margin: 0, 
-                    letterSpacing: '0.2em', 
-                    lineHeight: 0.85,
+                    letterSpacing: '0.25em', 
+                    lineHeight: 0.8,
                     fontFamily: '"Outfit", sans-serif',
                     textTransform: 'uppercase',
                     background: 'linear-gradient(90deg, #2A60E4, #E1128F)',
