@@ -503,19 +503,89 @@ export function AIProfileAnalyzer() {
                </div>
             </div>
 
-            {/* Profile Card Overlay (DAILY QUOTE INTEGRATED) */}
-            <div style={{ background: 'rgba(255,255,255,0.98)', borderRadius: 20, padding: '20px 28px', display: 'flex', alignItems: 'center', gap: 20, boxShadow: '0 20px 40px rgba(0,0,0,0.3)', border: '1px solid #E2E8F0', maxWidth: 460 }}>
+            {/* Profile Card Overlay (DAILY QUOTE INTEGRATED WITH LOVE) */}
+            <div style={{ 
+              background: '#fff', 
+              borderRadius: 24, 
+              padding: '24px 32px', 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: 24, 
+              boxShadow: '0 30px 60px rgba(0,0,0,0.15)', 
+              border: '2px solid #FFD100', // Hertz Outline with Love
+              maxWidth: 520,
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+               <div style={{ 
+                 position: 'absolute', 
+                 top: 0, 
+                 right: 0, 
+                 background: '#FFD100', 
+                 color: '#000', 
+                 fontSize: 9, 
+                 fontWeight: 950, 
+                 padding: '4px 12px', 
+                 borderBottomLeftRadius: 12,
+                 textTransform: 'uppercase',
+                 letterSpacing: '0.1em'
+               }}>
+                  Quote of the Day
+               </div>
+
                <div style={{ flex: 1 }}>
-                  <p style={{ fontSize: 20, fontWeight: 950, color: '#000', margin: 0 }}>Ram</p>
-                  <p style={{ fontSize: 13, color: '#4B5563', margin: '4px 0', fontWeight: 700, lineHeight: 1.4, minHeight: 40, display: 'flex', alignItems: 'center' }}>
-                    {dailyQuote}
-                  </p>
-                  <button style={{ background: 'none', border: 'none', color: '#FFD100', fontSize: 13, fontWeight: 950, padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, marginTop: 10 }}>
-                    Give it some more love <ArrowRight size={14} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                     <p style={{ fontSize: 22, fontWeight: 950, color: '#000', margin: 0 }}>Ram</p>
+                     <Sparkles size={14} color="#FFD100" fill="#FFD100" />
+                  </div>
+                  <p style={{ fontSize: 10, fontWeight: 900, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Solution Architect</p>
+                  
+                  <div style={{ position: 'relative' }}>
+                     <p style={{ 
+                       fontSize: 14, 
+                       color: '#4B5563', 
+                       margin: 0, 
+                       fontStyle: 'italic', 
+                       fontWeight: 700, 
+                       lineHeight: 1.5, 
+                       minHeight: 44,
+                       position: 'relative',
+                       zIndex: 1,
+                       paddingLeft: 12,
+                       borderLeft: '3px solid #FFD100'
+                     }}>
+                       "{dailyQuote}"
+                     </p>
+                  </div>
+
+                  <button style={{ 
+                    background: '#F8FAFC', 
+                    border: '1px solid #E2E8F0', 
+                    color: '#64748B', 
+                    fontSize: 11, 
+                    fontWeight: 800, 
+                    padding: '6px 14px', 
+                    borderRadius: 30, 
+                    cursor: 'pointer', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: 6, 
+                    marginTop: 16,
+                    transition: 'all 0.2s'
+                  }} className="hover:bg-slate-50 hover:text-black">
+                    Fresh Inspiration <Zap size={10} color="#FFD100" fill="#FFD100" />
                   </button>
                </div>
-               <div style={{ width: 68, height: 68, borderRadius: '50%', overflow: 'hidden', border: '4px solid #F1F5F9', flexShrink: 0 }}>
-                  <Image src="/ram_profile.png" width={68} height={68} alt="Profile" />
+               <div style={{ 
+                 width: 80, 
+                 height: 80, 
+                 borderRadius: 20, 
+                 overflow: 'hidden', 
+                 border: '3px solid #F1F5F9', 
+                 flexShrink: 0,
+                 boxShadow: '0 10px 20px rgba(0,0,0,0.1)'
+               }}>
+                  <Image src="/ram_profile.png" width={80} height={80} alt="Profile" />
                </div>
             </div>
          </div>
@@ -546,7 +616,7 @@ export function AIProfileAnalyzer() {
                </div>
                <div style={{ marginTop: 24 }}>
                   <span style={{ display: 'block', fontSize: 11, fontWeight: 950, color: '#94A3B8', letterSpacing: '0.2rem', marginBottom: 8, textTransform: 'uppercase' }}>YOU TODAY</span>
-                  <p style={{ fontSize: 20, fontWeight: 950, color: '#000', margin: 0, letterSpacing: '-0.02em', textTransform: 'uppercase' }}>RPA Solution Architect</p>
+                  <p style={{ fontSize: 22, fontWeight: 950, color: '#000', margin: 0, letterSpacing: '-0.02em', textTransform: 'uppercase' }}>Solution Architect</p>
                </div>
             </div>
 
