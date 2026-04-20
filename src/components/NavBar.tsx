@@ -47,8 +47,8 @@ export const NavBar = () => {
         position: 'sticky',
         top: 0,
         zIndex: 500,
-        background: '#ffffff',
-        borderBottom: '1px solid #E2E8F0',
+        background: '#030B17', // Jio Hotstar Deep Midnight
+        borderBottom: '1px solid rgba(255,255,255,0.1)',
         transition: 'all 0.3s ease',
         height: scrolled ? 80 : 100,
         display: 'flex',
@@ -59,11 +59,10 @@ export const NavBar = () => {
       <div style={{ 
         width: '100%', 
         padding: '0 40px', 
-        height: '50%', 
         display: 'flex', 
         justifyContent: 'space-between', 
         alignItems: 'center',
-        borderBottom: '1px solid #F1F5F9'
+        borderBottom: '1px solid rgba(255,255,255,0.05)'
       }}>
          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             {/* GRID ICON AS SEEN IN SCREENSHOT */}
@@ -73,20 +72,20 @@ export const NavBar = () => {
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 16, textDecoration: 'none', group: 'true' }}>
                <div style={{ position: 'relative', width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   {/* ANIMATED GLOW BACKGROUND */}
-                  <div style={{ position: 'absolute', inset: 0, background: '#FFD100', borderRadius: 12, opacity: 0.2, animation: 'pulseLogo 3s infinite' }} />
+                  <div style={{ position: 'absolute', inset: 0, background: '#1F80E0', borderRadius: 12, opacity: 0.2, animation: 'pulseLogo 3s infinite' }} />
                   {/* CUSTOM SVG LOGO MARK */}
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ animation: 'floatIcon 4s ease-in-out infinite' }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1F80E0" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ animation: 'floatIcon 4s ease-in-out infinite' }}>
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                   </svg>
                </div>
                
-               <div style={{ width: 1, height: 24, background: '#E2E8F0', margin: '0 4px' }} />
+               <div style={{ width: 1, height: 24, background: 'rgba(255,255,255,0.1)', margin: '0 4px' }} />
 
                <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <h1 style={{ 
                     fontSize: 18, 
                     fontWeight: 1000, 
-                    color: '#000', 
+                    color: '#fff', 
                     margin: 0, 
                     textTransform: 'uppercase', 
                     letterSpacing: '-0.02em',
@@ -94,7 +93,7 @@ export const NavBar = () => {
                     position: 'relative',
                     overflow: 'hidden'
                   }}>
-                    CAREER <span style={{ color: '#64748B' }}>COACHING</span>
+                    CAREER <span style={{ color: '#1F80E0' }}>COACHING</span>
                     {/* SHIMMER EFFECT ON TEXT */}
                     <div style={{ 
                       position: 'absolute', 
@@ -102,11 +101,11 @@ export const NavBar = () => {
                       left: '-100%', 
                       width: '100%', 
                       height: '100%', 
-                      background: 'linear-gradient(90deg, transparent, rgba(255,209,0,0.4), transparent)', 
+                      background: 'linear-gradient(90deg, transparent, rgba(31,128,224,0.3), transparent)', 
                       animation: 'shimmerText 3s infinite' 
                     }} />
                   </h1>
-                  <p style={{ fontSize: 10, fontWeight: 800, color: '#FFD100', margin: 0, letterSpacing: '0.2em' }}>HERTZ NAVIGATOR</p>
+                  <p style={{ fontSize: 10, fontWeight: 800, color: '#1F80E0', margin: 0, letterSpacing: '0.2em' }}>JIO HOTSTAR EDITION</p>
                </div>
             </Link>
 
@@ -141,15 +140,15 @@ export const NavBar = () => {
                </svg>
                <ChevronDown size={14} color="#CBD5E1" />
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-               <div style={{ textAlign: 'right' }}>
-                  <p style={{ fontSize: 13, fontWeight: 900, color: '#000', margin: 0 }}>Ram</p>
-                  <p style={{ fontSize: 10, fontWeight: 700, color: '#FFD100', margin: 0 }}>Solution Architect</p>
-               </div>
-               <div style={{ width: 36, height: 36, borderRadius: '50%', overflow: 'hidden', border: '2px solid #FFD100' }}>
-                  <Image src="/ram_profile.png" width={36} height={36} alt="Profile" />
-               </div>
-            </div>
+             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div style={{ textAlign: 'right' }}>
+                   <p style={{ fontSize: 13, fontWeight: 900, color: '#fff', margin: 0 }}>Ram</p>
+                   <p style={{ fontSize: 10, fontWeight: 700, color: '#1F80E0', margin: 0 }}>Solution Architect</p>
+                </div>
+                <div style={{ width: 36, height: 36, borderRadius: '50%', overflow: 'hidden', border: '2px solid #1F80E0' }}>
+                   <Image src="/ram_profile.png" width={36} height={36} alt="Profile" />
+                </div>
+             </div>
          </div>
       </div>
 
@@ -169,22 +168,22 @@ export const NavBar = () => {
            height: '100%',
            alignItems: 'center',
            position: 'relative',
-           background: '#F8FAFC',
+           background: 'rgba(255,255,255,0.03)',
            borderRadius: 24,
            margin: '10px 0',
-           border: '1px solid #E2E8F0'
+           border: '1px solid rgba(255,255,255,0.05)'
          }}>
-            {/* THE SOLID HERTZ POWER PILL - DYNAMICALLY CALCULATED */}
+            {/* THE SOLID JIO HOTSTAR POWER PILL */}
             <div style={{
               position: 'absolute',
               height: 44,
               width: pillStyle.width,
-              background: '#FFD100', // FULL HERTZ COLOR
+              background: '#1F80E0', // JIO HOTSTAR BLUE
               borderRadius: 16,
-              transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)', // Bouncy spring move
+              transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)', 
               left: pillStyle.left, 
               opacity: pillStyle.opacity,
-              boxShadow: '0 10px 25px rgba(255, 209, 0, 0.4)',
+              boxShadow: '0 10px 25px rgba(31, 128, 224, 0.4)',
               zIndex: 0,
               pointerEvents: 'none',
               transform: hoveredIdx !== null ? 'scale(1.1)' : 'scale(1)'
@@ -202,7 +201,7 @@ export const NavBar = () => {
                   fontSize: 12,
                   padding: '12px 24px',
                   fontWeight: 1000,
-                  color: (link.active && hoveredIdx === null) || hoveredIdx === idx ? '#000' : '#64748B',
+                  color: (link.active && hoveredIdx === null) || hoveredIdx === idx ? '#fff' : '#94A3B8',
                   letterSpacing: '0.1em',
                   transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
                   position: 'relative',

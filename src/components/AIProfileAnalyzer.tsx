@@ -586,20 +586,20 @@ export function AIProfileAnalyzer() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fff', width: '100%', paddingBottom: 100, overflowX: 'hidden' }}>
+    <div style={{ minHeight: '100vh', background: '#030B17', width: '100%', paddingBottom: 100, overflowX: 'hidden', color: '#fff' }}>
       
-      {/* FULL WIDTH HERTZ BANNER - COMPACT SIZE */}
+      {/* FULL WIDTH JIO HOTSTAR BANNER */}
       <div style={{ 
         width: '100%', 
         position: 'relative', 
         height: 240, 
-        background: '#000', 
+        background: '#030B17', 
         display: 'flex', 
         alignItems: 'center', 
         overflow: 'hidden', 
         margin: 0,
-        borderTop: '4px solid #FFD100', 
-        borderBottom: '4px solid #FFD100' 
+        borderTop: '4px solid #1F80E0', 
+        borderBottom: '4px solid #1F80E0' 
       }}>
          <img 
             src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=2000&auto=format&fit=crop&q=80" 
@@ -711,7 +711,7 @@ export function AIProfileAnalyzer() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, marginBottom: 120 }}>
              {/* LEFT SIDE: SKILL PROGRESS BARS */}
              <div style={{ background: '#fff', padding: '40px', borderRadius: 32, border: '1px solid #F1F5F9', boxShadow: '0 10px 30px rgba(0,0,0,0.02)' }}>
-                <h3 style={{ fontSize: 24, fontWeight: 950, color: '#000', marginBottom: 40 }}>YOUR MATCH SCORE</h3>
+                <h3 style={{ fontSize: 24, fontWeight: 950, color: '#fff', marginBottom: 40 }}>YOUR MATCH SCORE</h3>
                 {[
                   { label: 'RPA ARCHITECTURE', value: 95, score: '28/30' },
                   { label: 'AI & MACHINE LEARNING', value: 85, score: '25/30' },
@@ -721,14 +721,14 @@ export function AIProfileAnalyzer() {
                 ].map((skill, i) => (
                   <div key={i} style={{ marginBottom: 32 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-                      <span style={{ fontSize: 12, fontWeight: 950, color: '#64748B', letterSpacing: '0.05em' }}>{skill.label}</span>
-                      <span style={{ fontSize: 13, fontWeight: 900, color: '#000' }}>{skill.score}</span>
+                      <span style={{ fontSize: 12, fontWeight: 950, color: '#94A3B8', letterSpacing: '0.05em' }}>{skill.label}</span>
+                      <span style={{ fontSize: 13, fontWeight: 900, color: '#fff' }}>{skill.score}</span>
                     </div>
-                    <div style={{ height: 6, background: '#F1F5F9', borderRadius: 10, position: 'relative', overflow: 'hidden' }}>
+                    <div style={{ height: 6, background: 'rgba(255,255,255,0.05)', borderRadius: 10, position: 'relative', overflow: 'hidden' }}>
                       <div style={{ 
                         width: `${skill.value}%`, 
                         height: '100%', 
-                        background: 'linear-gradient(90deg, #FFD100, #F59E0B, #10B981)', 
+                        background: 'linear-gradient(90deg, #1F80E0, #38BDF8, #22D3EE)', 
                         borderRadius: 10,
                         transition: 'width 1.5s cubic-bezier(0.19, 1, 0.22, 1)' 
                       }} />
@@ -745,9 +745,9 @@ export function AIProfileAnalyzer() {
                       <circle cx="140" cy="140" r="100" fill="none" stroke="url(#matchGradient)" strokeWidth="20" strokeLinecap="round" strokeDasharray="314 314" strokeDashoffset="45" transform="rotate(-180 140 140)" style={{ transition: 'stroke-dashoffset 1.5s ease' }} />
                       <defs>
                         <linearGradient id="matchGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor="#FFD100" />
-                          <stop offset="50%" stopColor="#FB923C" />
-                          <stop offset="100%" stopColor="#10B981" />
+                          <stop offset="0%" stopColor="#1F80E0" />
+                          <stop offset="50%" stopColor="#38BDF8" />
+                          <stop offset="100%" stopColor="#22D3EE" />
                         </linearGradient>
                       </defs>
                    </svg>
@@ -757,12 +757,12 @@ export function AIProfileAnalyzer() {
                    </div>
                 </div>
                 <div style={{ marginTop: 20, textAlign: 'center' }}>
-                   <p style={{ color: '#FFD100', fontSize: 13, fontWeight: 950 }}>hertz-solutions.com</p>
+                   <p style={{ color: '#1F80E0', fontSize: 13, fontWeight: 950 }}>jiohotstar.com</p>
                 </div>
              </div>
           </div>
 
-          <h1 style={{ textAlign: 'center', fontSize: 40, fontWeight: 1000, color: '#000', marginBottom: 100, textTransform: 'uppercase', letterSpacing: '-0.03em' }}>Explore Future Moves</h1>
+          <h1 style={{ textAlign: 'center', fontSize: 40, fontWeight: 1000, color: '#fff', marginBottom: 100, textTransform: 'uppercase', letterSpacing: '-0.03em' }}>Explore Future Moves</h1>
 
          {/* Tree Top Root Area */}
          <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 140, marginBottom: 180 }}>
