@@ -140,7 +140,7 @@ export const NavBar = () => {
                   <h1 style={{ 
                     fontSize: 28, 
                     fontWeight: 900, 
-                    color: '#fff', // BACK TO WHITE
+                    color: '#fff', 
                     margin: 0, 
                     letterSpacing: '0.05em', 
                     lineHeight: 0.8,
@@ -150,18 +150,14 @@ export const NavBar = () => {
                     Career
                   </h1>
                   <h1 style={{ 
-                    fontSize: 16, 
-                    fontWeight: 400, 
-                    fontStyle: 'italic',
-                    margin: '8px 0 0', 
-                    letterSpacing: '0.3em', 
+                    fontSize: 28, // Same size
+                    fontWeight: 900, // Same weight
+                    color: '#fff', // Same color
+                    margin: '4px 0 0', // Tightened spacing
+                    letterSpacing: '0.05em', // Same spacing
                     lineHeight: 0.8,
                     fontFamily: '"Inter", sans-serif',
-                    textTransform: 'uppercase',
-                    background: 'linear-gradient(90deg, #FFD100, #F59E0B)', // YELLOW REMAINS
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    opacity: 0.9
+                    textTransform: 'uppercase'
                   }}>
                     Coaching
                   </h1>
