@@ -66,21 +66,18 @@ export const NavBar = () => {
       }}>
          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             {/* GRID ICON AS SEEN IN SCREENSHOT */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 3px)', gap: 2, padding: 10, cursor: 'pointer' }}>
-               {[...Array(9)].map((_, i) => <div key={i} style={{ width: 3, height: 3, background: '#64748B', borderRadius: 1 }} />)}
-            </div>
-            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 24, textDecoration: 'none' }}>
-               <div style={{ position: 'relative', width: 52, height: 52, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* ELITE ASCENDANT 'H' MONOGRAM */}
-                  <svg width="44" height="44" viewBox="0 0 100 100" fill="none">
+            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 32, textDecoration: 'none' }}>
+               <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {/* SCALED ELITE ASCENDANT 'H' MONOGRAM */}
+                  <svg width="56" height="56" viewBox="0 0 100 100" fill="none">
                     {/* LEFT PILLAR */}
-                    <rect x="25" y="20" width="10" height="60" rx="5" fill="url(#hGradient)" />
+                    <rect x="25" y="15" width="12" height="70" rx="6" fill="url(#hGradientLarge)" />
                     {/* RIGHT PILLAR */}
-                    <rect x="65" y="20" width="10" height="60" rx="5" fill="url(#hGradient)" />
+                    <rect x="63" y="15" width="12" height="70" rx="6" fill="url(#hGradientLarge)" />
                     {/* THE ASCENDANT CROSSBAR (ARROW) */}
-                    <path d="M35 55 L50 40 L65 55" stroke="#fff" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M37 55 L50 40 L63 55" stroke="#fff" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
                     <defs>
-                      <linearGradient id="hGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <linearGradient id="hGradientLarge" x1="0%" y1="0%" x2="0%" y2="100%">
                         <stop offset="0%" stopColor="#E1128F" />
                         <stop offset="100%" stopColor="#2A60E4" />
                       </linearGradient>
@@ -88,34 +85,34 @@ export const NavBar = () => {
                   </svg>
                </div>
                
-               <div style={{ width: 1, height: 36, background: 'rgba(255,255,255,0.15)', margin: '0 4px' }} />
+               <div style={{ width: 2, height: 48, background: 'rgba(255,255,255,0.15)', margin: '0 4px' }} />
 
                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <h1 style={{ 
-                    fontSize: 22, 
-                    fontWeight: 950, 
+                    fontSize: 28, 
+                    fontWeight: 1000, 
                     color: '#fff', 
                     margin: 0, 
-                    letterSpacing: '0.15em', 
-                    lineHeight: 0.9,
+                    letterSpacing: '0.2em', 
+                    lineHeight: 0.85,
                     fontFamily: '"Outfit", sans-serif',
                     textTransform: 'uppercase'
                   }}>
                     Career
                   </h1>
                   <h1 style={{ 
-                    fontSize: 22, 
+                    fontSize: 28, 
                     fontWeight: 300, 
-                    color: 'url(#hGradient)', // Will try to use a span with gradient later or just magenta
+                    color: '#fff', 
                     margin: 0, 
-                    letterSpacing: '0.15em', 
-                    lineHeight: 0.9,
+                    letterSpacing: '0.2em', 
+                    lineHeight: 0.85,
                     fontFamily: '"Outfit", sans-serif',
                     textTransform: 'uppercase',
-                    opacity: 0.9,
                     background: 'linear-gradient(90deg, #2A60E4, #E1128F)',
                     WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent'
+                    WebkitTextFillColor: 'transparent',
+                    opacity: 0.95
                   }}>
                     Coaching
                   </h1>
