@@ -93,7 +93,7 @@ export const NavBar = () => {
                   }}>
                     Career<span style={{ fontWeight: 400 }}>Coaching</span>
                   </h1>
-                  <p style={{ fontSize: 9, fontWeight: 900, color: '#E1128F', margin: 0, letterSpacing: '0.15em', textTransform: 'uppercase' }}>POWERED BY JIOHOTSTAR</p>
+                  <p style={{ fontSize: 9, fontWeight: 900, color: '#E1128F', margin: 0, letterSpacing: '0.15em', textTransform: 'uppercase' }}>POWERED BY HERTZ</p>
                </div>
             </Link>
 
