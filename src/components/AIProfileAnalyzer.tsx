@@ -434,134 +434,113 @@ export function AIProfileAnalyzer() {
   if (step === 'upload') {
     return (
       <div style={{ 
-        maxWidth: 900, 
-        margin: '100px auto', 
+        maxWidth: 700, 
+        margin: '120px auto', 
         padding: '0 24px',
-        animation: 'fadeInUp 0.8s cubic-bezier(0.19, 1, 0.22, 1)' 
+        animation: 'fadeInUp 0.6s cubic-bezier(0.19, 1, 0.22, 1)' 
       }}>
+        {/* MINIMALIST NAUKRI-STYLE CARD */}
         <div style={{
           background: '#fff',
-          border: '3px solid #FFD100',
-          borderRadius: 48,
-          padding: '100px 60px',
-          textAlign: 'center',
-          boxShadow: '0 40px 100px rgba(255, 209, 0, 0.12)',
-          position: 'relative',
-          overflow: 'hidden'
+          borderRadius: 24,
+          padding: '40px 48px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          boxShadow: '0 4px 30px rgba(0,0,0,0.04)',
+          border: '1px solid #E2E8F0',
+          position: 'relative'
         }}>
-          {/* DECORATIVE ELEMENTS */}
-          <div style={{ position: 'absolute', top: -100, right: -100, width: 300, height: 300, background: 'radial-gradient(circle, rgba(255, 209, 0, 0.1), transparent)', borderRadius: '50%' }} />
-          <div style={{ position: 'absolute', bottom: -100, left: -100, width: 300, height: 300, background: 'radial-gradient(circle, rgba(255, 209, 0, 0.15), transparent)', borderRadius: '50%' }} />
+           <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+              <div style={{ width: 80, height: 80, borderRadius: '50%', overflow: 'hidden', border: '3px solid #FFD100', flexShrink: 0 }}>
+                 <Image src="/ram_profile.png" width={80} height={80} alt="Ram" />
+              </div>
+              <div>
+                 <h2 style={{ fontSize: 24, fontWeight: 1000, color: '#000', margin: 0 }}>Ram</h2>
+                 <p style={{ fontSize: 13, fontWeight: 700, color: '#64748B', margin: '4px 0', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Solution Architect</p>
+                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 8 }}>
+                    <div style={{ width: 6, height: 6, background: '#10B981', borderRadius: '50%' }} />
+                    <span style={{ fontSize: 12, fontWeight: 800, color: '#10B981' }}>Resume Uploaded</span>
+                 </div>
+              </div>
+           </div>
 
-          <input 
-            type="file" 
-            id="resume-upload" 
-            hidden 
-            onChange={handleFileChange} 
-            accept=".pdf,.doc,.docx" 
-          />
-
-          {/* PULSING ICON */}
-          <div 
-            onClick={() => document.getElementById('resume-upload')?.click()}
-            style={{ 
-              width: 90, 
-              height: 90, 
-              background: '#000', 
-              borderRadius: 24, 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              margin: '0 auto 48px', 
-              border: '4px solid #FFD100',
-              cursor: 'pointer',
-              transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
-              boxShadow: '0 20px 40px rgba(0,0,0,0.2)'
-            }} 
-            className="hover:scale-110 active:scale-95 group shadow-glow"
-          >
-            <UploadCloud size={36} color="#FFD100" />
-          </div>
-
-          <h2 style={{ fontSize: 44, fontWeight: 1000, color: '#000', marginBottom: 16, letterSpacing: '-0.04em', textTransform: 'uppercase' }}>
-             GENERATE FUTURE MOVES
-          </h2>
-          <p style={{ fontSize: 18, color: '#64748B', maxWidth: 500, margin: '0 auto 48px', fontWeight: 600, lineHeight: 1.6 }}>
-             Upload your resume to reveal your intelligent, AI-mapped career tree at Hertz.
-          </p>
-
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
-             {selectedFile ? (
-               <div style={{ 
-                 background: '#F8FAFC', 
-                 padding: '12px 24px', 
-                 borderRadius: 14, 
-                 border: '1px solid #E2E8F0', 
-                 display: 'flex', 
-                 alignItems: 'center', 
-                 gap: 12,
-                 animation: 'popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)'
-               }}>
-                  <div style={{ width: 8, height: 8, background: '#10B981', borderRadius: '50%' }} />
-                  <span style={{ fontSize: 14, fontWeight: 800, color: '#1E293B' }}>{selectedFile.name}</span>
-                  <X size={16} color="#94A3B8" style={{ cursor: 'pointer' }} onClick={() => setSelectedFile(null)} />
-               </div>
-             ) : (
-               <div style={{ height: 48 }} />
-             )}
-
-             <div style={{ display: 'flex', gap: 16 }}>
+           <div style={{ display: 'flex', gap: 12 }}>
+              <input type="file" id="resume-upload" hidden onChange={handleFileChange} accept=".pdf,.doc,.docx" />
+              <button 
+                onClick={() => document.getElementById('resume-upload')?.click()}
+                style={{ 
+                  background: '#000', 
+                  color: '#fff', 
+                  border: 'none', 
+                  padding: '14px 28px', 
+                  borderRadius: 12, 
+                  fontSize: 13, 
+                  fontWeight: 950, 
+                  textTransform: 'uppercase', 
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  boxShadow: '0 10px 20px rgba(0,0,0,0.1)'
+                }}
+                className="hover:scale-105 active:scale-95"
+              >
+                Update Resume
+              </button>
+              
+              {selectedFile ? (
                 <button 
-                  disabled={!selectedFile}
                   onClick={handleAnalyze}
                   style={{ 
-                    background: selectedFile ? '#FFD100' : '#F1F5F9', 
-                    color: selectedFile ? '#000' : '#94A3B8', 
+                    background: '#FFD100', 
+                    color: '#000', 
                     border: 'none', 
-                    padding: '24px 56px', 
-                    borderRadius: 16, 
-                    fontSize: 15, 
+                    padding: '14px 28px', 
+                    borderRadius: 12, 
+                    fontSize: 13, 
                     fontWeight: 950, 
                     textTransform: 'uppercase', 
-                    letterSpacing: '0.1em', 
-                    cursor: selectedFile ? 'pointer' : 'not-allowed',
-                    transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                    boxShadow: selectedFile ? '0 20px 40px rgba(255, 209, 0, 0.3)' : 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 12,
-                    border: '2px solid #000'
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    boxShadow: '0 10px 20px rgba(255, 209, 0, 0.3)'
                   }}
                   className="hover:scale-105 active:scale-95"
                 >
-                  Analyze My Trajectory <Rocket size={18} />
+                  Analyze
                 </button>
-
-                {selectedFile && (
-                  <button 
-                    onClick={() => setSelectedFile(null)}
-                    style={{ 
-                      background: 'transparent', 
-                      color: '#000', 
-                      border: '2px solid #E2E8F0', 
-                      padding: '24px 32px', 
-                      borderRadius: 16, 
-                      fontSize: 15, 
-                      fontWeight: 950, 
-                      textTransform: 'uppercase', 
-                      letterSpacing: '0.1em', 
-                      cursor: 'pointer',
-                      transition: 'all 0.2s',
-                    }}
-                    className="hover:bg-slate-50"
-                  >
-                    Reset
-                  </button>
-                )}
-             </div>
-          </div>
+              ) : (
+                <button 
+                  onClick={() => setStep('results')} // Shortcut for demo purposes
+                  style={{ 
+                    background: '#F1F5F9', 
+                    color: '#64748B', 
+                    border: '1px solid #E2E8F0', 
+                    padding: '14px 28px', 
+                    borderRadius: 12, 
+                    fontSize: 13, 
+                    fontWeight: 950, 
+                    textTransform: 'uppercase', 
+                    cursor: 'pointer'
+                  }}
+                >
+                  Skip to Results
+                </button>
+              )}
+           </div>
         </div>
+
+        <p style={{ textAlign: 'center', marginTop: 32, fontSize: 13, color: '#94A3B8', fontWeight: 600 }}>
+          Hertz Career Navigator is powered by Intelligent Neural Pathfinding.
+        </p>
+
+        <style>{`
+          @keyframes fadeInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+          }
+        `}</style>
       </div>
+    );
+  }
     );
   }
 
