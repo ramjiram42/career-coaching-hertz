@@ -88,7 +88,7 @@ export const NavBar = () => {
          </div>
       </div>
 
-      {/* BOTTOM TIER: NAVIGATION OPTIONS WITH GLASSY SLIDING PILL */}
+      {/* BOTTOM TIER: NAVIGATION OPTIONS WITH ZOOMING POWER PILL */}
       <div style={{ 
         width: '100%', 
         height: '50%', 
@@ -99,30 +99,30 @@ export const NavBar = () => {
       }}>
          <div style={{ 
            display: 'flex', 
-           gap: 10, // Tighter gap for the glassy pill move
+           gap: 12,
            padding: '8px',
            height: '100%',
            alignItems: 'center',
            position: 'relative',
            background: '#F8FAFC',
-           borderRadius: 20,
-           margin: '10px 0'
+           borderRadius: 24,
+           margin: '10px 0',
+           border: '1px solid #E2E8F0'
          }}>
-            {/* THE GLASSY SLIDING PILL */}
+            {/* THE SOLID HERTZ POWER PILL */}
             <div style={{
               position: 'absolute',
-              height: 40,
-              width: hoveredIdx !== null ? 100 : 0, // Dynamic width based on hovered item (placeholder logic)
-              background: 'rgba(255, 255, 255, 0.8)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid #FFD100',
-              borderRadius: 12,
-              transition: 'all 0.4s cubic-bezier(0.19, 1, 0.22, 1)',
-              left: hoveredIdx !== null ? (8 + hoveredIdx * 110) : 0, // Basic position logic
+              height: 44,
+              width: 120, // Match the scale of the zoomed tab
+              background: '#FFD100', // FULL HERTZ COLOR
+              borderRadius: 16,
+              transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)', // Bouncy spring move
+              left: hoveredIdx !== null ? (6 + hoveredIdx * 112) : 0, 
               opacity: hoveredIdx !== null ? 1 : 0,
-              boxShadow: '0 4px 15px rgba(255, 209, 0, 0.15)',
+              boxShadow: '0 10px 25px rgba(255, 209, 0, 0.4)',
               zIndex: 0,
-              pointerEvents: 'none'
+              pointerEvents: 'none',
+              transform: hoveredIdx !== null ? 'scale(1.1)' : 'scale(1)'
             }} />
 
             {navLinks.map((link, idx) => (
@@ -134,31 +134,21 @@ export const NavBar = () => {
                 style={{
                   textDecoration: 'none',
                   fontSize: 12,
-                  padding: '10px 24px',
-                  fontWeight: 950,
+                  padding: '12px 24px',
+                  fontWeight: 1000,
                   color: (link.active && hoveredIdx === null) || hoveredIdx === idx ? '#000' : '#64748B',
-                  letterSpacing: '0.08em',
-                  transition: 'color 0.3s ease',
+                  letterSpacing: '0.1em',
+                  transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
                   position: 'relative',
                   zIndex: 1,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  minWidth: 100
+                  minWidth: 100,
+                  transform: hoveredIdx === idx ? 'scale(1.2)' : 'scale(1)', // ZOOM EFFECT
                 }}
               >
                 {link.name}
-                {/* ACTIVE INDICATOR (FALLBACK) */}
-                {link.active && hoveredIdx === null && (
-                   <div style={{
-                     position: 'absolute',
-                     bottom: 4,
-                     width: 4,
-                     height: 4,
-                     background: '#FFD100',
-                     borderRadius: '50%'
-                   }} />
-                )}
               </Link>
             ))}
          </div>
