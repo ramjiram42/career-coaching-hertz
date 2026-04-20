@@ -366,6 +366,7 @@ export function AIProfileAnalyzer() {
   const [step, setStep] = useState<Step>('upload');
   const [analyzingText, setAnalyzingText] = useState('Initializing Neural Engine...');
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   // Daily Quote Logic - Picks a unique quote for every day of the year
   const dailyQuote = useMemo(() => {
@@ -416,40 +417,149 @@ export function AIProfileAnalyzer() {
     }
   ];
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setStep('analyzing');
-      setTimeout(() => setAnalyzingText('Analyzing 10+ years experience...'), 800);
-      setTimeout(() => setAnalyzingText('Extracting RPA & Architecture strengths...'), 1600);
-      setTimeout(() => setStep('results'), 3500);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
     }
+  };
+
+  const handleAnalyze = () => {
+    if (!selectedFile) return;
+    setStep('analyzing');
+    setTimeout(() => setAnalyzingText('Analyzing 10+ years experience...'), 800);
+    setTimeout(() => setAnalyzingText('Extracting RPA & Architecture strengths...'), 1600);
+    setTimeout(() => setStep('results'), 3500);
   };
 
   if (step === 'upload') {
     return (
-      <div style={{ maxWidth: 800, margin: '80px auto', padding: '0 24px' }}>
-        <div 
-          onClick={(e) => {
-            if (e.target instanceof HTMLInputElement) return;
-            document.getElementById('resume-upload')?.click();
-          }}
-          style={{
-            background: '#fff',
-            border: '4px solid #FFD100',
-            borderRadius: 32,
-            padding: '80px 40px',
-            textAlign: 'center',
-            cursor: 'pointer',
-            boxShadow: '0 20px 40px -10px rgba(255, 209, 0, 0.15)'
-          }}
-        >
-          <input type="file" id="resume-upload" hidden onChange={handleFileSelect} accept=".pdf,.doc,.docx" />
-          <div style={{ width: 80, height: 80, background: '#000', borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 40px', border: '3px solid #FFD100' }}>
-            <UploadCloud size={32} color="#FFD100" />
+      <div style={{ 
+        maxWidth: 900, 
+        margin: '100px auto', 
+        padding: '0 24px',
+        animation: 'fadeInUp 0.8s cubic-bezier(0.19, 1, 0.22, 1)' 
+      }}>
+        <div style={{
+          background: '#fff',
+          border: '3px solid #FFD100',
+          borderRadius: 48,
+          padding: '100px 60px',
+          textAlign: 'center',
+          boxShadow: '0 40px 100px rgba(255, 209, 0, 0.12)',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          {/* DECORATIVE ELEMENTS */}
+          <div style={{ position: 'absolute', top: -100, right: -100, width: 300, height: 300, background: 'radial-gradient(circle, rgba(255, 209, 0, 0.1), transparent)', borderRadius: '50%' }} />
+          <div style={{ position: 'absolute', bottom: -100, left: -100, width: 300, height: 300, background: 'radial-gradient(circle, rgba(255, 209, 0, 0.15), transparent)', borderRadius: '50%' }} />
+
+          <input 
+            type="file" 
+            id="resume-upload" 
+            hidden 
+            onChange={handleFileChange} 
+            accept=".pdf,.doc,.docx" 
+          />
+
+          {/* PULSING ICON */}
+          <div 
+            onClick={() => document.getElementById('resume-upload')?.click()}
+            style={{ 
+              width: 90, 
+              height: 90, 
+              background: '#000', 
+              borderRadius: 24, 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              margin: '0 auto 48px', 
+              border: '4px solid #FFD100',
+              cursor: 'pointer',
+              transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.2)'
+            }} 
+            className="hover:scale-110 active:scale-95 group shadow-glow"
+          >
+            <UploadCloud size={36} color="#FFD100" />
           </div>
-          <h2 style={{ fontSize: 36, fontWeight: 900, color: '#000', marginBottom: 16 }}>GENERATE FUTURE MOVES</h2>
-          <p style={{ fontSize: 18, color: '#64748B', fontWeight: 600, marginBottom: 48 }}>Upload your resume to reveal your intelligent career tree.</p>
-          <button style={{ background: '#FFD100', color: '#000', border: '2px solid #000', padding: '18px 48px', borderRadius: 12, fontWeight: 900, fontSize: 15, cursor: 'pointer', textTransform: 'uppercase' }}>Analyze My Trajectory</button>
+
+          <h2 style={{ fontSize: 44, fontWeight: 1000, color: '#000', marginBottom: 16, letterSpacing: '-0.04em', textTransform: 'uppercase' }}>
+             GENERATE FUTURE MOVES
+          </h2>
+          <p style={{ fontSize: 18, color: '#64748B', maxWidth: 500, margin: '0 auto 48px', fontWeight: 600, lineHeight: 1.6 }}>
+             Upload your resume to reveal your intelligent, AI-mapped career tree at Hertz.
+          </p>
+
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
+             {selectedFile ? (
+               <div style={{ 
+                 background: '#F8FAFC', 
+                 padding: '12px 24px', 
+                 borderRadius: 14, 
+                 border: '1px solid #E2E8F0', 
+                 display: 'flex', 
+                 alignItems: 'center', 
+                 gap: 12,
+                 animation: 'popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)'
+               }}>
+                  <div style={{ width: 8, height: 8, background: '#10B981', borderRadius: '50%' }} />
+                  <span style={{ fontSize: 14, fontWeight: 800, color: '#1E293B' }}>{selectedFile.name}</span>
+                  <X size={16} color="#94A3B8" style={{ cursor: 'pointer' }} onClick={() => setSelectedFile(null)} />
+               </div>
+             ) : (
+               <div style={{ height: 48 }} />
+             )}
+
+             <div style={{ display: 'flex', gap: 16 }}>
+                <button 
+                  disabled={!selectedFile}
+                  onClick={handleAnalyze}
+                  style={{ 
+                    background: selectedFile ? '#FFD100' : '#F1F5F9', 
+                    color: selectedFile ? '#000' : '#94A3B8', 
+                    border: 'none', 
+                    padding: '24px 56px', 
+                    borderRadius: 16, 
+                    fontSize: 15, 
+                    fontWeight: 950, 
+                    textTransform: 'uppercase', 
+                    letterSpacing: '0.1em', 
+                    cursor: selectedFile ? 'pointer' : 'not-allowed',
+                    transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                    boxShadow: selectedFile ? '0 20px 40px rgba(255, 209, 0, 0.3)' : 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 12,
+                    border: '2px solid #000'
+                  }}
+                  className="hover:scale-105 active:scale-95"
+                >
+                  Analyze My Trajectory <Rocket size={18} />
+                </button>
+
+                {selectedFile && (
+                  <button 
+                    onClick={() => setSelectedFile(null)}
+                    style={{ 
+                      background: 'transparent', 
+                      color: '#000', 
+                      border: '2px solid #E2E8F0', 
+                      padding: '24px 32px', 
+                      borderRadius: 16, 
+                      fontSize: 15, 
+                      fontWeight: 950, 
+                      textTransform: 'uppercase', 
+                      letterSpacing: '0.1em', 
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                    }}
+                    className="hover:bg-slate-50"
+                  >
+                    Reset
+                  </button>
+                )}
+             </div>
+          </div>
         </div>
       </div>
     );
