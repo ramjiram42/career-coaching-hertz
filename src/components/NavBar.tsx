@@ -120,17 +120,17 @@ export const NavBar = () => {
             {/* GRID ICON AS SEEN IN SCREENSHOT */}
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 24, textDecoration: 'none' }}>
                <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* SIMPLIFIED 'VELOCITY PILLARS' LOGO */}
+                  {/* SIMPLIFIED 'VELOCITY PILLARS' LOGO - NOW YELLOW */}
                   <svg width="56" height="56" viewBox="0 0 100 100" fill="none">
                     {/* LEFT WING */}
-                    <rect x="25" y="25" width="25" height="10" rx="5" fill="#2563EB" />
-                    <rect x="35" y="40" width="20" height="10" rx="5" fill="#2563EB" opacity="0.8" />
-                    <rect x="45" y="55" width="15" height="10" rx="5" fill="#2563EB" opacity="0.6" />
+                    <rect x="25" y="25" width="25" height="10" rx="5" fill="#FFD100" />
+                    <rect x="35" y="40" width="20" height="10" rx="5" fill="#FFD100" opacity="0.8" />
+                    <rect x="45" y="55" width="15" height="10" rx="5" fill="#FFD100" opacity="0.6" />
                     
                     {/* RIGHT WING */}
-                    <rect x="55" y="15" width="25" height="10" rx="5" fill="#9333EA" />
-                    <rect x="55" y="30" width="20" height="10" rx="5" fill="#9333EA" opacity="0.8" />
-                    <rect x="55" y="45" width="15" height="10" rx="5" fill="#9333EA" opacity="0.6" />
+                    <rect x="55" y="15" width="25" height="10" rx="5" fill="#F59E0B" />
+                    <rect x="55" y="30" width="20" height="10" rx="5" fill="#F59E0B" opacity="0.8" />
+                    <rect x="55" y="45" width="15" height="10" rx="5" fill="#F59E0B" opacity="0.6" />
                   </svg>
                </div>
                
@@ -140,14 +140,12 @@ export const NavBar = () => {
                   <h1 style={{ 
                     fontSize: 28, 
                     fontWeight: 900, 
+                    color: '#fff', // BACK TO WHITE
                     margin: 0, 
                     letterSpacing: '0.05em', 
                     lineHeight: 0.8,
                     fontFamily: '"Inter", sans-serif',
-                    textTransform: 'uppercase',
-                    background: 'linear-gradient(90deg, #FFD100, #F59E0B)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
+                    textTransform: 'uppercase'
                   }}>
                     Career
                   </h1>
@@ -155,12 +153,12 @@ export const NavBar = () => {
                     fontSize: 16, 
                     fontWeight: 400, 
                     fontStyle: 'italic',
-                    margin: '8px 0 0', // Increased spacing
+                    margin: '8px 0 0', 
                     letterSpacing: '0.3em', 
                     lineHeight: 0.8,
                     fontFamily: '"Inter", sans-serif',
                     textTransform: 'uppercase',
-                    background: 'linear-gradient(90deg, #FFD100, #F59E0B)',
+                    background: 'linear-gradient(90deg, #FFD100, #F59E0B)', // YELLOW REMAINS
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     opacity: 0.9
