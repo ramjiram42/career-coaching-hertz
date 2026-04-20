@@ -120,27 +120,17 @@ export const NavBar = () => {
             {/* GRID ICON AS SEEN IN SCREENSHOT */}
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 36, textDecoration: 'none' }}>
                <div style={{ position: 'relative', width: 90, height: 90, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* HIGH-FIDELITY 'CC' MONOLINE LOGO BASED ON USER REFERENCE */}
+                  {/* THE 'VELOCITY PILLARS' LOGO BASED ON USER REFERENCE */}
                   <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
-                    {/* OUTER ORBITAL RINGS */}
-                    <circle cx="50" cy="50" r="45" stroke="url(#spectrumGradient)" strokeWidth="1.5" />
-                    <circle cx="50" cy="50" r="40" stroke="url(#spectrumGradient)" strokeWidth="0.8" opacity="0.5" />
+                    {/* LEFT WING (BLUE) */}
+                    <rect x="25" y="25" width="25" height="10" rx="5" fill="#2563EB" />
+                    <rect x="35" y="40" width="20" height="10" rx="5" fill="#2563EB" opacity="0.8" />
+                    <rect x="45" y="55" width="15" height="10" rx="5" fill="#2563EB" opacity="0.6" />
                     
-                    {/* THE 'C' LETTERFORMS (NESTED MONOLINE) */}
-                    <path d="M75 35 A25 25 0 1 0 75 65" stroke="url(#spectrumGradient)" strokeWidth="3" strokeLinecap="round" />
-                    <path d="M60 40 A15 15 0 1 0 60 60" stroke="url(#spectrumGradient)" strokeWidth="1.5" strokeLinecap="round" />
-                    
-                    {/* INNER ACCENT CORES */}
-                    <path d="M45 50 L55 40 M45 50 L55 60" stroke="url(#spectrumGradient)" strokeWidth="2" strokeLinecap="round" opacity="0.8" />
-
-                    <defs>
-                      <linearGradient id="spectrumGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#A8FF78" />  {/* LIME */}
-                        <stop offset="33%" stopColor="#FBD786" /> {/* GOLD */}
-                        <stop offset="66%" stopColor="#F77062" /> {/* CORAL */}
-                        <stop offset="100%" stopColor="#FE5196" /> {/* MAGENTA */}
-                      </linearGradient>
-                    </defs>
+                    {/* RIGHT WING (PURPLE) */}
+                    <rect x="55" y="15" width="25" height="10" rx="5" fill="#9333EA" />
+                    <rect x="55" y="30" width="20" height="10" rx="5" fill="#9333EA" opacity="0.8" />
+                    <rect x="55" y="45" width="15" height="10" rx="5" fill="#9333EA" opacity="0.6" />
                   </svg>
                </div>
                
