@@ -95,7 +95,7 @@ export default function HomePage() {
       </div>
 
       {/* ── SUB NAV TABS ─────────────────────────────── */}
-      <div style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+      <div style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(255,255,255,0.05)', position: 'relative', zIndex: 0 }}>
         <div className="container" style={{ display: 'flex', gap: 0 }}>
           {[
             { label: 'Home', href: '/', active: true },

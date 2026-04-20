@@ -96,7 +96,8 @@ export const NavBar = () => {
       style={{
         position: 'sticky',
         top: 0,
-        zIndex: 500,
+        zIndex: 50,
+        width: '100%',
         background: '#030B17',
         borderBottom: '1px solid rgba(255,255,255,0.1)',
         transition: 'all 0.3s ease',
