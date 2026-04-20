@@ -71,10 +71,11 @@ export const NavBar = () => {
             </div>
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 16, textDecoration: 'none' }}>
                <div style={{ position: 'relative', width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* AUTHENTIC JIO HOTSTAR STAR SVG */}
+                  {/* JIO HOTSTAR STAR + CAREER UP ARROW */}
                   <svg width="40" height="40" viewBox="0 0 100 100" fill="none">
                     <path d="M50 5 L56 38 L90 38 L62 58 L72 90 L50 70 L28 90 L38 58 L10 38 L44 38 Z" fill="#fff" />
-                    <circle cx="50" cy="50" r="1.5" fill="rgba(255,255,255,0.9)" />
+                    {/* CAREER UP INDICATOR */}
+                    <path d="M50 45 L50 15 M50 15 L40 25 M50 15 L60 25" stroke="#E1128F" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                </div>
                
@@ -90,9 +91,9 @@ export const NavBar = () => {
                     lineHeight: 1,
                     fontFamily: 'system-ui, -apple-system, sans-serif'
                   }}>
-                    Jio<span style={{ fontWeight: 400 }}>Hotstar</span>
+                    Career<span style={{ fontWeight: 400 }}>Coaching</span>
                   </h1>
-                  <p style={{ fontSize: 9, fontWeight: 900, color: '#E1128F', margin: 0, letterSpacing: '0.15em', textTransform: 'uppercase' }}>CAREER NAVIGATOR</p>
+                  <p style={{ fontSize: 9, fontWeight: 900, color: '#E1128F', margin: 0, letterSpacing: '0.15em', textTransform: 'uppercase' }}>POWERED BY JIOHOTSTAR</p>
                </div>
             </Link>
 
