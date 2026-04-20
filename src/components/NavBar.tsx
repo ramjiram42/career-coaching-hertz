@@ -90,17 +90,28 @@ export const NavBar = () => {
 
                <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <h1 style={{ 
-                    fontSize: 22, 
-                    fontWeight: 800, 
+                    fontSize: 24, 
+                    fontWeight: 1000, // ULTRA BOLD
                     color: '#fff', 
                     margin: 0, 
-                    letterSpacing: '-0.02em',
+                    letterSpacing: '-0.04em', // CONDENSED
                     lineHeight: 1,
-                    fontFamily: 'system-ui, -apple-system, sans-serif'
+                    fontStyle: 'italic', // HERTZ ITALIC STYLE
+                    fontFamily: '"Arial Black", sans-serif'
                   }}>
-                    Career<span style={{ fontWeight: 400 }}>Coaching</span>
+                    Career<span style={{ fontWeight: 400, fontStyle: 'normal' }}>Coaching</span>
                   </h1>
-                  <p style={{ fontSize: 9, fontWeight: 900, color: '#E1128F', margin: 0, letterSpacing: '0.15em', textTransform: 'uppercase' }}>POWERED BY HERTZ</p>
+                  <p style={{ 
+                    fontSize: 10, 
+                    fontWeight: 1000, 
+                    color: '#E1128F', 
+                    margin: '2px 0 0', 
+                    letterSpacing: '0.15em', 
+                    textTransform: 'uppercase',
+                    fontStyle: 'italic' // TAGLINE ALSO ITALIC
+                  }}>
+                    POWERED BY HERTZ
+                  </p>
                </div>
             </Link>
 
