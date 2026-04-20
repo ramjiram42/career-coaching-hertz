@@ -41,7 +41,7 @@ export const NavBar = () => {
     >
       <div style={{ width: '100%', maxWidth: 1440, margin: '0 auto', padding: '0 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         
-        {/* BRAND LOGO - REFINED */}
+        {/* BRAND LOGO */}
         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
            <div style={{ background: '#FFD100', width: 40, height: 40, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Rocket size={20} color="#000" />
@@ -52,7 +52,7 @@ export const NavBar = () => {
            </div>
         </Link>
 
-        {/* NAVIGATION LINKS - CLEANER & ELEGANT */}
+        {/* NAVIGATION LINKS */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           {navLinks.map((link) => (
             <Link 
@@ -79,11 +79,11 @@ export const NavBar = () => {
           ))}
         </div>
 
-        {/* RIGHT SIDE ACTIONS - MINIMALIST PREMIUM */}
+        {/* RIGHT SIDE ACTIONS */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
            <Bell size={20} color="#64748B" style={{ cursor: 'pointer' }} />
 
-           {/* REFINED PROFILE SECTION - NO WRAPPING */}
+           {/* UPDATED PROFILE SECTION - RAM & SOLUTION ARCHITECT */}
            <div style={{ 
               display: 'flex', 
               alignItems: 'center', 
@@ -99,9 +99,9 @@ export const NavBar = () => {
                  <Image src="/ram_profile.png" width={36} height={36} alt="Profile" />
               </div>
               <div style={{ whiteSpace: 'nowrap' }}>
-                 <p style={{ color: '#000', fontSize: 13, fontWeight: 800, margin: 0 }}>RAM JIRAM</p>
+                 <p style={{ color: '#000', fontSize: 13, fontWeight: 800, margin: 0 }}>Ram</p>
                  <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                    <p style={{ color: '#94A3B8', fontSize: 10, fontWeight: 700, margin: 0 }}>PLATINUM MEMBER</p>
+                    <p style={{ color: '#94A3B8', fontSize: 10, fontWeight: 700, margin: 0 }}>Solution Architect</p>
                     <Sparkles size={8} color="#FFD100" fill="#FFD100" />
                  </div>
               </div>
