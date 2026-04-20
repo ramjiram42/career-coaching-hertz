@@ -164,8 +164,8 @@ export const NavBar = () => {
          </div>
 
          <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
-            <Search size={20} color="#64748B" style={{ cursor: 'pointer' }} />
-            <Bell size={20} color="#64748B" style={{ cursor: 'pointer' }} />
+            <Search size={20} color="#64748B" style={{ cursor: 'pointer', transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#f59e0b'} onMouseLeave={(e) => e.currentTarget.style.color = '#64748B'} />
+            <Bell size={20} color="#64748B" style={{ cursor: 'pointer', transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ec4899'} onMouseLeave={(e) => e.currentTarget.style.color = '#64748B'} />
             
              <div style={{ position: 'relative' }}>
                 <div 
@@ -173,7 +173,7 @@ export const NavBar = () => {
                   style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', marginLeft: 8, padding: '4px 8px', borderRadius: 8, background: isLocationOpen ? 'rgba(255,255,255,0.05)' : 'transparent', transition: 'all 0.3s ease' }}
                 >
                    {selectedLocale.flag}
-                   <ChevronDown size={14} color={isLocationOpen ? "#ec4899" : "#CBD5E1"} style={{ transform: isLocationOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'all 0.3s ease' }} />
+                   <ChevronDown size={14} color={isLocationOpen ? "#f59e0b" : "#CBD5E1"} style={{ transform: isLocationOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'all 0.3s ease' }} />
                 </div>
 
                 {isLocationOpen && (
@@ -202,11 +202,11 @@ export const NavBar = () => {
                           borderRadius: 8,
                           cursor: 'pointer',
                           transition: 'all 0.2s ease',
-                          background: selectedLocale.name === loc.name ? 'rgba(236, 72, 153, 0.1)' : 'transparent'
+                          background: selectedLocale.name === loc.name ? 'rgba(245, 158, 11, 0.1)' : 'transparent'
                         }}
                       >
                         {loc.flag}
-                        <span style={{ fontSize: 13, fontWeight: 700, color: selectedLocale.name === loc.name ? '#ec4899' : '#CBD5E1' }}>{loc.name}</span>
+                        <span style={{ fontSize: 13, fontWeight: 700, color: selectedLocale.name === loc.name ? '#f59e0b' : '#CBD5E1' }}>{loc.name}</span>
                       </div>
                     ))}
                   </div>
@@ -216,10 +216,19 @@ export const NavBar = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                  <div style={{ textAlign: 'right' }}>
                     <p style={{ fontSize: 13, fontWeight: 900, color: '#fff', margin: 0 }}>Ram</p>
-                    <p style={{ fontSize: 10, fontWeight: 700, color: '#ec4899', margin: 0 }}>Solution Architect</p>
+                    <p style={{ fontSize: 10, fontWeight: 700, color: '#f59e0b', margin: 0 }}>Solution Architect</p>
                  </div>
-                 <div style={{ width: 36, height: 36, borderRadius: '50%', overflow: 'hidden', border: '2px solid #ec4899', cursor: 'pointer' }}>
-                    <Image src="/ram_profile.png" width={36} height={36} alt="Profile" />
+                 <div style={{ 
+                   width: 38, 
+                   height: 38, 
+                   borderRadius: '50%', 
+                   padding: 2,
+                   background: 'linear-gradient(135deg, #f59e0b, #ec4899)', 
+                   cursor: 'pointer' 
+                 }}>
+                    <div style={{ width: '100%', height: '100%', borderRadius: '50%', overflow: 'hidden', border: '2px solid #030B17' }}>
+                      <Image src="/ram_profile.png" width={36} height={36} alt="Profile" />
+                    </div>
                  </div>
               </div>
          </div>
