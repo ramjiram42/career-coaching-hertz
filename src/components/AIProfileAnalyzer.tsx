@@ -541,8 +541,6 @@ export function AIProfileAnalyzer() {
       </div>
     );
   }
-    );
-  }
 
   if (step === 'analyzing') {
     return (
