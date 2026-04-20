@@ -70,7 +70,7 @@ export const NavBar = () => {
     { name: 'JOURNEYS', href: '/your-move' },
     { name: 'GIGS', href: '#' },
     { name: 'MENTORS', href: '#' },
-    { name: 'LEARN', href: '#' },
+    { name: 'LEARN', href: '/learn' },
     { name: 'VACANCIES', href: '#' },
   ];
 
@@ -98,22 +98,23 @@ export const NavBar = () => {
         top: 0,
         zIndex: 999,
         width: '100%',
-        background: '#030B17',
-        borderBottom: '1px solid rgba(255,255,255,0.1)',
+        background: '#fff',
+        borderBottom: '1px solid #E5E7EB',
         transition: 'all 0.3s ease',
         height: scrolled ? 80 : 100,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '0 40px'
+        padding: '0 40px',
+        boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.06)' : 'none'
       }}
     >
       {/* LEFT TIER: BRANDING */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 24, textDecoration: 'none' }}>
-            <div style={{ position: 'relative', width: 48, height: 48, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-               <svg width="44" height="44" viewBox="0 0 100 100" fill="none">
+         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
+            <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+               <svg width="60" height="60" viewBox="0 0 100 100" fill="none">
                  <circle cx="50" cy="50" r="45" stroke="url(#hertzGradient)" strokeWidth="2" strokeDasharray="120 40" opacity="0.6" />
                  <circle cx="50" cy="50" r="38" stroke="url(#hertzGradient)" strokeWidth="1" strokeDasharray="80 20" opacity="0.4" />
                  <path d="M35 30 V70 M65 30 V70 M35 50 H65" stroke="url(#hertzGradient)" strokeWidth="8" strokeLinecap="round" />
@@ -127,19 +128,17 @@ export const NavBar = () => {
                </svg>
             </div>
             
-            <div style={{ width: 1, height: 30, background: 'rgba(255,255,255,0.1)', margin: '0 4px' }} />
-
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                <h1 style={{ 
                  fontSize: 24, 
                  fontWeight: 900, 
-                 color: '#fff', 
+                 color: '#111827', 
                  margin: 0, 
                  letterSpacing: '0.02em', 
                  lineHeight: 0.8,
-                 fontFamily: '"Inter", sans-serif',
+                 fontFamily: 'inherit',
                }}>
-                 Career
+                 CAREER
                </h1>
                <h1 style={{ 
                  fontSize: 12, 
@@ -147,13 +146,13 @@ export const NavBar = () => {
                  margin: '6px 0 0', 
                  letterSpacing: '0.25em', 
                  lineHeight: 0.8,
-                 fontFamily: '"Inter", sans-serif',
+                 fontFamily: 'inherit',
                  textTransform: 'uppercase',
                  background: 'linear-gradient(90deg, #f59e0b, #ec4899)',
                  WebkitBackgroundClip: 'text',
                  WebkitTextFillColor: 'transparent',
                }}>
-                 Coaching
+                 COACHING
                </h1>
             </div>
          </Link>
@@ -166,9 +165,9 @@ export const NavBar = () => {
         padding: '6px',
         alignItems: 'center',
         position: 'relative',
-        background: 'rgba(255,255,255,0.03)',
+        background: 'rgba(0,0,0,0.04)',
         borderRadius: 24,
-        border: '1px solid rgba(255,255,255,0.05)'
+        border: '1px solid #E5E7EB'
       }}>
          <div style={{
            position: 'absolute',
@@ -197,7 +196,7 @@ export const NavBar = () => {
                fontSize: 11,
                padding: '10px 18px',
                fontWeight: 1000,
-               color: (pathname === link.href) || hoveredIdx === idx ? '#fff' : '#94A3B8',
+               color: (pathname === link.href) || hoveredIdx === idx ? '#111827' : '#6B7280',
                letterSpacing: '0.1em',
                transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
                position: 'relative',
@@ -216,8 +215,8 @@ export const NavBar = () => {
 
       {/* RIGHT TIER: PROFILE AND ACTIONS */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
-         <Search size={20} color="#64748B" style={{ cursor: 'pointer', transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#f59e0b'} onMouseLeave={(e) => e.currentTarget.style.color = '#64748B'} />
-         <Bell size={20} color="#64748B" style={{ cursor: 'pointer', transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ec4899'} onMouseLeave={(e) => e.currentTarget.style.color = '#64748B'} />
+         <Search size={20} color="#9CA3AF" style={{ cursor: 'pointer', transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#f59e0b'} onMouseLeave={(e) => e.currentTarget.style.color = '#9CA3AF'} />
+         <Bell size={20} color="#9CA3AF" style={{ cursor: 'pointer', transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ec4899'} onMouseLeave={(e) => e.currentTarget.style.color = '#9CA3AF'} />
          
           <div style={{ position: 'relative' }}>
              <div 
@@ -341,7 +340,7 @@ export const NavBar = () => {
 
            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <div style={{ textAlign: 'right' }}>
-                 <p style={{ fontSize: 13, fontWeight: 900, color: '#fff', margin: 0 }}>Ram</p>
+                 <p style={{ fontSize: 13, fontWeight: 900, color: '#111827', margin: 0 }}>Ram</p>
                  <p style={{ fontSize: 10, fontWeight: 700, color: '#f59e0b', margin: 0 }}>Solution Architect</p>
               </div>
               <div style={{ 

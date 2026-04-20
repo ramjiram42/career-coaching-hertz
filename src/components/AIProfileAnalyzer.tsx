@@ -1,8 +1,10 @@
 'use client';
 
-import { UploadCloud, Cpu, Search, X, CheckCircle2, ArrowRight, Target, TrendingUp, Info, Award, BookOpen, Layers, Zap, Sparkles, User, HelpCircle, Compass, Heart, Share2, ChevronRight, BarChart3, ChevronDown, UserCheck, Briefcase, Rocket } from "lucide-react"
+import { UploadCloud, Cpu, Search, X, CheckCircle2, ArrowRight, Target, TrendingUp, Info, Award, BookOpen, Layers, Zap, Sparkles, User, HelpCircle, Compass, Heart, Share2, ChevronRight, BarChart3, ChevronDown, UserCheck, Briefcase, Rocket, Car, Bus, Bike, Plane } from "lucide-react"
 import { useState, useRef, useEffect, useMemo } from 'react'
 import Image from 'next/image'
+import CareerCoachingPortal from './pathways/CareerCoachingPortal';
+import NewJourneyFlow from './pathways/NewJourneyFlow';
 
 type Step = 'upload' | 'analyzing' | 'results';
 
@@ -359,7 +361,7 @@ const DAILY_QUOTES = [
   "Your future is as bright as your faith.",
   "Optimism is the faith that leads to achievement. Nothing can be done without hope and confidence.",
   "Be humble. Be hungry. And always be the hardest worker in the room.",
-  "Success is not about the destination, it's about the climb."
+  "Success is not about the destination, it's about the climb.",
 ];
 
 export function AIProfileAnalyzer() {
@@ -367,6 +369,17 @@ export function AIProfileAnalyzer() {
   const [analyzingText, setAnalyzingText] = useState('Initializing Neural Engine...');
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [showSurprise, setShowSurprise] = useState(false);
+  const [portalActivePath, setPortalActivePath] = useState<string | null>(null);
+  const [showNewJourney, setShowNewJourney] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('hertz_profile_analyzed') === 'true') {
+        setStep('results');
+      }
+    }
+  }, []);
 
   // Daily Quote Logic - Picks a unique quote for every day of the year
   const dailyQuote = useMemo(() => {
@@ -428,7 +441,10 @@ export function AIProfileAnalyzer() {
     setStep('analyzing');
     setTimeout(() => setAnalyzingText('Analyzing 10+ years experience...'), 800);
     setTimeout(() => setAnalyzingText('Extracting RPA & Architecture strengths...'), 1600);
-    setTimeout(() => setStep('results'), 3500);
+    setTimeout(() => {
+      localStorage.setItem('hertz_profile_analyzed', 'true');
+      setStep('results');
+    }, 3500);
   };
 
   if (step === 'upload') {
@@ -449,15 +465,15 @@ export function AIProfileAnalyzer() {
 
          <div style={{
            width: '100%',
-           background: 'rgba(10, 20, 40, 0.45)',
-           backdropFilter: 'blur(40px)',
-           border: '1px solid rgba(255,255,255,0.1)',
+           background: '#fff',
+           backdropFilter: 'none',
+           border: '1px solid #E5E7EB',
            borderRadius: 36,
            padding: '55px 70px',
            display: 'flex',
            alignItems: 'center',
            justifyContent: 'space-between',
-           boxShadow: '0 40px 120px rgba(0,0,0,0.7)',
+           boxShadow: '0 8px 40px rgba(0,0,0,0.06)',
            position: 'relative',
            overflow: 'hidden',
            animation: 'cardIn 1s cubic-bezier(0.2, 0.8, 0.2, 1)'
@@ -522,168 +538,140 @@ export function AIProfileAnalyzer() {
                     animation: 'pulseOrbital 6s infinite linear reverse'
                   }} />
                   
-                  <div style={{ width: '100%', height: '100%', borderRadius: '50%', overflow: 'hidden', border: '6px solid #060E1A' }}>
-                     <Image src="/ram_profile.png" width={136} height={136} alt="Ram" style={{ objectFit: 'cover' }} />
-                  </div>
-
-                  <div style={{ 
-                    position: 'absolute', 
-                    bottom: 6, 
-                    right: 6, 
-                    width: 34, 
-                    height: 34, 
-                    background: '#10B981', 
-                    borderRadius: '50%', 
-                    border: '4px solid #060E1A', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center',
-                    boxShadow: '0 4px 12px rgba(16, 185, 129, 0.4)',
-                    animation: 'scaleIn 0.5s 0.8s both'
-                  }}>
-                     <UserCheck size={18} color="#fff" />
+                  <div style={{ width: '100%', height: '100%', borderRadius: '50%', overflow: 'hidden', border: '6px solid #F1F5F9' }}>
+                     <Image src="/ram_profile.png" width={136} height={136} alt="Ram" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
                   </div>
                </div>
 
                <div style={{ animation: 'fadeSlideRight 0.8s both' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                     <h1 style={{ fontSize: 52, color: '#fff', margin: 0, letterSpacing: '-0.04em', fontWeight: 1000, fontFamily: '"Outfit", sans-serif' }}>Ram</h1>
-                     <div style={{ 
-                       padding: '5px 14px', 
-                       background: 'rgba(16, 185, 129, 0.15)', 
-                       border: '1px solid rgba(16, 185, 129, 0.3)', 
-                       borderRadius: 99, 
-                       fontSize: 11, 
-                       fontWeight: 900, 
-                       color: '#10B981', 
-                       letterSpacing: '0.12em',
-                       animation: 'glowTextGreen 2s infinite alternate'
-                     }}>
-                       RESUME ACTIVE
-                     </div>
+                     <h1 style={{ fontSize: 52, color: '#111827', margin: 0, letterSpacing: '-0.04em', fontWeight: 1000, fontFamily: 'inherit' }}>Ram</h1>
                   </div>
-                  <p style={{ fontSize: 19, color: '#94A3B8', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', margin: '4px 0', fontFamily: '"Outfit", sans-serif' }}>
+                  <p style={{ fontSize: 19, color: '#6B7280', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', margin: '4px 0', fontFamily: 'inherit' }}>
                      Solution Architect
                   </p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginTop: 20 }}>
-                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'default' }}>
-                        <Cpu size={16} color="#f59e0b" style={{ animation: 'iconPulse 2s infinite' }} />
-                        <span style={{ fontSize: 13, fontWeight: 800, color: '#f59e0b', letterSpacing: '0.06em' }}>Neural Engine Ready</span>
-                     </div>
-                  </div>
                </div>
             </div>
 
             {/* RIGHT: ACTIONS */}
-            <div style={{ display: 'flex', gap: 20, position: 'relative', zIndex: 1, animation: 'fadeSlideLeft 0.8s both' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16, position: 'relative', zIndex: 1, animation: 'fadeSlideLeft 0.8s both' }}>
                <input type="file" id="resume-upload" hidden onChange={handleFileChange} accept=".pdf,.doc,.docx" />
-               <button 
-                 onClick={() => document.getElementById('resume-upload')?.click()}
-                 style={{ 
-                   background: 'rgba(255,255,255,0.06)', 
-                   color: '#fff', 
-                   padding: '22px 36px', 
-                   borderRadius: 18, 
-                   fontWeight: 1000, 
-                   border: '1px solid rgba(255,255,255,0.12)', 
-                   fontSize: 15, 
-                   textTransform: 'uppercase', 
-                   letterSpacing: '0.12em',
-                   cursor: 'pointer',
-                   fontFamily: '"Outfit", sans-serif',
-                   transition: 'all 0.3s ease',
-                   display: 'flex',
-                   alignItems: 'center',
-                   gap: 12
-                 }}
-                 onMouseEnter={(e) => {
-                   e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-                   e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)';
-                   e.currentTarget.style.transform = 'translateY(-2px)';
-                 }}
-                 onMouseLeave={(e) => {
-                   e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
-                   e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
-                   e.currentTarget.style.transform = 'translateY(0)';
-                 }}
-               >
-                 Upload Resume
-               </button>
                
-               {selectedFile ? (
-                 <button 
-                   onClick={handleAnalyze}
-                   style={{ 
-                     background: 'linear-gradient(135deg, #f59e0b, #ec4899)', 
-                     color: '#fff', 
-                     padding: '22px 40px', 
-                     borderRadius: 18, 
-                     fontWeight: 1000, 
-                     border: 'none', 
-                     fontSize: 15, 
-                     textTransform: 'uppercase', 
-                     letterSpacing: '0.14em',
-                     cursor: 'pointer',
-                     fontFamily: '"Outfit", sans-serif',
-                     transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                     boxShadow: '0 20px 45px rgba(236, 72, 153, 0.3)',
-                     display: 'flex',
-                     alignItems: 'center',
-                     gap: 14
-                   }}
-                   onMouseEnter={(e) => {
-                     e.currentTarget.style.transform = 'translateY(-6px) scale(1.03)';
-                     e.currentTarget.style.boxShadow = '0 30px 60px rgba(236, 72, 153, 0.45)';
-                   }}
-                   onMouseLeave={(e) => {
-                     e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                     e.currentTarget.style.boxShadow = '0 20px 45px rgba(236, 72, 153, 0.3)';
-                   }}
-                 >
-                   Analyze Path <Sparkles size={18} />
-                 </button>
-               ) : (
-                 <button 
-                   onClick={() => setStep('results')} 
-                   style={{ 
-                     background: 'linear-gradient(135deg, #f59e0b, #ec4899)', 
-                     color: '#fff', 
-                     padding: '22px 36px', 
-                     borderRadius: 18, 
-                     fontWeight: 1000, 
-                     border: 'none', 
-                     fontSize: 15, 
-                     textTransform: 'uppercase', 
-                     letterSpacing: '0.12em',
-                     cursor: 'pointer',
-                     fontFamily: '"Outfit", sans-serif',
-                     transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                     boxShadow: '0 15px 35px rgba(245, 158, 11, 0.25)',
-                     display: 'flex',
-                     alignItems: 'center',
-                     gap: 12
-                   }}
-                   onMouseEnter={(e) => {
-                     e.currentTarget.style.transform = 'translateY(-4px)';
-                     e.currentTarget.style.boxShadow = '0 20px 45px rgba(245, 158, 11, 0.4)';
-                   }}
-                   onMouseLeave={(e) => {
-                     e.currentTarget.style.transform = 'translateY(0)';
-                     e.currentTarget.style.boxShadow = '0 15px 35px rgba(245, 158, 11, 0.25)';
-                   }}
-                 >
-                   Skip to Results <ArrowRight size={18} />
-                 </button>
-               )}
+               {/* BIG OPTIONS ROW */}
+               <div style={{ display: 'flex', gap: 16 }}>
+                  <button 
+                    onClick={() => document.getElementById('resume-upload')?.click()}
+                    style={{ 
+                      flex: 1, 
+                      background: 'linear-gradient(to bottom right, #ffffff, #f8fafc)', 
+                      color: '#1e293b', 
+                      padding: '24px 20px', 
+                      borderRadius: 16, 
+                      fontWeight: 800, 
+                      border: '1px solid rgba(226, 232, 240, 0.8)', 
+                      fontSize: 13, 
+                      textTransform: 'uppercase', 
+                      letterSpacing: '0.06em',
+                      cursor: 'pointer', 
+                      display: 'flex', 
+                      flexDirection: 'column', 
+                      justifyContent: 'center', 
+                      alignItems: 'center', 
+                      gap: 10, 
+                      transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)', 
+                      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.02)',
+                      minWidth: 160
+                    }}
+                    onMouseEnter={(e) => { 
+                      e.currentTarget.style.transform = 'translateY(-3px)'; 
+                      e.currentTarget.style.boxShadow = '0 12px 20px rgba(0, 0, 0, 0.06)'; 
+                      e.currentTarget.style.borderColor = '#cbd5e1'; 
+                    }}
+                    onMouseLeave={(e) => { 
+                      e.currentTarget.style.transform = 'translateY(0)'; 
+                      e.currentTarget.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.02)'; 
+                      e.currentTarget.style.borderColor = 'rgba(226, 232, 240, 0.8)'; 
+                    }}
+                  >
+                    <div style={{ background: '#F1F5F9', padding: '10px', borderRadius: '50%', marginBottom: '4px', color: '#0369a1' }}>
+                      <User size={22} />
+                    </div>
+                    FIRST TIME USER
+                  </button>
+                  
+                  <button 
+                    onClick={() => document.getElementById('resume-upload')?.click()}
+                    style={{ 
+                      flex: 1, 
+                      background: 'linear-gradient(to bottom right, #ffffff, #f8fafc)', 
+                      color: '#1e293b', 
+                      padding: '24px 20px', 
+                      borderRadius: 16, 
+                      fontWeight: 800, 
+                      border: '1px solid rgba(226, 232, 240, 0.8)', 
+                      fontSize: 13, 
+                      textTransform: 'uppercase', 
+                      letterSpacing: '0.06em',
+                      cursor: 'pointer', 
+                      display: 'flex', 
+                      flexDirection: 'column', 
+                      justifyContent: 'center', 
+                      alignItems: 'center', 
+                      gap: 10, 
+                      transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)', 
+                      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.02)',
+                      minWidth: 160
+                    }}
+                    onMouseEnter={(e) => { 
+                      e.currentTarget.style.transform = 'translateY(-3px)'; 
+                      e.currentTarget.style.boxShadow = '0 12px 20px rgba(0, 0, 0, 0.06)'; 
+                      e.currentTarget.style.borderColor = '#cbd5e1'; 
+                    }}
+                    onMouseLeave={(e) => { 
+                      e.currentTarget.style.transform = 'translateY(0)'; 
+                      e.currentTarget.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.02)'; 
+                      e.currentTarget.style.borderColor = 'rgba(226, 232, 240, 0.8)'; 
+                    }}
+                  >
+                    <div style={{ background: '#F1F5F9', padding: '10px', borderRadius: '50%', marginBottom: '4px', color: '#0369a1' }}>
+                      <Search size={22} />
+                    </div>
+                    RE-EVALUATE
+                  </button>
+               </div>
+
+               {/* SMALL CONTROLS ROW */}
+               <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
+                  <button 
+                    onClick={selectedFile ? handleAnalyze : () => { localStorage.setItem('hertz_profile_analyzed', 'true'); setStep('results'); }}
+                    style={{ 
+                      flex: 1, background: 'linear-gradient(135deg, #f59e0b, #ec4899)', color: '#fff', padding: '14px 16px', borderRadius: 12, fontWeight: 900, border: 'none', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.05em', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, boxShadow: '0 8px 20px rgba(236,72,153,0.25)', transition: 'transform 0.2s'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    {selectedFile ? 'Submit Analysis' : 'Skip & Submit'} <ArrowRight size={16} />
+                  </button>
+                  <button 
+                    onClick={() => setSelectedFile(null)}
+                    style={{ 
+                      flex: 1, background: '#fff', color: '#64748B', padding: '14px 16px', borderRadius: 12, fontWeight: 900, border: '1px solid #E2E8F0', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.05em', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 2px 5px rgba(0,0,0,0.02)', display: 'flex', justifyContent: 'center', alignItems: 'center'
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = '#F8FAFC'; e.currentTarget.style.color = '#0F172A'; e.currentTarget.style.borderColor = '#CBD5E1'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#64748B'; e.currentTarget.style.borderColor = '#E2E8F0'; }}
+                  >
+                    Reset
+                  </button>
+               </div>
             </div>
          </div>
 
          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 15, opacity: 0.7, marginTop: 40, animation: 'fadeSlideUp 1s 1s both' }}>
-            <div style={{ width: 60, height: 1, background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3))' }} />
-            <p style={{ fontSize: 13, color: '#94A3B8', fontWeight: 600, letterSpacing: '0.06em', margin: 0, fontFamily: '"Outfit", sans-serif' }}>
-               Hertz Career Forge is powered by <span style={{ color: '#fff', fontWeight: 800, animation: 'glowTextWhite 2s infinite alternate' }}>Intelligent Neural Pathfinding.</span>
+            <div style={{ width: 60, height: 1, background: 'linear-gradient(90deg, transparent, #CBD5E1)' }} />
+            <p style={{ fontSize: 13, color: '#9CA3AF', fontWeight: 600, letterSpacing: '0.06em', margin: 0, fontFamily: 'inherit' }}>
+               Hertz Career Forge is powered by <span style={{ color: '#374151', fontWeight: 800 }}>Intelligent Neural Pathfinding.</span>
             </p>
-            <div style={{ width: 60, height: 1, background: 'linear-gradient(90deg, rgba(255,255,255,0.3), transparent)' }} />
+            <div style={{ width: 60, height: 1, background: 'linear-gradient(90deg, #CBD5E1, transparent)' }} />
          </div>
 
          <style>{`
@@ -700,6 +688,13 @@ export function AIProfileAnalyzer() {
             @keyframes scaleIn { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
             @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 0.7; transform: translateY(0); } }
             @keyframes glowTextWhite { from { text-shadow: 0 0 0px #fff; } to { text-shadow: 0 0 10px rgba(255,255,255,0.5); } }
+            @keyframes cycleTransport {
+              0% { opacity: 0; transform: translateX(-25px) scale(0.8); }
+              5% { opacity: 1; transform: translateX(0) scale(1); }
+              20% { opacity: 1; transform: translateX(0) scale(1); }
+              25% { opacity: 0; transform: translateX(25px) scale(0.8); }
+              100% { opacity: 0; transform: translateX(25px) scale(0.8); }
+            }
          `}</style>
       </div>
     );
@@ -708,10 +703,27 @@ export function AIProfileAnalyzer() {
   if (step === 'analyzing') {
     return (
       <div style={{ maxWidth: 600, margin: '160px auto', textAlign: 'center' }}>
+        <style>{`
+            @keyframes cycleRealTransport {
+              0% { opacity: 0; transform: translateX(-20px) scale(0.8); }
+              5% { opacity: 1; transform: translateX(0) scale(1); }
+              15% { opacity: 1; transform: translateX(0) scale(1); }
+              20% { opacity: 0; transform: translateX(20px) scale(0.8); }
+              100% { opacity: 0; transform: translateX(20px) scale(0.8); }
+            }
+            @keyframes spin { 100% { transform: rotate(360deg); } }
+        `}</style>
         <div style={{ position: 'relative', width: 100, height: 100, margin: '0 auto 40px' }}>
           <div style={{ position: 'absolute', inset: 0, border: '8px solid #F1F5F9', borderRadius: '50%' }} />
           <div style={{ position: 'absolute', inset: 0, border: '8px solid #FFD100', borderRadius: '50%', borderTopColor: 'transparent', animation: 'spin 0.8s linear infinite' }} />
-          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Cpu size={40} color="#000" /></div>
+          
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=100&h=100&fit=crop" style={{ position: 'absolute', width: 56, height: 56, borderRadius: '50%', objectFit: 'cover', opacity: 0, animation: 'cycleRealTransport 5s infinite 0s' }} alt="Real Car" />
+            <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=100&h=100&fit=crop" style={{ position: 'absolute', width: 56, height: 56, borderRadius: '50%', objectFit: 'cover', opacity: 0, animation: 'cycleRealTransport 5s infinite 1s' }} alt="Real Bus" />
+            <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=100&h=100&fit=crop" style={{ position: 'absolute', width: 56, height: 56, borderRadius: '50%', objectFit: 'cover', opacity: 0, animation: 'cycleRealTransport 5s infinite 2s' }} alt="Real Cycle" />
+            <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=100&h=100&fit=crop" style={{ position: 'absolute', width: 56, height: 56, borderRadius: '50%', objectFit: 'cover', opacity: 0, animation: 'cycleRealTransport 5s infinite 3s' }} alt="Real Flight" />
+            <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=100&h=100&fit=crop" style={{ position: 'absolute', width: 56, height: 56, borderRadius: '50%', objectFit: 'cover', opacity: 0, animation: 'cycleRealTransport 5s infinite 4s' }} alt="Real Truck" />
+          </div>
         </div>
         <h3 style={{ fontSize: 24, fontWeight: 900, color: '#000', marginBottom: 16, textTransform: 'uppercase' }}>Hertz Intelligence...</h3>
         <p style={{ fontSize: 18, color: '#64748B', fontWeight: 800 }}>{analyzingText}</p>
@@ -720,131 +732,411 @@ export function AIProfileAnalyzer() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#030B17', width: '100%', paddingBottom: 100, overflowX: 'hidden', color: '#fff' }}>
+    <div style={{ minHeight: '100vh', background: '#fff', width: '100%', paddingBottom: 100, overflowX: 'hidden', color: '#111827' }}>
       
-      {/* FULL WIDTH JIO HOTSTAR GRADIENT BANNER */}
-      <div style={{ 
-        width: '100%', 
-        position: 'relative', 
-        height: 240, 
-        background: 'linear-gradient(90deg, #2A60E4, #E1128F)', 
-        display: 'flex', 
-        alignItems: 'center', 
-        overflow: 'hidden', 
-        margin: 0,
-        boxShadow: 'inset 0 0 100px rgba(0,0,0,0.5)'
-      }}>
+      {/* HERO SECTION WRAPPER */}
+      <div style={{ background: '#fff', width: '100%', borderBottom: '1px solid #E5E7EB' }}>
+      
+      {/* HOMEPAGE STYLE CLEAN BANNER */}
+      <div style={{ position: 'relative', height: 220, overflow: 'hidden' }}>
          <img 
             src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=2000&auto=format&fit=crop&q=80" 
             alt="Hertz Fleet" 
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }} 
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} 
          />
+         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 60%, transparent 100%)' }} />
          
-         <div style={{ width: '100%', maxWidth: 1400, margin: '0 auto', padding: '0 60px', position: 'relative', zIndex: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            {/* Left Side Content */}
-            <div style={{ textAlign: 'left' }}>
-               <h2 style={{ fontSize: 32, fontWeight: 950, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', margin: 0, lineHeight: 1.1 }}>
-                  OPPORTUNITIES<br/>CURATED FOR YOU.
-               </h2>
-               <div style={{ display: 'flex', gap: 14, marginTop: 24 }}>
-                  <button style={{ background: '#FFD100', color: '#000', border: 'none', padding: '10px 20px', borderRadius: 8, fontWeight: 950, fontSize: 13, textTransform: 'uppercase', cursor: 'pointer' }}>EXPLORE JOURNEYS</button>
-                  <button style={{ background: 'rgba(0,0,0,0.4)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', padding: '10px 20px', borderRadius: 8, fontWeight: 950, fontSize: 13, textTransform: 'uppercase', cursor: 'pointer', backdropFilter: 'blur(5px)' }}>VIEW VACANCIES</button>
-               </div>
+         <div style={{ position: 'absolute', left: '2.5rem', top: '50%', transform: 'translateY(-50%)' }}>
+            <h2 style={{ fontSize: '2rem', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.1, margin: 0, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
+               NAVIGATE YOUR<br/>NEXT MOVE.
+            </h2>
+            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
+               <button onClick={() => { setStep('upload'); setSelectedFile(null); }} style={{ background: 'linear-gradient(90deg, #f59e0b, #ec4899)', color: '#fff', padding: '0.5rem 1.25rem', borderRadius: 8, fontWeight: 900, fontSize: '0.75rem', border: 'none', textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer', boxShadow: '0 10px 20px rgba(236, 72, 153, 0.3)' }}>UPLOAD RESUME</button>
+               <button onClick={() => { localStorage.removeItem('hertz_profile_analyzed'); setStep('upload'); setSelectedFile(null); }} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', padding: '0.5rem 1.25rem', borderRadius: 8, fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)' }}>REVALIDATE</button>
             </div>
+         </div>
 
-            {/* Profile Card Overlay (DAILY QUOTE INTEGRATED WITH LOVE) */}
-            <div style={{ 
-              background: '#fff', 
-              borderRadius: 24, 
-              padding: '24px 32px', 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: 24, 
-              boxShadow: '0 30px 60px rgba(0,0,0,0.15)', 
-              border: '2px solid #FFD100', // Hertz Outline with Love
-              maxWidth: 520,
-              position: 'relative',
-              overflow: 'hidden'
-            }}>
-               <div style={{ 
-                 position: 'absolute', 
-                 top: 0, 
-                 right: 0, 
-                 background: '#FFD100', 
-                 color: '#000', 
-                 fontSize: 9, 
-                 fontWeight: 950, 
-                 padding: '4px 12px', 
-                 borderBottomLeftRadius: 12,
-                 textTransform: 'uppercase',
-                 letterSpacing: '0.1em'
-               }}>
-                  Quote of the Day
-               </div>
-
-               <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                     <p style={{ fontSize: 22, fontWeight: 950, color: '#000', margin: 0 }}>Ram</p>
-                     <Sparkles size={14} color="#FFD100" fill="#FFD100" />
-                  </div>
-                  <p style={{ fontSize: 10, fontWeight: 900, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Solution Architect</p>
-                  
-                  <div style={{ position: 'relative' }}>
-                     <p style={{ 
-                       fontSize: 14, 
-                       color: '#1E293B', // Darkened for proper visibility as requested
-                       margin: 0, 
-                       fontStyle: 'italic', 
-                       fontWeight: 750, // Slightly bolder for crispness
-                       lineHeight: 1.5, 
-                       minHeight: 44,
-                       position: 'relative',
-                       zIndex: 1,
-                       paddingLeft: 12,
-                       borderLeft: '3px solid #FFD100'
-                     }}>
-                       "{dailyQuote}"
-                     </p>
-                  </div>
-
-                  <button style={{ 
-                    background: '#F8FAFC', 
-                    border: '1px solid #E2E8F0', 
-                    color: '#64748B', 
-                    fontSize: 11, 
-                    fontWeight: 800, 
-                    padding: '6px 14px', 
-                    borderRadius: 30, 
-                    cursor: 'pointer', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: 6, 
-                    marginTop: 16,
-                    transition: 'all 0.2s'
-                  }} className="hover:bg-slate-50 hover:text-black">
-                    Fresh Inspiration <Zap size={10} color="#FFD100" fill="#FFD100" />
-                  </button>
-               </div>
-               <div style={{ 
-                 width: 80, 
-                 height: 80, 
-                 borderRadius: 20, 
-                 overflow: 'hidden', 
-                 border: '3px solid #F1F5F9', 
-                 flexShrink: 0,
-                 boxShadow: '0 10px 20px rgba(0,0,0,0.1)'
-               }}>
-                  <Image src="/ram_profile.png" width={80} height={80} alt="Profile" />
+         <div style={{ position: 'absolute', right: '2.5rem', top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(20px)', borderRadius: 16, padding: '1.25rem 1.5rem', display: 'flex', alignItems: 'center', gap: '1rem', boxShadow: '0 20px 40px rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <div style={{ flex: 1 }}>
+               <p style={{ fontWeight: 900, fontSize: '1.1rem', color: '#fff', margin: 0 }}>Ram</p>
+               <p style={{ fontSize: '0.75rem', color: '#94A3B8', margin: '0.2rem 0 0.5rem' }}>Your profile is looking awesome</p>
+               <button style={{ color: '#ec4899', background: 'none', border: 'none', padding: 0, fontSize: '0.75rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.25rem', cursor: 'pointer' }}>
+                  Elevate your potential <ArrowRight size={12} />
+               </button>
+            </div>
+            <div style={{ width: 52, height: 52, background: 'linear-gradient(135deg, #f59e0b, #ec4899)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: 2 }}>
+               <div style={{ width: '100%', height: '100%', borderRadius: '50%', overflow: 'hidden' }}>
+                  <Image src="/ram_profile.png" alt="Ram" width={52} height={52} style={{ objectFit: 'cover' }} />
                </div>
             </div>
          </div>
       </div>
+    </div>
 
-      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '80px 40px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, marginBottom: 120 }}>
+    <div style={{ maxWidth: 1400, margin: '0 auto', padding: '80px 40px' }}>
+
+      {/* EXPLORE FUTURE MOVES SECTION */}
+      <div style={{ textAlign: 'center', marginBottom: 100, position: 'relative' }}>
+         <h2 style={{ fontSize: 44, fontWeight: 900, color: '#1E293B', marginBottom: 60, letterSpacing: '-0.02em', fontFamily: 'inherit' }}>
+            Explore Future Moves
+         </h2>
+         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 60, position: 'relative', zIndex: 10 }}>
+           
+           {/* Animated Left Arrow */}
+           <svg style={{ position: 'absolute', top: 76, right: '50%', marginRight: 90, width: 200, height: 40, zIndex: 0 }} viewBox="0 0 200 40">
+               <defs>
+                  <marker id="arrowheadLeft" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#111827" />
+                  </marker>
+               </defs>
+               <path d="M 200 20 L 10 20" fill="none" stroke="#111827" strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrowheadLeft)">
+                 <animate attributeName="stroke-dashoffset" from="12" to="0" dur="1s" repeatCount="indefinite" />
+               </path>
+           </svg>
+           
+           {/* Animated Right Arrow */}
+           <svg style={{ position: 'absolute', top: 76, left: '50%', marginLeft: 90, width: 200, height: 40, zIndex: 0 }} viewBox="0 0 200 40">
+               <defs>
+                  <marker id="arrowheadRight" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#111827" />
+                  </marker>
+               </defs>
+               <path d="M 0 20 L 190 20" fill="none" stroke="#111827" strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrowheadRight)">
+                 <animate attributeName="stroke-dashoffset" from="12" to="0" dur="1s" repeatCount="indefinite" />
+               </path>
+           </svg>
+           
+           {/* Left Item */}
+           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 280, marginTop: 20 }}>
+             <div style={{ borderRadius: '50%', padding: 4, background: '#fff' }}>
+               <div style={{ width: 120, height: 120, borderRadius: '50%', overflow: 'hidden', border: '4px solid #10B981', background: '#1e293b', position: 'relative' }}>
+                  
+<style>{`
+  .tech-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: techCrossfade 15s infinite; }
+  .ts-1 { animation-delay: 0s; }
+  .ts-2 { animation-delay: 5s; }
+  .ts-3 { animation-delay: 10s; }
+  @keyframes techCrossfade {
+    0% { opacity: 0; transform: scale(1.05); }
+    10% { opacity: 1; transform: scale(1.0); }
+    33% { opacity: 1; transform: scale(1.0); }
+    43% { opacity: 0; transform: scale(1.05); }
+    100% { opacity: 0; transform: scale(1.05); }
+  }
+`}</style>
+<div style={{ position: 'relative', width: '100%', height: '100%' }}>
+  <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=400&q=80" className="tech-slide ts-1" alt="Tech Code" />
+  <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=400&q=80" className="tech-slide ts-2" alt="Tech Team" />
+  <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&q=80" className="tech-slide ts-3" alt="Tech Engineer" />
+</div>
+
+               </div>
+             </div>
+             <div style={{ background: '#10B981', color: '#fff', fontSize: 13, fontWeight: 900, padding: '4px 18px', borderRadius: 8, textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: 12 }}>TECH UPGRADE</div>
+             <div style={{ color: '#3B82F6', fontWeight: 800, fontSize: 16, marginTop: 16, cursor: 'pointer', textAlign: 'center', lineHeight: 1.4 }}>Suggested Moves</div>
+           </div>
+
+           {/* Middle Item */}
+           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 340, position: 'relative' }}>
+             {showSurprise && (
+                <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 300, height: 300, background: 'radial-gradient(circle, rgba(254,240,138,0.5) 0%, rgba(254,240,138,0) 70%)', zIndex: -1 }}></div>
+             )}
+             <div style={{ borderRadius: '50%', padding: 4, background: '#fff' }}>
+               <div style={{ width: 160, height: 160, borderRadius: '50%', overflow: 'hidden', border: '4px solid #fff', boxShadow: '0 10px 25px rgba(0,0,0,0.1)' }}>
+                  <Image src="/ram_profile.png" alt="You Today" width={160} height={160} style={{ objectFit: 'cover', transform: 'scale(1.1) translateY(5%)' }} />
+               </div>
+             </div>
+             
+             {!showSurprise ? (
+                <button onClick={() => setShowSurprise(true)} style={{ background: '#083375', color: '#fff', border: 'none', padding: '12px 28px', borderRadius: 4, fontWeight: 800, fontSize: 16, cursor: 'pointer', marginTop: 30 }}>Simulate Pathway</button>
+             ) : (
+               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 10, animation: 'cardIn 0.8s ease forwards' }}>
+                 <div style={{ width: 2, height: 20, borderLeft: '2px dashed #93C5FD', marginBottom: 10 }}></div>
+                 <span style={{ color: '#94A3B8', fontSize: 13, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.15em' }}>YOU TODAY</span>
+                 <span style={{ color: '#111827', fontSize: 22, fontWeight: 900, marginTop: 4, letterSpacing: '-0.02em', textTransform: 'uppercase' }}>Solution Architect</span>
+               </div>
+             )}
+           </div>
+
+           {/* Right Item */}
+           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 280, marginTop: 20 }}>
+             <div style={{ borderRadius: '50%', padding: 4, background: '#fff' }}>
+               <div style={{ width: 120, height: 120, borderRadius: '50%', overflow: 'hidden', border: '4px solid #F59E0B', background: '#1e293b', position: 'relative' }}>
+                  
+<style>{`
+  .strat-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: stratCrossfade 15s infinite; }
+  .ss-1 { animation-delay: 0s; }
+  .ss-2 { animation-delay: 5s; }
+  .ss-3 { animation-delay: 10s; }
+  @keyframes stratCrossfade {
+    0% { opacity: 0; transform: scale(1.05); }
+    10% { opacity: 1; transform: scale(1.0); }
+    33% { opacity: 1; transform: scale(1.0); }
+    43% { opacity: 0; transform: scale(1.05); }
+    100% { opacity: 0; transform: scale(1.05); }
+  }
+`}</style>
+<div style={{ position: 'relative', width: '100%', height: '100%' }}>
+  <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&q=80" className="strat-slide ss-1" alt="Strategic Global" />
+  <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&q=80" className="strat-slide ss-2" alt="Strategic Future Server" />
+  <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&q=80" className="strat-slide ss-3" alt="Strategic Pathing" />
+</div>
+
+               </div>
+             </div>
+             <div style={{ background: '#F59E0B', color: '#fff', fontSize: 13, fontWeight: 900, padding: '4px 18px', borderRadius: 8, textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: 12 }}>STRATEGIC NODE</div>
+             <div 
+                onClick={() => { setShowNewJourney(true); setShowSurprise(false); setPortalActivePath(null); }} 
+                style={{ color: '#3B82F6', fontWeight: 800, fontSize: 16, marginTop: 16, cursor: 'pointer', textAlign: 'center', lineHeight: 1.4 }}
+              >
+                Make a new Journey
+              </div>
+           </div>
+
+         </div>
+
+         
+         
+         {/* SURPRISE ME ANIMATED TREE */}
+         {showSurprise && !portalActivePath && !showNewJourney && (
+           <div style={{ marginTop: 20 }}>
+               <div style={{ position: 'relative', height: 140, width: '100%', marginBottom: 30, marginTop: -10 }}>
+                   <svg width="100%" height="100%" viewBox="0 0 1000 100" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, overflow: 'visible', filter: 'drop-shadow(0 0 8px rgba(147, 197, 253, 0.5))' }}>
+                     <defs>
+                       <linearGradient id="glowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                         <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.2" />
+                         <stop offset="50%" stopColor="#60A5FA" stopOpacity="1" />
+                         <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.2" />
+                       </linearGradient>
+                       <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                         <path d="M 0 0 L 10 5 L 0 10 z" fill="#3B82F6" />
+                       </marker>
+                     </defs>
+                     <path d="M 500 0 C 450 80, 200 60, 125 100" fill="none" stroke="url(#glowGradient)" strokeWidth="3" strokeDasharray="6 6" markerEnd="url(#arrow)">
+                        <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite" />
+                     </path>
+                     <path d="M 500 0 C 480 60, 420 60, 375 100" fill="none" stroke="url(#glowGradient)" strokeWidth="3" strokeDasharray="6 6" markerEnd="url(#arrow)">
+                        <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite" />
+                     </path>
+                     <path d="M 500 0 C 520 60, 580 60, 625 100" fill="none" stroke="url(#glowGradient)" strokeWidth="3" strokeDasharray="6 6" markerEnd="url(#arrow)">
+                        <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite" />
+                     </path>
+                     <path d="M 500 0 C 550 80, 800 60, 875 100" fill="none" stroke="url(#glowGradient)" strokeWidth="3" strokeDasharray="6 6" markerEnd="url(#arrow)">
+                        <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite" />
+                     </path>
+                   </svg>
+                </div>
+
+                {/* The 4 Cards Row */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24, textAlign: 'center', perspective: '1000px' }}>
+                   
+                   {/* Card 1 */}
+                   <div 
+                     onClick={() => setPortalActivePath('intelligent-automation-arch')} 
+                     className="path-card-creative"
+                     style={{ 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center', 
+                        cursor: 'pointer',
+                        animation: 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                        animationDelay: '0.1s',
+                        opacity: 0,
+                        transformStyle: 'preserve-3d'
+                     }}
+                   >
+                      <div style={{ background: '#10B981', color: '#fff', fontSize: 11, fontWeight: 900, padding: '4px 16px', borderRadius: 8, border: '2px solid #fff', textTransform: 'uppercase', marginBottom: -10, position: 'relative', zIndex: 2, boxShadow: '0 4px 6px rgba(16, 185, 129, 0.3)' }}>HIGH MATCH</div>
+                      <div style={{ 
+                        background: '#fff', 
+                        border: '1px solid #E2E8F0', 
+                        borderRadius: 12, 
+                        padding: '30px 20px', 
+                        width: '100%', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center', 
+                        boxShadow: '0 10px 25px rgba(0,0,0,0.05)', 
+                        position: 'relative', 
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        transform: 'translateZ(0)'
+                      }}>
+                         <div style={{ position: 'absolute', top: 12, left: 12, fontSize: 10, color: '#94A3B8', fontWeight: 600 }}>JOURNEY</div>
+                         <div style={{ position: 'absolute', top: 12, right: 12 }}><Compass size={16} color="#CBD5E1" /></div>
+                         <div style={{ width: 90, height: 90, borderRadius: '50%', overflow: 'hidden', border: '4px solid #F1F5F9', marginBottom: 16, boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>
+                            <Image src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=200&q=80" width={90} height={90} alt="" style={{ objectFit: 'cover' }} />
+                         </div>
+                         <div style={{ fontSize: 16, fontWeight: 700, color: '#0F172A', lineHeight: 1.2, marginBottom: 20 }}>Intelligent<br/>Automation Architect</div>
+                         <div style={{ background: 'linear-gradient(135deg, #4d9e20, #3B82F6)', color: '#fff', fontSize: 10, fontWeight: 900, padding: '6px 16px', borderRadius: 20, textTransform: 'uppercase', boxShadow: '0 4px 10px rgba(59, 130, 246, 0.2)' }}>NEXT STEP</div>
+                      </div>
+                   </div>
+
+                   {/* Card 2 */}
+                   <div 
+                     onClick={() => setPortalActivePath('enterprise-automation-arch')} 
+                     className="path-card-creative"
+                     style={{ 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center', 
+                        cursor: 'pointer',
+                        animation: 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                        animationDelay: '0.2s',
+                        opacity: 0
+                     }}
+                   >
+                      <div style={{ background: '#10B981', color: '#fff', fontSize: 11, fontWeight: 900, padding: '4px 16px', borderRadius: 8, border: '2px solid #fff', textTransform: 'uppercase', marginBottom: -10, position: 'relative', zIndex: 2, boxShadow: '0 4px 6px rgba(16, 185, 129, 0.3)' }}>HIGH MATCH</div>
+                      <div style={{ 
+                        background: '#fff', 
+                        border: '1px solid #E2E8F0', 
+                        borderRadius: 12, 
+                        padding: '30px 20px', 
+                        width: '100%', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center', 
+                        boxShadow: '0 10px 25px rgba(0,0,0,0.05)', 
+                        position: 'relative', 
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                      }}>
+                         <div style={{ position: 'absolute', top: 12, left: 12, fontSize: 10, color: '#94A3B8', fontWeight: 600 }}>JOURNEY</div>
+                         <div style={{ position: 'absolute', top: 12, right: 12 }}><Compass size={16} color="#CBD5E1" /></div>
+                         <div style={{ width: 90, height: 90, borderRadius: '50%', overflow: 'hidden', border: '4px solid #F1F5F9', marginBottom: 16, boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>
+                            <Image src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=200&q=80" width={90} height={90} alt="" style={{ objectFit: 'cover' }} />
+                         </div>
+                         <div style={{ fontSize: 16, fontWeight: 700, color: '#0F172A', lineHeight: 1.2, marginBottom: 20 }}>Enterprise<br/>Automation Architect</div>
+                         <div style={{ background: 'linear-gradient(135deg, #EA580C, #F59E0B)', color: '#fff', fontSize: 10, fontWeight: 900, padding: '6px 16px', borderRadius: 20, textTransform: 'uppercase', boxShadow: '0 4px 10px rgba(234, 88, 12, 0.2)' }}>FUTURE MOVE</div>
+                      </div>
+                   </div>
+
+                   {/* Card 3 */}
+                   <div 
+                     onClick={() => setPortalActivePath('tech-program-manager')} 
+                     className="path-card-creative"
+                     style={{ 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center', 
+                        cursor: 'pointer',
+                        animation: 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                        animationDelay: '0.3s',
+                        opacity: 0
+                     }}
+                   >
+                      <div style={{ background: '#F59E0B', color: '#fff', fontSize: 11, fontWeight: 900, padding: '4px 16px', borderRadius: 8, border: '2px solid #fff', textTransform: 'uppercase', marginBottom: -10, position: 'relative', zIndex: 2, boxShadow: '0 4px 6px rgba(245, 158, 11, 0.3)' }}>ADJACENT</div>
+                      <div style={{ 
+                        background: '#fff', 
+                        border: '1px solid #E2E8F0', 
+                        borderRadius: 12, 
+                        padding: '30px 20px', 
+                        width: '100%', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center', 
+                        boxShadow: '0 10px 25px rgba(0,0,0,0.05)', 
+                        position: 'relative', 
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                      }}>
+                         <div style={{ position: 'absolute', top: 12, left: 12, fontSize: 10, color: '#94A3B8', fontWeight: 600 }}>JOURNEY</div>
+                         <div style={{ position: 'absolute', top: 12, right: 12 }}><Compass size={16} color="#CBD5E1" /></div>
+                         <div style={{ width: 90, height: 90, borderRadius: '50%', overflow: 'hidden', border: '4px solid #F1F5F9', marginBottom: 16, boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>
+                            <Image src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=200&q=80" width={90} height={90} alt="" style={{ objectFit: 'cover' }} />
+                         </div>
+                         <div style={{ fontSize: 16, fontWeight: 700, color: '#0F172A', lineHeight: 1.2, marginBottom: 20 }}>Technical<br/>Program Manager</div>
+                         <div style={{ background: 'linear-gradient(135deg, #EA580C, #F59E0B)', color: '#fff', fontSize: 10, fontWeight: 900, padding: '6px 16px', borderRadius: 20, textTransform: 'uppercase', boxShadow: '0 4px 10px rgba(234, 88, 12, 0.2)' }}>FUTURE MOVE</div>
+                      </div>
+                   </div>
+
+                   {/* Card 4 */}
+                   <div 
+                     onClick={() => setPortalActivePath('ai-architect')} 
+                     className="path-card-creative"
+                     style={{ 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center', 
+                        cursor: 'pointer',
+                        animation: 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                        animationDelay: '0.4s',
+                        opacity: 0
+                     }}
+                   >
+                      <div style={{ background: '#8B5CF6', color: '#fff', fontSize: 11, fontWeight: 900, padding: '4px 16px', borderRadius: 8, border: '2px solid #fff', textTransform: 'uppercase', marginBottom: -10, position: 'relative', zIndex: 2, boxShadow: '0 4px 6px rgba(139, 92, 246, 0.3)' }}>WILD CARD</div>
+                      <div style={{ 
+                        background: '#fff', 
+                        border: '1px solid #E2E8F0', 
+                        borderRadius: 12, 
+                        padding: '30px 20px', 
+                        width: '100%', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center', 
+                        boxShadow: '0 10px 25px rgba(0,0,0,0.05)', 
+                        position: 'relative', 
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                      }}>
+                         <div style={{ position: 'absolute', top: 12, left: 12, fontSize: 10, color: '#94A3B8', fontWeight: 600 }}>JOURNEY</div>
+                         <div style={{ position: 'absolute', top: 12, right: 12 }}><Compass size={16} color="#CBD5E1" /></div>
+                         <div style={{ width: 90, height: 90, borderRadius: '50%', overflow: 'hidden', border: '4px solid #F1F5F9', marginBottom: 16, boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>
+                            <Image src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&q=80" width={90} height={90} alt="" style={{ objectFit: 'cover' }} />
+                         </div>
+                         <div style={{ fontSize: 16, fontWeight: 700, color: '#0F172A', lineHeight: 1.2, marginBottom: 20 }}>AI<br/>Architect</div>
+                         <div style={{ background: 'linear-gradient(135deg, #9F1239, #8B5CF6)', color: '#fff', fontSize: 10, fontWeight: 900, padding: '6px 16px', borderRadius: 20, textTransform: 'uppercase', boxShadow: '0 4px 10px rgba(139, 92, 246, 0.2)' }}>WILD CARD</div>
+                      </div>
+                   </div>
+
+                </div>
+
+                <style>{`
+                   @keyframes popIn {
+                      from { transform: scale(0.8) translateY(20px); opacity: 0; }
+                      to { transform: scale(1) translateY(0); opacity: 1; }
+                   }
+                   .path-card-creative:hover > div:nth-child(2) {
+                      transform: translateY(-8px) scale(1.02);
+                      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+                   }
+                   .path-card-creative:hover > div:nth-child(1) {
+                      transform: translateY(-4px);
+                      box-shadow: 0 8px 15px rgba(0,0,0,0.2) !important;
+                   }
+                `}</style>
+             </div>
+         )}
+         
+         {/* NEW JOURNEY FLOW */}
+         {showNewJourney && (
+           <NewJourneyFlow 
+              onFindJourney={(role) => {
+                // Map custom role to nearest existing path for demo
+                const roleMap: Record<string, string> = {
+                  'Automation Architect': 'intelligent-automation-arch',
+                  'Head of Automation': 'enterprise-automation-arch',
+                  'Chief AI Officer': 'ai-architect',
+                  'Engineering Manager': 'automation-eng-manager',
+                  'Product Manager': 'product-manager-ai',
+                  'CTO': 'intelligent-automation-arch',
+                  'Operations Director': 'delivery-head',
+                  'Solution Consultant': 'digital-transformation-consultant'
+                };
+                setPortalActivePath(roleMap[role] || 'intelligent-automation-arch');
+                setShowNewJourney(false);
+                setShowSurprise(true);
+              }}
+              onCancel={() => setShowNewJourney(false)}
+           />
+         )}
+         
+         {/* CAREER COACHING PORTAL */}
+         {showSurprise && portalActivePath && (
+           <CareerCoachingPortal overridePath={portalActivePath} onBack={() => { setPortalActivePath(null); setShowSurprise(true); }} />
+         )}
+       </div>
+
+
+       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, marginBottom: 120 }}>
              {/* LEFT SIDE: SKILL PROGRESS BARS */}
-             <div style={{ background: '#fff', padding: '40px', borderRadius: 32, border: '1px solid #F1F5F9', boxShadow: '0 10px 30px rgba(0,0,0,0.02)' }}>
-                <h3 style={{ fontSize: 24, fontWeight: 950, color: '#fff', marginBottom: 40 }}>YOUR MATCH SCORE</h3>
+             <div style={{ background: '#fff', padding: '40px', borderRadius: 32, border: '1px solid #F1F5F9', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
+                <h3 style={{ fontSize: 24, fontWeight: 950, color: '#111827', marginBottom: 40 }}>YOUR MATCH SCORE</h3>
                 {[
                   { label: 'RPA ARCHITECTURE', value: 95, score: '28/30' },
                   { label: 'AI & MACHINE LEARNING', value: 85, score: '25/30' },
@@ -855,9 +1147,9 @@ export function AIProfileAnalyzer() {
                   <div key={i} style={{ marginBottom: 32 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
                       <span style={{ fontSize: 12, fontWeight: 950, color: '#94A3B8', letterSpacing: '0.05em' }}>{skill.label}</span>
-                      <span style={{ fontSize: 13, fontWeight: 900, color: '#fff' }}>{skill.score}</span>
+                      <span style={{ fontSize: 13, fontWeight: 900, color: '#111827' }}>{skill.score}</span>
                     </div>
-                    <div style={{ height: 6, background: 'rgba(255,255,255,0.05)', borderRadius: 10, position: 'relative', overflow: 'hidden' }}>
+                    <div style={{ height: 6, background: '#F1F5F9', borderRadius: 10, position: 'relative', overflow: 'hidden' }}>
                       <div style={{ 
                         width: `${skill.value}%`, 
                         height: '100%', 
@@ -870,38 +1162,95 @@ export function AIProfileAnalyzer() {
                 ))}
              </div>
 
-             {/* RIGHT SIDE: RADIAL GAUGE */}
-             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#000', borderRadius: 40, padding: 40, position: 'relative' }}>
-                <div style={{ position: 'relative', width: 280, height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                   <svg width="280" height="200" viewBox="0 0 280 200">
-                      <circle cx="140" cy="140" r="100" fill="none" stroke="#2D3748" strokeWidth="20" strokeLinecap="round" strokeDasharray="314 314" strokeDashoffset="0" transform="rotate(-180 140 140)" />
-                      <circle cx="140" cy="140" r="100" fill="none" stroke="url(#matchGradient)" strokeWidth="20" strokeLinecap="round" strokeDasharray="314 314" strokeDashoffset="45" transform="rotate(-180 140 140)" style={{ transition: 'stroke-dashoffset 1.5s ease' }} />
+             {/* RIGHT SIDE: ANALOG SPEEDOMETER GAUGE */}
+             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#0F172A', borderRadius: 40, padding: '60px 40px', position: 'relative', border: '1px solid #1E293B', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 320, height: 320, background: 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+                
+                <div style={{ position: 'absolute', bottom: 20, right: 30, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: 0.8 }}>
+                   <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(236, 72, 153, 0.1)', border: '1px solid rgba(236, 72, 153, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ec4899', cursor: 'pointer', transition: 'all 0.3s' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.2)'; e.currentTarget.style.boxShadow = '0 0 20px #ec4899'; }}>
+                      <Zap size={18} fill="#ec4899" />
+                   </div>
+                   <span style={{ fontSize: 9, fontWeight: 900, color: '#ec4899', marginTop: 4, letterSpacing: '0.1em' }}>NITRO</span>
+                </div>
+
+                <div style={{ position: 'relative', width: 320, height: 260, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                   <svg width="320" height="260" viewBox="0 0 200 160" style={{ overflow: 'visible' }}>
                       <defs>
-                        <linearGradient id="matchGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor="#2A60E4" />
+                        <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="#3B82F6" />
                           <stop offset="100%" stopColor="#E1128F" />
                         </linearGradient>
+                        <filter id="gaugeGlow">
+                          <feGaussianBlur stdDeviation="4" result="blur" />
+                          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                        </filter>
                       </defs>
+
+                      {/* Gauge Base Arc */}
+                      <path d="M 30 130 A 80 80 0 1 1 170 130" fill="none" stroke="#1E293B" strokeWidth="14" strokeLinecap="round" />
+                      
+                      {/* Interactive Progress Arc */}
+                      <path 
+                        d="M 30 130 A 80 80 0 1 1 170 130" 
+                        fill="none" 
+                        stroke="url(#gaugeGradient)" 
+                        strokeWidth="14" 
+                        strokeLinecap="round"
+                        strokeDasharray="360"
+                        strokeDashoffset={360 - (360 * 0.85)} 
+                        style={{ transition: 'stroke-dashoffset 2s cubic-bezier(0.19, 1, 0.22, 1)', filter: 'url(#gaugeGlow)' }}
+                      />
+
+                      {/* Dashboard Ticks */}
+                      {[...Array(21)].map((_, i) => {
+                        const angle = -210 + (i * 12); 
+                        const rad = (angle * Math.PI) / 180;
+                        const isMajor = i % 5 === 0;
+                        const tickLen = isMajor ? 14 : 7;
+                        const x1 = 100 + Math.cos(rad) * 65;
+                        const y1 = 90 + Math.sin(rad) * 65;
+                        const x2 = 100 + Math.cos(rad) * (65 + tickLen);
+                        const y2 = 90 + Math.sin(rad) * (65 + tickLen);
+                        return (
+                          <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={isMajor ? "#94A3B8" : "#334155"} strokeWidth={isMajor ? "2.5" : "1"} />
+                        );
+                      })}
+
+                      {/* Analog Needle */}
+                      <g style={{ transform: `rotate(${-120 + (240 * 0.85)}deg)`, transformOrigin: '100px 90px', transition: 'transform 2.8s cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
+                        <path d="M 100 90 L 100 12" stroke="#fff" strokeWidth="3" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 6px #fff)' }} />
+                        <circle cx="100" cy="90" r="10" fill="#0F172A" stroke="#3B82F6" strokeWidth="3" />
+                        <circle cx="100" cy="90" r="3" fill="#fff" />
+                      </g>
                    </svg>
-                   <div style={{ position: 'absolute', top: '55%', transform: 'translateY(-50%)', textAlign: 'center' }}>
-                      <span style={{ fontSize: 90, fontWeight: 1000, color: '#fff', lineHeight: 1 }}>85</span>
-                      <p style={{ fontSize: 14, fontWeight: 800, color: '#94A3B8', marginTop: 10 }}>Overall Match</p>
+
+                   <div style={{ position: 'absolute', bottom: 40, textAlign: 'center' }}>
+                      <span style={{ fontSize: 80, fontWeight: 1000, color: '#fff', lineHeight: 1, textShadow: '0 0 40px rgba(59, 130, 246, 0.8)' }}>85</span>
+                      <p style={{ fontSize: 13, fontWeight: 900, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.2rem', marginTop: 10 }}>Overall Match</p>
                    </div>
                 </div>
-                <div style={{ marginTop: 20, textAlign: 'center' }}>
-                   <p style={{ color: '#E1128F', fontSize: 13, fontWeight: 950 }}>jiohotstar.com</p>
+
+                <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', padding: '0 30px', marginTop: 10 }}>
+                   <div style={{ textAlign: 'center' }}>
+                      <div style={{ fontSize: 10, color: '#475569', fontWeight: 900, letterSpacing: '0.1em' }}>RELIABILITY</div>
+                      <div style={{ fontSize: 14, color: '#10B981', fontWeight: 800 }}>OPTIMAL</div>
+                   </div>
+                   <div style={{ textAlign: 'center' }}>
+                      <div style={{ fontSize: 10, color: '#475569', fontWeight: 900, letterSpacing: '0.1em' }}>ENGINE</div>
+                      <div style={{ fontSize: 14, color: '#3B82F6', fontWeight: 800 }}>ACTIVE</div>
+                   </div>
                 </div>
              </div>
           </div>
 
-          <h1 style={{ textAlign: 'center', fontSize: 40, fontWeight: 1000, color: '#fff', marginBottom: 100, textTransform: 'uppercase', letterSpacing: '-0.03em' }}>Explore Future Moves</h1>
+          <h1 style={{ textAlign: 'center', fontSize: 40, fontWeight: 1000, color: '#111827', marginBottom: 100, textTransform: 'uppercase', letterSpacing: '-0.03em' }}>Explore Future Moves</h1>
 
          {/* Tree Top Root Area */}
          <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 140, marginBottom: 180 }}>
             
             {/* NEXT STEP (Left Node) */}
             <div style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}>
-               <div style={{ width: 100, height: 100, borderRadius: '50%', border: '4px solid #10B981', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, overflow: 'hidden', boxShadow: '0 10px 25px rgba(16,185,129,0.15)' }}>
+               <div style={{ width: 100, height: 100, borderRadius: '50%', border: '4px solid #10B981', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, overflow: 'hidden', boxShadow: '0 4px 15px rgba(16,185,129,0.1)' }}>
                   <Image src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=100&h=100&fit=crop" width={100} height={100} alt="Next" />
                </div>
                <span style={{ display: 'inline-block', background: '#10B981', color: '#fff', fontSize: 10, fontWeight: 950, padding: '6px 16px', borderRadius: 6, marginBottom: 12, textTransform: 'uppercase' }}>NEXT STEP</span>
@@ -912,19 +1261,19 @@ export function AIProfileAnalyzer() {
             <div style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}>
                <div style={{ position: 'relative' }}>
                   <div style={{ position: 'absolute', top: -10, left: -10, right: -10, bottom: -10, borderRadius: '50%', background: 'linear-gradient(135deg, #FFD100, transparent)', opacity: 0.3, filter: 'blur(15px)' }} />
-                  <div style={{ position: 'relative', width: 140, height: 140, borderRadius: '50%', border: '8px solid #fff', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 32, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.12)' }}>
+                  <div style={{ position: 'relative', width: 140, height: 140, borderRadius: '50%', border: '8px solid #F1F5F9', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 32, overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
                      <Image src="/ram_profile.png" width={140} height={140} alt="You" />
                   </div>
                </div>
                <div style={{ marginTop: 24 }}>
                   <span style={{ display: 'block', fontSize: 11, fontWeight: 950, color: '#94A3B8', letterSpacing: '0.2rem', marginBottom: 8, textTransform: 'uppercase' }}>YOU TODAY</span>
-                  <p style={{ fontSize: 22, fontWeight: 950, color: '#000', margin: 0, letterSpacing: '-0.02em', textTransform: 'uppercase' }}>Solution Architect</p>
+                  <p style={{ fontSize: 22, fontWeight: 950, color: '#111827', margin: 0, letterSpacing: '-0.02em', textTransform: 'uppercase' }}>Solution Architect</p>
                </div>
             </div>
 
             {/* FUTURE MOVE (Right Node) */}
             <div style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}>
-               <div style={{ width: 100, height: 100, borderRadius: '50%', border: '4px solid #F59E0B', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, overflow: 'hidden', boxShadow: '0 10px 25px rgba(245,158,11,0.15)' }}>
+               <div style={{ width: 100, height: 100, borderRadius: '50%', border: '4px solid #F59E0B', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, overflow: 'hidden', boxShadow: '0 4px 15px rgba(245,158,11,0.1)' }}>
                   <Image src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=100&h=100&fit=crop" width={100} height={100} alt="Future" />
                </div>
                <span style={{ display: 'inline-block', background: '#F59E0B', color: '#fff', fontSize: 10, fontWeight: 950, padding: '6px 16px', borderRadius: 6, marginBottom: 12, textTransform: 'uppercase' }}>FUTURE MOVE</span>
@@ -950,21 +1299,21 @@ export function AIProfileAnalyzer() {
          {/* 4 Cards Grid */}
          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 32, position: 'relative', zIndex: 10 }}>
             {careerCards.map(card => (
-              <div key={card.id} style={{ background: '#fff', borderRadius: 32, padding: '56px 32px 40px', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid #F1F5F9', position: 'relative', minHeight: 520, transition: 'transform 0.3s ease' }} className="hover:-translate-y-2">
+              <div key={card.id} style={{ background: '#fff', borderRadius: 32, padding: '56px 32px 40px', boxShadow: '0 4px 20px rgba(0,0,0,0.06)', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid #F1F5F9', position: 'relative', minHeight: 520, transition: 'transform 0.3s ease' }} className="hover:-translate-y-2">
                  
-                 <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', background: card.matchColor, color: '#fff', fontSize: 10, fontWeight: 950, padding: '6px 24px', borderRadius: 10, whiteSpace: 'nowrap', boxShadow: '0 10px 15px rgba(0,0,0,0.1)', textTransform: 'uppercase', border: '2px solid #fff' }}>{card.match}</div>
+                 <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', background: card.matchColor, color: '#fff', fontSize: 10, fontWeight: 950, padding: '6px 24px', borderRadius: 10, whiteSpace: 'nowrap', boxShadow: '0 10px 15px rgba(0,0,0,0.1)', textTransform: 'uppercase', border: '2px solid rgba(3, 11, 23, 0.5)' }}>{card.match}</div>
                  
-                 <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#CBD5E1', marginBottom: 12 }}>
+                 <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#94A3B8', marginBottom: 12 }}>
                     <span style={{ fontSize: 11, fontWeight: 950, letterSpacing: '0.15em' }}>JOURNEY</span>
-                    <Search size={22} color="#000" />
+                    <Search size={22} color="#fff" />
                  </div>
 
-                 <div style={{ width: 160, height: 160, borderRadius: '50%', overflow: 'hidden', margin: '32px 0', border: '10px solid #F8FAFC', flexShrink: 0, boxShadow: 'inset 0 0 0 4px rgba(0,0,0,0.02)' }}>
+                 <div style={{ width: 160, height: 160, borderRadius: '50%', overflow: 'hidden', margin: '32px 0', border: '10px solid rgba(255,255,255,0.03)', flexShrink: 0, boxShadow: 'inset 0 0 0 4px rgba(0,0,0,0.2)' }}>
                     <img src={card.image} alt={card.role} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                  </div>
 
                  <div style={{ flex: 1, display: 'flex', alignItems: 'center', textAlign: 'center', marginBottom: 32 }}>
-                    <h4 style={{ fontSize: 22, fontWeight: 950, color: '#000', margin: 0, lineHeight: 1.1, textTransform: 'uppercase' }}>{card.role}</h4>
+                    <h4 style={{ fontSize: 22, fontWeight: 950, color: '#111827', margin: 0, lineHeight: 1.1, textTransform: 'uppercase' }}>{card.role}</h4>
                  </div>
                  
                  <button style={{ background: card.badgeColor, color: '#fff', border: 'none', padding: '14px 44px', borderRadius: 12, fontSize: 11, fontWeight: 950, textTransform: 'uppercase', letterSpacing: '0.15em', cursor: 'pointer', transition: 'all 0.2s', boxShadow: `0 8px 16px ${card.badgeColor}33` }}>{card.badge}</button>
@@ -975,6 +1324,8 @@ export function AIProfileAnalyzer() {
 
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
+        * { scrollbar-width: none; }
+        *::-webkit-scrollbar { display: none; }
       `}</style>
     </div>
   );

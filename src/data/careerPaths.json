@@ -1,0 +1,217 @@
+{
+  "profileInfo": {
+    "currentRole": "RPA Solution Architect",
+    "experience": "10+ years",
+    "certifications": ["PMP", "CSM", "CSPO", "CSP-SM", "Automation Anywhere Certified Professional"],
+    "skills": ["Automation Anywhere A360", "UiPath", "Workato", "Jira", "Azure DevOps", "GitHub", "Solution Architecture", "Program Management", "Team Leadership", "Process Optimization", "UAT", "Deployment Support", "Cloud awareness (Azure/AWS)", "Product Ownership", "Scrum Master", "Technical Project Management"],
+    "interests": ["CTO path", "AI-driven engineering", "intelligent automation", "scalable architecture", "cloud platforms", "business-aligned technology strategy"]
+  },
+  "categories": [
+    {
+      "id": "high-match",
+      "type": "High Match 🔥",
+      "style": "green",
+      "color": "#10B981",
+      "paths": [
+        {
+          "id": "intelligent-automation-arch",
+          "name": "Intelligent Automation Architect",
+          "matchScore": 9.5,
+          "readiness": "Short term (0–2 years)",
+          "whyItFits": "Strong RPA architecture background. Experience building scalable automation frameworks and strong interest in AI-driven engineering.",
+          "alignedSkills": ["RPA architecture", "scalable architecture", "intelligent automation"],
+          "missingSkills": ["Python", "Machine Learning Basics"],
+          "defaultHighlight": true,
+          "nodes": [
+            { "role": "RPA Trainee", "status": "past" },
+            { "role": "RPA Developer", "status": "past" },
+            { "role": "Senior RPA Developer", "status": "past" },
+            { "role": "Lead RPA Developer", "status": "past" },
+            { "role": "RPA Solution Architect", "status": "current" },
+            { "role": "Intelligent Automation Architect", "status": "next" },
+            { "role": "AI Automation Lead", "status": "future" },
+            { "role": "Head of Intelligent Automation", "status": "future" },
+            { "role": "CTO", "status": "future" }
+          ]
+        },
+        {
+          "id": "enterprise-automation-arch",
+          "name": "Enterprise Automation Architect",
+          "matchScore": 9.0,
+          "readiness": "Short term (0–2 years)",
+          "whyItFits": "Strong enterprise architecture and automation delivery experience. Governance and cross-functional leadership focus.",
+          "alignedSkills": ["Enterprise Architecture", "Governance", "Cross-functional leadership"],
+          "missingSkills": ["Advanced Cloud Architecture"],
+          "defaultHighlight": false,
+          "nodes": [
+            { "role": "RPA Trainee", "status": "past" },
+            { "role": "RPA Developer", "status": "past" },
+            { "role": "Senior RPA Developer", "status": "past" },
+            { "role": "Lead RPA Developer", "status": "past" },
+            { "role": "RPA Solution Architect", "status": "current" },
+            { "role": "Enterprise Automation Architect", "status": "next" },
+            { "role": "Automation Practice Head", "status": "future" },
+            { "role": "Director of Automation", "status": "future" },
+            { "role": "CTO", "status": "future" }
+          ]
+        },
+        {
+          "id": "automation-eng-manager",
+          "name": "Engineering Manager (Automation)",
+          "matchScore": 8.5,
+          "readiness": "Mid term (2-4 years)",
+          "whyItFits": "Team leadership and mentoring coupled with delivery ownership and engineering background.",
+          "alignedSkills": ["Team Leadership", "Delivery ownership", "Engineering background"],
+          "missingSkills": ["People Management Frameworks", "Budgeting"],
+          "defaultHighlight": false,
+          "nodes": [
+            { "role": "RPA Trainee", "status": "past" },
+            { "role": "RPA Developer", "status": "past" },
+            { "role": "Senior Automation Developer", "status": "past" },
+            { "role": "Lead Automation Engineer", "status": "past" },
+            { "role": "RPA Solution Architect", "status": "current" },
+            { "role": "Engineering Manager (Automation)", "status": "next" },
+            { "role": "Senior Engineering Manager", "status": "future" },
+            { "role": "VP Engineering", "status": "future" },
+            { "role": "CTO", "status": "future" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "adjacent-domain",
+      "type": "Adjacent Domain ⚡",
+      "style": "orange",
+      "color": "#F59E0B",
+      "paths": [
+        {
+          "id": "tech-program-manager",
+          "name": "Technical Program Manager",
+          "matchScore": 8.0,
+          "readiness": "Short term (0–2 years)",
+          "whyItFits": "PMP and Agile certifications, combined with strong project leadership and delivery governance.",
+          "alignedSkills": ["PMP", "Agile", "Delivery Governance", "Scrum Master"],
+          "missingSkills": ["Large scale program budgeting"],
+          "defaultHighlight": false,
+          "nodes": [
+            { "role": "RPA Developer", "status": "past" },
+            { "role": "Lead RPA Developer", "status": "past" },
+            { "role": "Solution Architect", "status": "past" },
+            { "role": "Technical Project Manager", "status": "current" },
+            { "role": "Technical Program Manager", "status": "next" },
+            { "role": "Program Director", "status": "future" },
+            { "role": "VP Delivery", "status": "future" },
+            { "role": "COO / CTO", "status": "future" }
+          ]
+        },
+        {
+          "id": "product-manager-ai",
+          "name": "Product Manager (Automation / AI)",
+          "matchScore": 7.5,
+          "readiness": "Mid term (3-5 years)",
+          "whyItFits": "Product ownership exposure and strong business-technical alignment suitable for automation platforms.",
+          "alignedSkills": ["Product Ownership", "Business alignment", "Automation strategy"],
+          "missingSkills": ["Go-to-market strategy", "Customer discovery techniques"],
+          "defaultHighlight": false,
+          "nodes": [
+            { "role": "RPA Developer", "status": "past" },
+            { "role": "Lead RPA Developer", "status": "past" },
+            { "role": "Solution Architect", "status": "past" },
+            { "role": "Product Owner", "status": "current" },
+            { "role": "Product Manager (Automation / AI)", "status": "next" },
+            { "role": "Senior Product Manager", "status": "future" },
+            { "role": "Head of Product", "status": "future" },
+            { "role": "Chief Product Officer", "status": "future" }
+          ]
+        },
+        {
+          "id": "delivery-head",
+          "name": "Delivery Manager / Delivery Head",
+          "matchScore": 8.0,
+          "readiness": "Mid term (2-4 years)",
+          "whyItFits": "Strong delivery governance, leadership across teams, and execution management strength.",
+          "alignedSkills": ["Delivery management", "Agile execution", "Governance"],
+          "missingSkills": ["P&L Management"],
+          "defaultHighlight": false,
+          "nodes": [
+            { "role": "RPA Developer", "status": "past" },
+            { "role": "Lead RPA Developer", "status": "past" },
+            { "role": "Scrum Master / Delivery Lead", "status": "past" },
+            { "role": "Solution Architect & Project Manager", "status": "current" },
+            { "role": "Delivery Manager", "status": "next" },
+            { "role": "Senior Delivery Manager", "status": "future" },
+            { "role": "Delivery Head", "status": "future" },
+            { "role": "COO / CTO", "status": "future" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wild-card",
+      "type": "Wild Card 🚀",
+      "style": "purple",
+      "color": "#8B5CF6",
+      "paths": [
+        {
+          "id": "ai-architect",
+          "name": "AI Architect",
+          "matchScore": 6.5,
+          "readiness": "Long term (5-10 years)",
+          "whyItFits": "Automation base with exposure to intelligent document processing. Significant upskilling required in ML.",
+          "alignedSkills": ["IQ Bot / IDP", "AI interest", "Automation algorithms"],
+          "missingSkills": ["Python", "SQL", "Data engineering basics", "ML fundamentals", "LLM architecture", "Azure AI/OpenAI"],
+          "defaultHighlight": false,
+          "nodes": [
+            { "role": "RPA Developer", "status": "past" },
+            { "role": "IQ Bot / IDP Specialist", "status": "past" },
+            { "role": "Automation Data Analyst", "status": "past" },
+            { "role": "Data Engineer", "status": "current" },
+            { "role": "AI Engineer", "status": "next" },
+            { "role": "AI Solutions Architect", "status": "future" },
+            { "role": "AI Architect", "status": "future" },
+            { "role": "CTO (AI-first company)", "status": "future" }
+          ]
+        },
+        {
+          "id": "cloud-architect",
+          "name": "Cloud / Enterprise Architect",
+          "matchScore": 7.0,
+          "readiness": "Mid term (3-5 years)",
+          "whyItFits": "General solution architecture background present, needs deeper focus strictly on Cloud (AWS/Azure) integration paradigms.",
+          "alignedSkills": ["Solution Architecture", "Cloud awareness"],
+          "missingSkills": ["Microservices", "Containers", "Deep networking & security", "Enterprise integration patterns"],
+          "defaultHighlight": false,
+          "nodes": [
+            { "role": "Automation Engineer", "status": "past" },
+            { "role": "Integration Specialist", "status": "past" },
+            { "role": "Solution Architect", "status": "current" },
+            { "role": "Cloud Architect", "status": "next" },
+            { "role": "Enterprise Architect", "status": "future" },
+            { "role": "Chief Architect", "status": "future" },
+            { "role": "CTO", "status": "future" }
+          ]
+        },
+        {
+          "id": "digital-transformation-consultant",
+          "name": "Digital Transformation Consultant",
+          "matchScore": 7.5,
+          "readiness": "Mid term (3-5 years)",
+          "whyItFits": "Strong stakeholder management and business strategy interest. Good transition to executive advisory.",
+          "alignedSkills": ["Stakeholder Management", "Governance", "Tech Strategy"],
+          "missingSkills": ["Operating model design", "Business case dev", "Executive storytelling", "Consulting frameworks"],
+          "defaultHighlight": false,
+          "nodes": [
+            { "role": "RPA Developer", "status": "past" },
+            { "role": "Lead RPA Developer", "status": "past" },
+            { "role": "Solution Architect", "status": "current" },
+            { "role": "Digital Transformation Consultant", "status": "next" },
+            { "role": "Senior Consultant", "status": "future" },
+            { "role": "Principal Consultant", "status": "future" },
+            { "role": "Partner / Strategy Head", "status": "future" },
+            { "role": "CTO", "status": "future" }
+          ]
+        }
+      ]
+    }
+  ]
+}

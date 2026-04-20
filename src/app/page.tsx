@@ -1,6 +1,8 @@
+"use client";
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, ExternalLink, Heart } from 'lucide-react'
+import { ArrowRight, ExternalLink, Heart, Quote } from 'lucide-react'
 import { ResumeUploadSection } from '@/components/ResumeUpload'
 
 const journeyCards = [
@@ -56,8 +58,23 @@ const careerPaths = [
 ]
 
 export default function HomePage() {
+  const [quoteOfTheDay, setQuoteOfTheDay] = useState('');
+
+  useEffect(() => {
+    const dailyQuotes = [
+      "The future depends on what you do today.",
+      "Don't watch the clock; do what it does. Keep going.",
+      "Your career is your business. It's time to manage it as a CEO.",
+      "Opportunities don't happen, you create them.",
+      "The only way to do great work is to love what you do.",
+      "Growth and comfort do not coexist.",
+      "The expert in anything was once a beginner."
+    ];
+    setQuoteOfTheDay(dailyQuotes[new Date().getDay()]);
+  }, []);
+
   return (
-    <main style={{ background: '#030B17', minHeight: '100vh', color: '#fff' }}>
+    <main style={{ background: '#F8FAFC', minHeight: '100vh', color: '#111827', fontFamily: 'inherit' }}>
 
       {/* ── HERO BANNER ─────────────────────────────── */}
       <div style={{ position: 'relative', height: 220, overflow: 'hidden' }}>
@@ -66,13 +83,13 @@ export default function HomePage() {
 
         <div style={{ position: 'absolute', left: '2.5rem', top: '50%', transform: 'translateY(-50%)' }}>
           <h2 style={{ fontSize: '2rem', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.1, margin: 0, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
-            Opportunities<br />Curated For You.
+            Drive Your<br />Career Forward.
           </h2>
           <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
             <Link href="/your-move" style={{ background: 'linear-gradient(90deg, #f59e0b, #ec4899)', color: '#fff', padding: '0.5rem 1.25rem', borderRadius: 8, fontWeight: 900, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', textDecoration: 'none', boxShadow: '0 10px 20px rgba(236, 72, 153, 0.3)' }}>
               Explore Journeys
             </Link>
-            <Link href="/jobs" style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', padding: '0.5rem 1.25rem', borderRadius: 8, fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)' }}>
+            <Link href="/vacancies" style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', padding: '0.5rem 1.25rem', borderRadius: 8, fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)' }}>
               View Vacancies
             </Link>
           </div>
@@ -83,7 +100,7 @@ export default function HomePage() {
             <p style={{ fontWeight: 900, fontSize: '1.1rem', color: '#fff', margin: 0 }}>Ram</p>
             <p style={{ fontSize: '0.75rem', color: '#94A3B8', margin: '0.2rem 0 0.5rem' }}>Your profile is looking awesome</p>
             <Link href="/your-move" style={{ color: '#ec4899', fontSize: '0.75rem', fontWeight: 800, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-              Give it some more love <ArrowRight size={12} />
+              Elevate your potential <ArrowRight size={12} />
             </Link>
           </div>
           <div style={{ width: 52, height: 52, background: 'linear-gradient(135deg, #f59e0b, #ec4899)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: 2 }}>
@@ -95,139 +112,186 @@ export default function HomePage() {
       </div>
 
 
-      <div className="container" style={{ paddingTop: '3rem', paddingBottom: '5rem' }}>
-
-        {/* ── EXPLORE FUTURE MOVES ────────────────────── */}
-        <h2 style={{ textAlign: 'center', fontSize: '2rem', fontWeight: 900, color: '#fff', letterSpacing: '-0.03em', marginBottom: '3rem', textTransform: 'uppercase' }}>Explore Future Moves</h2>
-
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', marginBottom: '1rem' }}>
-          {/* NEXT STEP */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 200 }}>
-            <div style={{ background: '#ec4899', color: '#fff', padding: '0.25rem 1rem', borderRadius: 999, fontSize: '0.6rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '0.75rem', boxShadow: '0 5px 15px rgba(236, 72, 153, 0.3)' }}>Next Step</div>
-            <div style={{ width: 80, height: 80, borderRadius: '50%', border: '4px solid #f59e0b', background: 'rgba(245,158,11,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', marginBottom: '0.75rem', boxShadow: '0 0 30px rgba(245,158,11,0.2)' }}>🎯</div>
-            <Link href="/your-move" style={{ color: '#f59e0b', fontWeight: 900, fontSize: '0.8rem', textDecoration: 'none', textAlign: 'center', letterSpacing: '0.05em' }}>FIND SUGGESTED MOVES</Link>
-          </div>
-
-          <div style={{ flex: 1, borderTop: '2px dashed rgba(255,255,255,0.1)', marginTop: 45 }} />
-
-          {/* YOU TODAY */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 200 }}>
-            <div style={{ background: 'rgba(255,255,255,0.1)', color: '#94A3B8', padding: '0.25rem 1rem', borderRadius: 999, fontSize: '0.6rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '0.75rem' }}>You Today</div>
-            <div style={{ width: 80, height: 80, borderRadius: '50%', border: '4px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.75rem', boxShadow: '0 10px 30px rgba(0,0,0,0.4)', overflow: 'hidden' }}>
-              <Image src="/ram_profile.png" alt="Ram" width={80} height={80} style={{ objectFit: 'cover' }} />
-            </div>
-            <p style={{ color: '#fff', fontWeight: 800, fontSize: '0.85rem', textAlign: 'center', margin: 0 }}>Solution Architect</p>
-          </div>
-
-          <div style={{ flex: 1, borderTop: '2px dashed rgba(255,255,255,0.1)', marginTop: 45 }} />
-
-          {/* FUTURE MOVE */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 200 }}>
-            <div style={{ background: '#f59e0b', color: '#fff', padding: '0.25rem 1rem', borderRadius: 999, fontSize: '0.6rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '0.75rem', boxShadow: '0 5px 15px rgba(245, 158, 11, 0.3)' }}>Future Move</div>
-            <div style={{ width: 80, height: 80, borderRadius: '50%', border: '4px solid #ec4899', background: 'rgba(236,72,153,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', marginBottom: '0.75rem', boxShadow: '0 0 30px rgba(236,72,153,0.2)' }}>📈</div>
-            <Link href="/your-move" style={{ color: '#ec4899', fontWeight: 900, fontSize: '0.8rem', textDecoration: 'none', textAlign: 'center', letterSpacing: '0.05em' }}>START A JOURNEY</Link>
-          </div>
-        </div>
-
-        {/* Journey Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.25rem', marginTop: '3rem' }}>
-          {journeyCards.map((card, i) => (
-            <div key={i} style={{ background: '#fff', border: '1px solid #E5E7EB', borderRadius: 20, overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.85rem 1rem', borderBottom: '1px solid #F9FAFB' }}>
-                <span style={{ fontSize: '0.6rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#9CA3AF' }}>Journey</span>
-                <ExternalLink size={13} color="#D1D5DB" />
-              </div>
-              <div style={{ padding: '1.25rem 1rem', flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '0.75rem' }}>
-                <div style={{ width: 64, height: 64, borderRadius: '50%', border: `3px solid ${card.topColor}`, background: '#F9FAFB', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.75rem', boxShadow: `0 0 0 4px ${card.topColor}22` }}>{card.img}</div>
-                <div>
-                  <p style={{ fontSize: '0.7rem', color: '#9CA3AF', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.25rem' }}>{card.vertical}</p>
-                  <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#111827', lineHeight: 1.3, margin: 0 }}>{card.title}</h4>
+      <div className="container" style={{ padding: '4rem 2.5rem 8rem' }}>
+        
+        {/* ── FUEL50 STYLE GRID ────────────────────── */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem' }}>
+          
+          {/* TEXT BLOCK */}
+          <div style={{ gridColumn: 'span 2', paddingRight: '2rem' }}>
+            <h1 style={{ fontSize: '3.5rem', fontWeight: 950, color: '#111827', marginBottom: '1.5rem', letterSpacing: '-0.04em' }}>
+              Explore Future with <span style={{ background: 'linear-gradient(90deg, #f59e0b, #ec4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Hertz</span>
+            </h1>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <p style={{ fontSize: '1.35rem', color: '#4B5563', lineHeight: 1.4, margin: 0, fontWeight: 600 }}>
+                Welcome to your AI-powered <span style={{ color: '#111827', fontWeight: 900 }}>career mobility hub</span>. Discover tailored pathways for <span style={{ color: '#111827', fontWeight: 900 }}>upskilling, reskilling, and internal job opportunities</span> designed entirely around your potential.
+              </p>
+              
+              {/* INSPIRATION BOX */}
+              <div style={{ 
+                background: 'linear-gradient(135deg, rgba(245,158,11,0.05), rgba(236,72,153,0.05))',
+                borderLeft: '4px solid #f59e0b',
+                padding: '1.5rem',
+                borderRadius: '0 12px 12px 0',
+                marginTop: '0.5rem',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                <Quote size={24} color="#f59e0b" style={{ position: 'absolute', opacity: 0.15, right: '1.5rem', bottom: '1.5rem', transform: 'scale(4)' }} />
+                <h3 style={{ fontSize: '0.85rem', fontWeight: 800, color: '#ec4899', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
+                  Inspiration for the day
+                </h3>
+                <div style={{ minHeight: '40px', display: 'flex', alignItems: 'center' }}>
+                  {quoteOfTheDay ? (
+                    <p style={{ fontSize: '1.15rem', color: '#111827', fontStyle: 'italic', fontWeight: 600, margin: 0, lineHeight: 1.4 }}>
+                      "{quoteOfTheDay}"
+                    </p>
+                  ) : (
+                    <div style={{ width: '100%', height: '24px', background: 'rgba(0,0,0,0.05)', borderRadius: 4, animation: 'pulse 1.5s infinite' }} />
+                  )}
                 </div>
-              </div>
-              <div style={{ padding: '0 1rem 1rem' }}>
-                <Link href="/career-tree" style={{ display: 'block', background: card.bottomBg, color: card.bottomText, padding: '0.5rem', borderRadius: 8, fontSize: '0.65rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center', textDecoration: 'none', border: `1px solid ${card.topColor}33` }}>
-                  {card.bottomBadge}
-                </Link>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
 
-        {/* ── RECOMMENDED FOR YOU ──────────────────────── */}
-        <div style={{ marginTop: '5rem' }}>
-          <h2 style={{ fontSize: '1.75rem', fontWeight: 900, color: '#fff', letterSpacing: '-0.03em', marginBottom: '0.25rem' }}>DEVELOPMENT PATHS</h2>
-          <p style={{ color: '#94A3B8', fontSize: '0.875rem', marginBottom: '2.5rem', fontWeight: 700 }}>Curated based on your neural profile and 85% skill alignment</p>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            {careerPaths.map((path, pi) => (
-              <div key={pi} style={{ background: path.bg, border: path.highlight ? '1px solid #fbbf24' : '1px solid #F1F5F9', borderRadius: 20, padding: '1.5rem 2rem', boxShadow: path.highlight ? '0 4px 24px rgba(245,158,11,0.08)' : '0 2px 8px rgba(0,0,0,0.04)' }}>
-                {/* Path header */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <span style={{ background: path.badgeBg, color: '#fff', padding: '0.2rem 0.75rem', borderRadius: 999, fontSize: '0.7rem', fontWeight: 900 }}>{path.badge}</span>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', background: path.badgeBg + '20', padding: '0.2rem 0.6rem', borderRadius: 999 }}>
-                      <span style={{ color: path.badgeBg, fontSize: '0.75rem' }}>◆</span>
-                      <span style={{ color: path.badgeBg, fontSize: '0.75rem', fontWeight: 800 }}>{path.steps}</span>
-                    </div>
-                    <span style={{ fontSize: '0.8rem', color: '#6B7280' }}>{path.label} <strong style={{ color: '#000' }}>{path.target}</strong> ›</span>
-                  </div>
-                  <button style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', background: 'none', border: 'none', cursor: 'pointer', color: '#9CA3AF', fontSize: '0.8rem', fontWeight: 600 }}>
-                    <Heart size={15} /> Save path
-                  </button>
-                </div>
-
-                {/* Role progression row */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: '50%', background: '#FFD100', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '2px solid #E5E7EB', overflow: 'hidden' }}>
-                    <Image src="/ram_profile.png" alt="Ram" width={44} height={44} style={{ objectFit: 'cover' }} />
-                  </div>
-                  <div style={{ width: 24, height: 2, background: '#D1D5DB' }} />
-
-                  {path.roles.map((role, ri) => (
-                    <div key={ri} style={{ display: 'flex', alignItems: 'center', flex: ri < path.roles.length - 1 ? 1 : 0 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0' }}>
-                        <div style={{ width: 12, height: 12, borderRadius: '50%', border: role.final ? '3px solid #000' : '2px solid #D1D5DB', background: role.final ? '#000' : '#fff', flexShrink: 0 }} />
-                      </div>
-
-                      <div style={{ background: '#fff', border: '1px solid #E5E7EB', borderRadius: 12, padding: '0.85rem 1rem', marginLeft: 0, marginRight: 0, width: 180, flexShrink: 0, boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.4rem' }}>
-                          <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#111827', lineHeight: 1.3, margin: 0 }}>{role.title}</p>
-                          <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#D1D5DB', padding: 0, flexShrink: 0 }}>···</button>
-                        </div>
-                        {role.skills !== undefined && role.skills !== null && (
-                          <>
-                            <p style={{ fontSize: '0.7rem', color: '#9CA3AF', margin: '0 0 0.3rem' }}>You have {role.skills} of {role.total} most common skills for role</p>
-                            <div style={{ width: '100%', height: 4, background: '#F1F5F9', borderRadius: 99, overflow: 'hidden', marginBottom: '0.4rem' }}>
-                              <div style={{ height: '100%', width: `${Math.round((role.skills / (role.total || 1)) * 100)}%`, background: path.badgeBg, borderRadius: 99 }} />
-                            </div>
-                            {role.leadership && (
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                                <span style={{ fontSize: '0.65rem', color: '#F59E0B' }}>⭐</span>
-                                <span style={{ fontSize: '0.7rem', color: '#6B7280', fontWeight: 600 }}>Leadership role</span>
-                              </div>
-                            )}
-                          </>
-                        )}
-                        {role.extra && <p style={{ fontSize: '0.7rem', color: '#9CA3AF', fontWeight: 700, margin: 0 }}>{role.extra}</p>}
-                      </div>
-                      {ri < path.roles.length - 1 && (
-                        <div style={{ flex: 1, height: 2, background: '#E5E7EB', minWidth: 20 }} />
-                      )}
-                    </div>
-                  ))}
-                </div>
+          {/* JOURNEYS TILE */}
+          <Link href="/your-move" style={{ textDecoration: 'none', display: 'block' }}>
+            <div style={{ 
+              background: '#fff', 
+              borderRadius: 12, 
+              overflow: 'hidden', 
+              boxShadow: '0 4px 20px rgba(0,0,0,0.06)', 
+              display: 'flex', 
+              flexDirection: 'column',
+              transition: 'transform 0.3s ease, boxShadow 0.3s ease',
+              cursor: 'pointer'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px)';
+              e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.06)';
+            }}>
+              <div style={{ position: 'relative', height: 240, background: '#1e293b' }}>
+                <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80" className="slide-image slide-1" alt="Journeys 1" />
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80" className="slide-image slide-2" alt="Journeys 2" />
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" className="slide-image slide-3" alt="Journeys 3" />
               </div>
-            ))}
-          </div>
-        </div>
+              <div style={{ padding: '1.5rem', borderTop: '1px solid #F3F4F6', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                <div style={{ background: 'linear-gradient(90deg, #f59e0b, #ec4899)', color: '#fff', padding: '0.4rem 1rem', borderRadius: 999, fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem', display: 'inline-block', boxShadow: '0 4px 10px rgba(236, 72, 153, 0.3)' }}>JOURNEYS</div>
+                <p style={{ fontSize: '0.9rem', color: '#6B7280', margin: 0, fontWeight: 600, lineHeight: 1.4 }}>Explore journeys and discover potential career paths.</p>
+              </div>
+            </div>
+          </Link>
 
-        {/* ── RESUME UPLOAD ────────────────────────────── */}
-        <div style={{ marginTop: '4rem', paddingTop: '6rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-          <h3 style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 1000, color: '#fff', letterSpacing: '-0.03em', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Ready for the Next Level?</h3>
-          <p style={{ textAlign: 'center', color: '#94A3B8', fontSize: '0.95rem', marginBottom: '3rem', fontWeight: 700 }}>Upload your resume and let our AI map your trajectory instantly.</p>
-          <div style={{ maxWidth: 800, margin: '0 auto' }}>
-            <ResumeUploadSection />
+          {/* CROSSFADE ANIMATION */}
+          <style>{`
+            @keyframes cardCrossfade {
+              0% { opacity: 0; transform: scale(1.05); }
+              10% { opacity: 1; transform: scale(1); }
+              33% { opacity: 1; transform: scale(1); }
+              43% { opacity: 0; transform: scale(1.05); }
+              100% { opacity: 0; transform: scale(1.05); }
+            }
+            .slide-image {
+              position: absolute;
+              inset: 0;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              opacity: 0;
+            }
+            .slide-1 { animation: cardCrossfade 15s infinite 0s cubic-bezier(0.4, 0, 0.2, 1); }
+            .slide-2 { animation: cardCrossfade 15s infinite 5s cubic-bezier(0.4, 0, 0.2, 1); }
+            .slide-3 { animation: cardCrossfade 15s infinite 10s cubic-bezier(0.4, 0, 0.2, 1); }
+          `}</style>
+
+          {/* SKILLS TILE */}
+          <div 
+            onClick={() => window.location.href = '/learn'}
+            style={{ 
+              background: '#fff', 
+              borderRadius: 12, 
+              overflow: 'hidden', 
+              boxShadow: '0 4px 20px rgba(0,0,0,0.06)', 
+              display: 'flex', 
+              flexDirection: 'column',
+              transition: 'transform 0.3s ease, boxShadow 0.3s ease',
+              cursor: 'pointer'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px)';
+              e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.06)';
+            }}>
+              <div style={{ position: 'relative', height: 240, background: '#1e293b' }}>
+                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80" className="slide-image slide-1" alt="Skills 1" />
+                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80" className="slide-image slide-2" alt="Skills 2" />
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80" className="slide-image slide-3" alt="Skills 3" />
+              </div>
+              <div style={{ padding: '1.5rem', borderTop: '1px solid #F3F4F6', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                <div style={{ background: 'linear-gradient(90deg, #f59e0b, #ec4899)', color: '#fff', padding: '0.4rem 1rem', borderRadius: 999, fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem', display: 'inline-block', boxShadow: '0 4px 10px rgba(236, 72, 153, 0.3)' }}>SKILLS</div>
+                <p style={{ fontSize: '0.9rem', color: '#6B7280', margin: 0, fontWeight: 600, lineHeight: 1.4 }}>Manage skills required for your role and career.</p>
+              </div>
           </div>
+
+          {/* ACHIEVE TILE */}
+          <div style={{ background: '#fff', borderRadius: 12, overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 20px rgba(0,0,0,0.06)', transition: 'transform 0.3s ease, boxShadow 0.3s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-8px)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.1)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.06)'; }}>
+            <div style={{ position: 'relative', height: 240, background: '#1e293b' }}>
+               <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80" className="slide-image slide-1" alt="Milestones 1" />
+               <img src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?w=800&q=80" className="slide-image slide-2" alt="Milestones 2" />
+               <img src="https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?w=800&q=80" className="slide-image slide-3" alt="Milestones 3" />
+            </div>
+            <div style={{ padding: '1.5rem', borderTop: '1px solid #F3F4F6', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <div style={{ background: 'linear-gradient(90deg, #f59e0b, #ec4899)', color: '#fff', padding: '0.4rem 1rem', borderRadius: 999, fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem', display: 'inline-block', boxShadow: '0 4px 10px rgba(236, 72, 153, 0.3)' }}>MILESTONES</div>
+              <p style={{ fontSize: '0.9rem', color: '#6B7280', margin: 0, fontWeight: 600, lineHeight: 1.4 }}>Review your unlocked milestones and rewards.</p>
+            </div>
+          </div>
+
+          {/* GROUP TILE (Collaboration) */}
+          <div style={{ background: '#fff', borderRadius: 12, overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 20px rgba(0,0,0,0.06)', transition: 'transform 0.3s ease, boxShadow 0.3s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-8px)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.1)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.06)'; }}>
+            <div style={{ position: 'relative', height: 240, background: '#1e293b' }}>
+               <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&q=80" className="slide-image slide-1" alt="Network 1" />
+               <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80" className="slide-image slide-2" alt="Network 2" />
+               <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80" className="slide-image slide-3" alt="Network 3" />
+            </div>
+            <div style={{ padding: '1.5rem', borderTop: '1px solid #F3F4F6', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <div style={{ background: 'linear-gradient(90deg, #f59e0b, #ec4899)', color: '#fff', padding: '0.4rem 1rem', borderRadius: 999, fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem', display: 'inline-block', boxShadow: '0 4px 10px rgba(236, 72, 153, 0.3)' }}>NETWORK</div>
+              <p style={{ fontSize: '0.9rem', color: '#6B7280', margin: 0, fontWeight: 600, lineHeight: 1.4 }}>Connect with peers and mentors across teams.</p>
+            </div>
+          </div>
+
+          {/* CHEER TILE (Mentorship) */}
+          <div style={{ background: '#fff', borderRadius: 12, overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 20px rgba(0,0,0,0.06)', transition: 'transform 0.3s ease, boxShadow 0.3s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-8px)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.1)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.06)'; }}>
+            <div style={{ position: 'relative', height: 240, background: '#1e293b' }}>
+               <img src="https://images.unsplash.com/photo-1542744173-05336fcc7ad4?w=800&q=80" className="slide-image slide-1" alt="Mentorship 1" />
+               <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&q=80" className="slide-image slide-2" alt="Mentorship 2" />
+               <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" className="slide-image slide-3" alt="Mentorship 3" />
+            </div>
+            <div style={{ padding: '1.5rem', borderTop: '1px solid #F3F4F6', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <div style={{ background: 'linear-gradient(90deg, #f59e0b, #ec4899)', color: '#fff', padding: '0.4rem 1rem', borderRadius: 999, fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem', display: 'inline-block', boxShadow: '0 4px 10px rgba(236, 72, 153, 0.3)' }}>MENTORSHIP</div>
+              <p style={{ fontSize: '0.9rem', color: '#6B7280', margin: 0, fontWeight: 600, lineHeight: 1.4 }}>Find guidance and connect with experienced mentors.</p>
+            </div>
+          </div>
+
+          {/* PAWNS TILE (Leadership) */}
+          <div style={{ background: '#fff', borderRadius: 12, overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 20px rgba(0,0,0,0.06)', transition: 'transform 0.3s ease, boxShadow 0.3s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-8px)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.1)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.06)'; }}>
+            <div style={{ position: 'relative', height: 240, background: '#1e293b' }}>
+               <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80" className="slide-image slide-1" alt="Leadership 1" />
+               <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80" className="slide-image slide-2" alt="Leadership 2" />
+               <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&q=80" className="slide-image slide-3" alt="Leadership 3" />
+            </div>
+            <div style={{ padding: '1.5rem', borderTop: '1px solid #F3F4F6', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <div style={{ background: 'linear-gradient(90deg, #f59e0b, #ec4899)', color: '#fff', padding: '0.4rem 1rem', borderRadius: 999, fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem', display: 'inline-block', boxShadow: '0 4px 10px rgba(236, 72, 153, 0.3)' }}>LEADERSHIP</div>
+              <p style={{ fontSize: '0.9rem', color: '#6B7280', margin: 0, fontWeight: 600, lineHeight: 1.4 }}>Discover leadership paths and training.</p>
+            </div>
+          </div>
+
         </div>
 
       </div>
