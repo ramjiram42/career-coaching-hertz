@@ -184,10 +184,10 @@ export function AIProfileAnalyzer() {
                      </marker>
                   </defs>
                   {/* Paths starting exactly from the base of the center circle */}
-                  <path d="M550 0 C550 150, 137 150, 137 300" stroke="#007AFF" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.4} marker-end="url(#arrowhead)" />
-                  <path d="M550 0 C550 150, 412 150, 412 300" stroke="#007AFF" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.4} marker-end="url(#arrowhead)" />
-                  <path d="M550 0 C550 150, 687 150, 687 300" stroke="#007AFF" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.4} marker-end="url(#arrowhead)" />
-                  <path d="M550 0 C550 150, 962 150, 962 300" stroke="#007AFF" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.4} marker-end="url(#arrowhead)" />
+                  <path d="M550 0 C550 150, 137 150, 137 300" stroke="#007AFF" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.4} markerEnd="url(#arrowhead)" />
+                  <path d="M550 0 C550 150, 412 150, 412 300" stroke="#007AFF" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.4} markerEnd="url(#arrowhead)" />
+                  <path d="M550 0 C550 150, 687 150, 687 300" stroke="#007AFF" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.4} markerEnd="url(#arrowhead)" />
+                  <path d="M550 0 C550 150, 962 150, 962 300" stroke="#007AFF" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.4} markerEnd="url(#arrowhead)" />
                </svg>
             </div>
          </div>
