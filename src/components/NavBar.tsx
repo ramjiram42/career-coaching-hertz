@@ -101,7 +101,7 @@ export const NavBar = () => {
         background: '#030B17', // Jio Hotstar Deep Midnight
         borderBottom: '1px solid rgba(255,255,255,0.1)',
         transition: 'all 0.3s ease',
-        height: scrolled ? 80 : 100,
+        height: scrolled ? 100 : 140, // Increased height significantly to fix overlap
         display: 'flex',
         flexDirection: 'column', // Using a two-tier approach like the screenshot
       }}
@@ -109,6 +109,7 @@ export const NavBar = () => {
       {/* TOP TIER: BRANDING & PROFILE */}
       <div style={{ 
         width: '100%', 
+        height: '65%', // More height for branding
         padding: '0 40px', 
         display: 'flex', 
         justifyContent: 'space-between', 
