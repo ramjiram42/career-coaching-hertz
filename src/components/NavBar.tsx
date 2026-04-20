@@ -145,7 +145,7 @@ export const NavBar = () => {
                     lineHeight: 0.8,
                     fontFamily: '"Inter", sans-serif',
                     textTransform: 'uppercase',
-                    background: 'linear-gradient(90deg, #2563EB, #9333EA)',
+                    background: 'linear-gradient(90deg, #FFD100, #F59E0B)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                   }}>
@@ -155,15 +155,15 @@ export const NavBar = () => {
                     fontSize: 16, 
                     fontWeight: 400, 
                     fontStyle: 'italic',
-                    margin: '2px 0 0', 
+                    margin: '8px 0 0', // Increased spacing
                     letterSpacing: '0.3em', 
                     lineHeight: 0.8,
                     fontFamily: '"Inter", sans-serif',
                     textTransform: 'uppercase',
-                    background: 'linear-gradient(90deg, #2563EB, #9333EA)',
+                    background: 'linear-gradient(90deg, #FFD100, #F59E0B)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
-                    opacity: 0.8
+                    opacity: 0.9
                   }}>
                     Coaching
                   </h1>
