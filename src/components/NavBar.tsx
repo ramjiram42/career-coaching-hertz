@@ -145,27 +145,27 @@ export const NavBar = () => {
 
                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <h1 style={{ 
-                    fontSize: 28, 
+                    fontSize: 32, // Increased for clarity
                     fontWeight: 900, 
+                    color: '#fff', // White as requested
                     margin: 0, 
                     letterSpacing: '0.02em', 
                     lineHeight: 0.8,
                     fontFamily: '"Inter", sans-serif',
-                    background: 'linear-gradient(90deg, #f59e0b, #ec4899)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
                   }}>
                     Career
                   </h1>
                   <h1 style={{ 
-                    fontSize: 16, 
+                    fontSize: 16, // Half size
                     fontWeight: 800, 
-                    color: '#94A3B8', // Slate/Grey from reference
-                    margin: '6px 0 0', 
+                    margin: '8px 0 0', 
                     letterSpacing: '0.25em', 
                     lineHeight: 0.8,
                     fontFamily: '"Inter", sans-serif',
-                    textTransform: 'uppercase'
+                    textTransform: 'uppercase',
+                    background: 'linear-gradient(90deg, #f59e0b, #ec4899)', // Logo colors
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
                   }}>
                     Coaching
                   </h1>
