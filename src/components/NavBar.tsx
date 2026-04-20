@@ -88,7 +88,7 @@ export const NavBar = () => {
          </div>
       </div>
 
-      {/* BOTTOM TIER: NAVIGATION OPTIONS WITH YELLOW OUTLINE THEME */}
+      {/* BOTTOM TIER: NAVIGATION OPTIONS WITH GLASSY SLIDING PILL */}
       <div style={{ 
         width: '100%', 
         height: '50%', 
@@ -99,11 +99,32 @@ export const NavBar = () => {
       }}>
          <div style={{ 
            display: 'flex', 
-           gap: 40,
-           padding: '0 20px',
+           gap: 10, // Tighter gap for the glassy pill move
+           padding: '8px',
            height: '100%',
-           alignItems: 'center'
+           alignItems: 'center',
+           position: 'relative',
+           background: '#F8FAFC',
+           borderRadius: 20,
+           margin: '10px 0'
          }}>
+            {/* THE GLASSY SLIDING PILL */}
+            <div style={{
+              position: 'absolute',
+              height: 40,
+              width: hoveredIdx !== null ? 100 : 0, // Dynamic width based on hovered item (placeholder logic)
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid #FFD100',
+              borderRadius: 12,
+              transition: 'all 0.4s cubic-bezier(0.19, 1, 0.22, 1)',
+              left: hoveredIdx !== null ? (8 + hoveredIdx * 110) : 0, // Basic position logic
+              opacity: hoveredIdx !== null ? 1 : 0,
+              boxShadow: '0 4px 15px rgba(255, 209, 0, 0.15)',
+              zIndex: 0,
+              pointerEvents: 'none'
+            }} />
+
             {navLinks.map((link, idx) => (
               <Link 
                 key={link.name} 
@@ -112,28 +133,32 @@ export const NavBar = () => {
                 onMouseLeave={() => setHoveredIdx(null)}
                 style={{
                   textDecoration: 'none',
-                  fontSize: 13,
-                  fontWeight: 850,
-                  color: link.active || hoveredIdx === idx ? '#000' : '#64748B',
-                  letterSpacing: '0.05em',
-                  transition: 'all 0.2s',
+                  fontSize: 12,
+                  padding: '10px 24px',
+                  fontWeight: 950,
+                  color: (link.active && hoveredIdx === null) || hoveredIdx === idx ? '#000' : '#64748B',
+                  letterSpacing: '0.08em',
+                  transition: 'color 0.3s ease',
                   position: 'relative',
-                  padding: '8px 0'
+                  zIndex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  minWidth: 100
                 }}
               >
                 {link.name}
-                {/* DYNAMIC YELLOW UNDERLINE */}
-                <div style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  height: 3,
-                  background: '#FFD100',
-                  transform: link.active || hoveredIdx === idx ? 'scaleX(1)' : 'scaleX(0)',
-                  transition: 'transform 0.3s cubic-bezier(0.19, 1, 0.22, 1)',
-                  borderRadius: 10
-                }} />
+                {/* ACTIVE INDICATOR (FALLBACK) */}
+                {link.active && hoveredIdx === null && (
+                   <div style={{
+                     position: 'absolute',
+                     bottom: 4,
+                     width: 4,
+                     height: 4,
+                     background: '#FFD100',
+                     borderRadius: '50%'
+                   }} />
+                )}
               </Link>
             ))}
          </div>
