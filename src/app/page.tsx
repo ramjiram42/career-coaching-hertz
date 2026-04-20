@@ -94,23 +94,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ── SUB NAV TABS ─────────────────────────────── */}
-      <div style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(255,255,255,0.05)', position: 'relative', zIndex: 0 }}>
-        <div className="container" style={{ display: 'flex', gap: 0 }}>
-          {[
-            { label: 'Home', href: '/', active: true },
-            { label: 'Journeys', href: '/your-move' },
-            { label: 'Gigs', href: '/gigs' },
-            { label: 'Mentors', href: '/mentors' },
-            { label: 'Learn', href: '/dashboard' },
-            { label: 'Vacancies', href: '/jobs' },
-          ].map(tab => (
-            <Link key={tab.href} href={tab.href} style={{ padding: '1rem 1.5rem', fontWeight: 700, fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.08em', textDecoration: 'none', color: tab.active ? '#fff' : '#94A3B8', borderBottom: tab.active ? '3px solid #ec4899' : '3px solid transparent', whiteSpace: 'nowrap', transition: 'all 0.3s' }}>
-              {tab.label}
-            </Link>
-          ))}
-        </div>
-      </div>
 
       <div className="container" style={{ paddingTop: '3rem', paddingBottom: '5rem' }}>
 
