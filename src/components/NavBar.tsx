@@ -1,13 +1,14 @@
 'use client';
 
-import { Menu, X, Bell, User, ChevronDown, Rocket, Compass, Target, GraduationCap, Zap, Sparkles, LayoutDashboard, Map, Users, Search, Briefcase, GraduationCap as LearnIcon, Lightbulb } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export const NavBar = () => {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 });
+  const navRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -24,6 +25,20 @@ export const NavBar = () => {
     { name: 'LEARN', href: '#' },
     { name: 'VACANCIES', href: '#' },
   ];
+
+  useEffect(() => {
+    const activeIdx = navLinks.findIndex(l => l.active);
+    const targetIdx = hoveredIdx !== null ? hoveredIdx : activeIdx;
+    
+    if (navRefs.current[targetIdx]) {
+      const el = navRefs.current[targetIdx];
+      setPillStyle({
+        left: el?.offsetLeft || 0,
+        width: el?.offsetWidth || 0,
+        opacity: 1
+      });
+    }
+  }, [hoveredIdx]);
 
   return (
     <nav 
@@ -109,16 +124,16 @@ export const NavBar = () => {
            margin: '10px 0',
            border: '1px solid #E2E8F0'
          }}>
-            {/* THE SOLID HERTZ POWER PILL */}
+            {/* THE SOLID HERTZ POWER PILL - DYNAMICALLY CALCULATED */}
             <div style={{
               position: 'absolute',
               height: 44,
-              width: 120, // Match the scale of the zoomed tab
+              width: pillStyle.width,
               background: '#FFD100', // FULL HERTZ COLOR
               borderRadius: 16,
               transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)', // Bouncy spring move
-              left: hoveredIdx !== null ? (6 + hoveredIdx * 112) : 0, 
-              opacity: hoveredIdx !== null ? 1 : 0,
+              left: pillStyle.left, 
+              opacity: pillStyle.opacity,
               boxShadow: '0 10px 25px rgba(255, 209, 0, 0.4)',
               zIndex: 0,
               pointerEvents: 'none',
@@ -129,6 +144,7 @@ export const NavBar = () => {
               <Link 
                 key={link.name} 
                 href={link.href}
+                ref={(el) => { navRefs.current[idx] = el; }}
                 onMouseEnter={() => setHoveredIdx(idx)}
                 onMouseLeave={() => setHoveredIdx(null)}
                 style={{
