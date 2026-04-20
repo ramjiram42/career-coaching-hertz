@@ -38,7 +38,7 @@ export function ResumeUploadSection() {
          }}
        >
          <input type="file" ref={fileInputRef} hidden onChange={handleFileUpload} />
-         <UploadCloud size={48} color="#2563EB" />
+         <UploadCloud size={48} color="#f59e0b" />
          <h2 style={{ marginTop: 24, fontSize: 24, fontFamily: '"Outfit", sans-serif' }}>Upload Professional History</h2>
        </div>
     );
@@ -67,8 +67,8 @@ export function ResumeUploadSection() {
                height: 120, 
                borderRadius: '50%', 
                padding: 4, 
-               background: 'linear-gradient(135deg, #2563EB, #9333EA)',
-               boxShadow: '0 0 30px rgba(37, 99, 235, 0.4)'
+               background: 'linear-gradient(135deg, #f59e0b, #ec4899)',
+               boxShadow: '0 0 30px rgba(245, 158, 11, 0.4)'
              }}>
                 <div style={{ width: '100%', height: '100%', borderRadius: '50%', overflow: 'hidden', border: '4px solid #030B17' }}>
                    <Image src="/ram_profile.png" width={120} height={120} alt="Ram" style={{ objectFit: 'cover' }} />
@@ -137,7 +137,7 @@ export function ResumeUploadSection() {
 
        {/* FOOTER POWERED BY TAGLINE */}
        <p style={{ fontSize: 14, color: '#64748B', fontWeight: 600, letterSpacing: '0.02em', margin: 0, fontFamily: '"Outfit", sans-serif' }}>
-          CareerForge is powered by <span style={{ color: '#fff', fontWeight: 800 }}>Intelligent Neural Pathfinding.</span>
+          Career Coaching is powered by <span style={{ color: '#fff', fontWeight: 800 }}>Intelligent Neural Pathfinding.</span>
        </p>
     </div>
   );

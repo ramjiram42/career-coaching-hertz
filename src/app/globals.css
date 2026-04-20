@@ -1,14 +1,14 @@
 :root {
-  --primary: #2563EB;
-  --secondary: #9333EA;
-  --accent: #2563EB;
+  --primary: #f59e0b;
+  --secondary: #ec4899;
+  --accent: #f59e0b;
   --background: #030B17;
   --card-bg: rgba(255, 255, 255, 0.03);
   --text-main: #FFFFFF;
   --text-muted: #94A3B8;
   --shadow-soft: 0 10px 40px rgba(0,0,0,0.4);
   --shadow-medium: 0 20px 60px rgba(0,0,0,0.6);
-  --brand-gradient: linear-gradient(90deg, #2563EB, #9333EA);
+  --brand-gradient: linear-gradient(90deg, #f59e0b, #ec4899);
 }
 
 @import "tailwindcss";

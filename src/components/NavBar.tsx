@@ -64,7 +64,6 @@ export const NavBar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // EXACT OPTIONS FROM SCREENSHOT
   const navLinks = [
     { name: 'HOME', href: '/' },
     { name: 'JOURNEYS', href: '/your-move' },
@@ -80,7 +79,6 @@ export const NavBar = () => {
     
     if (navRefs.current[targetIdx]) {
       const el = navRefs.current[targetIdx];
-      // Use requestAnimationFrame or timeout to ensure DOM metrics are stable
       const frame = requestAnimationFrame(() => {
         setPillStyle({
           left: el?.offsetLeft || 0,
@@ -98,18 +96,18 @@ export const NavBar = () => {
         position: 'sticky',
         top: 0,
         zIndex: 500,
-        background: '#030B17', // Jio Hotstar Deep Midnight
+        background: '#030B17',
         borderBottom: '1px solid rgba(255,255,255,0.1)',
         transition: 'all 0.3s ease',
-        height: scrolled ? 100 : 140, // Increased height significantly to fix overlap
+        height: scrolled ? 100 : 140,
         display: 'flex',
-        flexDirection: 'column', // Using a two-tier approach like the screenshot
+        flexDirection: 'column',
       }}
     >
       {/* TOP TIER: BRANDING & PROFILE */}
       <div style={{ 
         width: '100%', 
-        height: '65%', // More height for branding
+        height: '65%', 
         padding: '0 40px', 
         display: 'flex', 
         justifyContent: 'space-between', 
@@ -117,25 +115,17 @@ export const NavBar = () => {
         borderBottom: '1px solid rgba(255,255,255,0.05)'
       }}>
          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-            {/* GRID ICON AS SEEN IN SCREENSHOT */}
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 24, textDecoration: 'none' }}>
                <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* HERTZ ORBITAL 'H' LOGO BASED ON USER REFERENCE */}
                   <svg width="60" height="60" viewBox="0 0 100 100" fill="none">
-                    {/* OUTER KINETIC CIRCLES */}
                     <circle cx="50" cy="50" r="45" stroke="url(#hertzGradient)" strokeWidth="2" strokeDasharray="120 40" opacity="0.6" />
                     <circle cx="50" cy="50" r="38" stroke="url(#hertzGradient)" strokeWidth="1" strokeDasharray="80 20" opacity="0.4" />
-                    
-                    {/* THE 'H' MONOGRAM */}
                     <path d="M35 30 V70 M65 30 V70 M35 50 H65" stroke="url(#hertzGradient)" strokeWidth="8" strokeLinecap="round" />
-                    
-                    {/* CENTER DIAMOND ACCENT */}
                     <rect x="47" y="47" width="6" height="6" fill="#fbbf24" transform="rotate(45 50 50)" />
-
                     <defs>
                       <linearGradient id="hertzGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#f59e0b" /> {/* ORANGE */}
-                        <stop offset="100%" stopColor="#ec4899" /> {/* PINK/MAGENTA */}
+                        <stop offset="0%" stopColor="#f59e0b" />
+                        <stop offset="100%" stopColor="#ec4899" />
                       </linearGradient>
                     </defs>
                   </svg>
@@ -145,9 +135,9 @@ export const NavBar = () => {
 
                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <h1 style={{ 
-                    fontSize: 32, // Increased for clarity
+                    fontSize: 32, 
                     fontWeight: 900, 
-                    color: '#fff', // White as requested
+                    color: '#fff', 
                     margin: 0, 
                     letterSpacing: '0.02em', 
                     lineHeight: 0.8,
@@ -156,14 +146,14 @@ export const NavBar = () => {
                     Career
                   </h1>
                   <h1 style={{ 
-                    fontSize: 16, // Half size
+                    fontSize: 16, 
                     fontWeight: 800, 
                     margin: '8px 0 0', 
                     letterSpacing: '0.25em', 
                     lineHeight: 0.8,
                     fontFamily: '"Inter", sans-serif',
                     textTransform: 'uppercase',
-                    background: 'linear-gradient(90deg, #f59e0b, #ec4899)', // Logo colors
+                    background: 'linear-gradient(90deg, #f59e0b, #ec4899)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                   }}>
@@ -171,26 +161,6 @@ export const NavBar = () => {
                   </h1>
                </div>
             </Link>
-
-            <style>{`
-              @keyframes pulseLogo {
-                0% { transform: scale(1); opacity: 0.2; }
-                50% { transform: scale(1.1); opacity: 0.4; }
-                100% { transform: scale(1); opacity: 0.2; }
-              }
-              @keyframes floatIcon {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-3px); }
-              }
-              @keyframes shimmerText {
-                0% { left: -100%; }
-                50%, 100% { left: 100%; }
-              }
-              @keyframes pulseLogo { 0% { transform: scale(1); opacity: 0.2; } 50% { transform: scale(1.1); opacity: 0.4; } 100% { transform: scale(1); opacity: 0.2; } }
-              @keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-              @keyframes shimmerText { 0% { left: -100%; } 50%, 100% { left: 100%; } }
-              @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-            `}</style>
          </div>
 
          <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
@@ -203,7 +173,7 @@ export const NavBar = () => {
                   style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', marginLeft: 8, padding: '4px 8px', borderRadius: 8, background: isLocationOpen ? 'rgba(255,255,255,0.05)' : 'transparent', transition: 'all 0.3s ease' }}
                 >
                    {selectedLocale.flag}
-                   <ChevronDown size={14} color={isLocationOpen ? "#E1128F" : "#CBD5E1"} style={{ transform: isLocationOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'all 0.3s ease' }} />
+                   <ChevronDown size={14} color={isLocationOpen ? "#ec4899" : "#CBD5E1"} style={{ transform: isLocationOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'all 0.3s ease' }} />
                 </div>
 
                 {isLocationOpen && (
@@ -219,9 +189,7 @@ export const NavBar = () => {
                     padding: '12px 8px',
                     boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
                     zIndex: 1000,
-                    animation: 'slideDown 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)'
                   }}>
-                    <p style={{ fontSize: 10, fontWeight: 900, color: '#64748B', letterSpacing: '0.1em', padding: '0 12px 8px', margin: 0, textTransform: 'uppercase' }}>Hertz Global Network</p>
                     {locales.map((loc) => (
                       <div 
                         key={loc.name}
@@ -234,13 +202,11 @@ export const NavBar = () => {
                           borderRadius: 8,
                           cursor: 'pointer',
                           transition: 'all 0.2s ease',
-                          background: selectedLocale.name === loc.name ? 'rgba(225, 18, 143, 0.1)' : 'transparent'
+                          background: selectedLocale.name === loc.name ? 'rgba(236, 72, 153, 0.1)' : 'transparent'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-                        onMouseLeave={(e) => e.currentTarget.style.background = selectedLocale.name === loc.name ? 'rgba(225, 18, 143, 0.1)' : 'transparent'}
                       >
                         {loc.flag}
-                        <span style={{ fontSize: 13, fontWeight: 700, color: selectedLocale.name === loc.name ? '#E1128F' : '#CBD5E1' }}>{loc.name}</span>
+                        <span style={{ fontSize: 13, fontWeight: 700, color: selectedLocale.name === loc.name ? '#ec4899' : '#CBD5E1' }}>{loc.name}</span>
                       </div>
                     ))}
                   </div>
@@ -250,9 +216,9 @@ export const NavBar = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                  <div style={{ textAlign: 'right' }}>
                     <p style={{ fontSize: 13, fontWeight: 900, color: '#fff', margin: 0 }}>Ram</p>
-                    <p style={{ fontSize: 10, fontWeight: 700, color: '#E1128F', margin: 0 }}>Solution Architect</p>
+                    <p style={{ fontSize: 10, fontWeight: 700, color: '#ec4899', margin: 0 }}>Solution Architect</p>
                  </div>
-                 <div style={{ width: 36, height: 36, borderRadius: '50%', overflow: 'hidden', border: '2px solid #E1128F', cursor: 'pointer' }}>
+                 <div style={{ width: 36, height: 36, borderRadius: '50%', overflow: 'hidden', border: '2px solid #ec4899', cursor: 'pointer' }}>
                     <Image src="/ram_profile.png" width={36} height={36} alt="Profile" />
                  </div>
               </div>
@@ -279,17 +245,17 @@ export const NavBar = () => {
            margin: '10px 0',
            border: '1px solid rgba(255,255,255,0.05)'
          }}>
-            {/* THE SOLID JIO HOTSTAR GRADIENT POWER PILL */}
+            {/* THE POWER PILL: NOW IN HERTZ ORBITAL COLORS */}
             <div style={{
               position: 'absolute',
               height: 44,
               width: pillStyle.width,
-              background: 'linear-gradient(90deg, #2A60E4, #E1128F)', // JIO HOTSTAR GRADIENT
+              background: 'linear-gradient(90deg, #f59e0b, #ec4899)',
               borderRadius: 16,
               transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)', 
               left: pillStyle.left, 
               opacity: pillStyle.opacity,
-              boxShadow: '0 10px 25px rgba(225, 18, 143, 0.4)',
+              boxShadow: '0 10px 25px rgba(236, 72, 153, 0.4)',
               zIndex: 0,
               pointerEvents: 'none',
               transform: hoveredIdx !== null ? 'scale(1.1)' : 'scale(1)'
@@ -307,7 +273,7 @@ export const NavBar = () => {
                   fontSize: 12,
                   padding: '12px 24px',
                   fontWeight: 1000,
-                  color: (link.active && hoveredIdx === null) || hoveredIdx === idx ? '#fff' : '#94A3B8',
+                  color: (pathname === link.href) || hoveredIdx === idx ? '#fff' : '#94A3B8',
                   letterSpacing: '0.1em',
                   transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
                   position: 'relative',
@@ -316,7 +282,7 @@ export const NavBar = () => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   minWidth: 100,
-                  transform: hoveredIdx === idx ? 'scale(1.2)' : 'scale(1)', // ZOOM EFFECT
+                  transform: hoveredIdx === idx ? 'scale(1.15)' : 'scale(1)',
                 }}
               >
                 {link.name}
