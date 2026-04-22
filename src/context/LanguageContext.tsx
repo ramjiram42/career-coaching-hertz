@@ -19,12 +19,19 @@ const translations: Translations = {
     ES: 'Explorar trayectorias',
     IT: 'Esplora i percorsi'
   },
+  'OPPORTUNITIES': {
+    EN: 'Opportunities',
+    DE: 'Möglichkeiten',
+    FR: 'Opportunités',
+    ES: 'Oportunidades',
+    IT: 'Opportunità'
+  },
   'LEARNING_MARKET': {
-    EN: 'Learning Marketplace',
-    DE: 'Lernmarktplatz',
-    FR: 'Marché de l\'apprentissage',
-    ES: 'Mercado de aprendizaje',
-    IT: 'Mercato dell\'apprendimento'
+    EN: 'Learning Hub',
+    DE: 'Lernzentrum',
+    FR: 'Centre d\'apprentissage',
+    ES: 'Centro de aprendizaje',
+    IT: 'Centro di apprendimento'
   },
   'MY_PLAN': {
     EN: 'My Development Plan',

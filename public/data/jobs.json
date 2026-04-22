@@ -1,4 +1,7 @@
 [
+  {"id":"G-101","title":"Product Survey Specialist","category":"Gig","location":"Remote","date":"2026-04-20","type":"Contract","salary":"$50/hr","isGig":true},
+  {"id":"G-102","title":"Short-term Fleet Audit","category":"Gig","location":"Atlanta, GA","date":"2026-04-19","type":"Contract","salary":"$1200 Flat","isGig":true},
+  {"id":"G-103","title":"User Testing: Hertz App","category":"Gig","location":"Remote","date":"2026-04-18","type":"Micro-task","salary":"$100/session","isGig":true},
   {"id":"38633","title":"Automotive Sales Consultant","category":"Sales","location":"Morrow, GA, United States","date":"2026-04-13","type":"Full-Time","salary":"Competitive"},
   {"id":"38754","title":"Part Time Car Wash Attendant","category":"Service","location":"Albuquerque, NM, United States","date":"2026-04-13","type":"Part-Time","salary":"Competitive"},
   {"id":"38756","title":"Driver Part Time","category":"Logistics","location":"Portland, OR, United States","date":"2026-04-13","type":"Part-Time","salary":"Competitive"},

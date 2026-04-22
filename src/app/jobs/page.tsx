@@ -44,8 +44,8 @@ export default function JobsPortal() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '40px' }}>
             <div className="icon-box" style={{ background: 'linear-gradient(135deg, #083375, #1E40AF)', color: '#fff', padding: '12px', borderRadius: '12px' }}><Briefcase size={24} /></div>
             <div>
-              <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: '#1E293B', letterSpacing: '-0.02em', margin: 0 }}>Discover Opportunities</h1>
-              <p style={{ marginTop: '0.25rem', color: '#64748B', fontSize: '1.1rem', fontWeight: 500 }}>{jobsData.length.toLocaleString()}+ live opportunities ready for your impact.</p>
+              <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: '#1E293B', letterSpacing: '-0.02em', margin: 0 }}>Unified Opportunities Hub</h1>
+              <p style={{ marginTop: '0.25rem', color: '#64748B', fontSize: '1.1rem', fontWeight: 500 }}>{jobsData.length.toLocaleString()}+ Vacancies and Gigs available for your next move.</p>
             </div>
           </div>
         </div>
@@ -134,6 +134,7 @@ export default function JobsPortal() {
               if (cat.includes('service') || cat.includes('support')) { badgeBg = 'rgba(245, 158, 11, 0.15)'; badgeColor = '#F59E0B'; }
               if (cat.includes('logistic') || cat.includes('driver')) { badgeBg = 'rgba(59, 130, 246, 0.15)'; badgeColor = '#3B82F6'; }
               if (cat.includes('leader') || cat.includes('manager')) { badgeBg = 'rgba(139, 92, 246, 0.15)'; badgeColor = '#8B5CF6'; }
+              if (cat.includes('gig')) { badgeBg = 'linear-gradient(135deg, #f59e0b, #ec4899)'; badgeColor = '#fff'; }
 
               const isMatch = resumeUploaded && searchTerm === '' && location === '';
 

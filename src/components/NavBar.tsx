@@ -70,10 +70,9 @@ export const NavBar = () => {
   const navLinks = [
     { name: 'HOME', href: '/' },
     { name: 'EXPLORE_JOURNEYS', href: '/your-move' },
-    { name: 'GIGS', href: '#' },
-    { name: 'MENTORS', href: '#' },
+    { name: 'MENTORS', href: '/mentors' },
     { name: 'LEARNING_MARKET', href: '/learn' },
-    { name: 'VACANCIES', href: '/jobs' },
+    { name: 'OPPORTUNITIES', href: '/jobs' },
   ];
 
   useEffect(() => {

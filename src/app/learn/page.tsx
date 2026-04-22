@@ -72,7 +72,7 @@ const LEARNING_PATHS = [
 
 export default function LearnPage() {
   const [filter, setFilter] = useState('All')
-  const [view, setView] = useState<'catalog' | 'paths' | 'vacancies'>('catalog')
+  const [view, setView] = useState<'catalog' | 'paths' | 'opportunities'>('catalog')
   const categories = ['All', ...Array.from(new Set(COURSES.map(c => c.category)))]
   const filtered = filter === 'All' ? COURSES : COURSES.filter(c => c.category === filter)
   const enrolled = COURSES.filter(c => c.enrolled && c.progress < 100)
@@ -90,7 +90,7 @@ export default function LearnPage() {
              <p style={{ color: '#3B82F6', fontSize: 13, fontWeight: 950, textTransform: 'uppercase', letterSpacing: '0.2em', margin: 0 }}>Knowledge Simulation Core</p>
           </div>
           <h1 style={{ color: '#fff', fontSize: 72, fontWeight: 1000, letterSpacing: '-0.04em', margin: '0 0 12px', lineHeight: 0.9 }}>
-            Learning <br /> <span style={{ background: 'linear-gradient(90deg, #3B82F6, #EC4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Marketplace</span>
+            Learning <br /> <span style={{ background: 'linear-gradient(90deg, #3B82F6, #EC4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Hub</span>
           </h1>
           <p style={{ color: '#94A3B8', fontSize: 20, maxWidth: 600, fontWeight: 600, letterSpacing: '0.01em' }}>Precision-engineered courses and paths to close your skill gaps for your next high-performance move.</p>
         </div>
@@ -156,7 +156,7 @@ export default function LearnPage() {
           </div>
 
           <div style={{ background: '#F1F5F9', padding: 6, borderRadius: 16, display: 'flex', gap: 4 }}>
-            {(['catalog', 'paths', 'vacancies'] as const).map(v => (
+            {(['catalog', 'paths', 'opportunities'] as const).map(v => (
               <button 
                 key={v} 
                 onClick={() => setView(v)} 
@@ -172,7 +172,7 @@ export default function LearnPage() {
                   textTransform: 'uppercase'
                 }}
               >
-                {v === 'catalog' ? 'Courses' : v === 'paths' ? 'Pathways' : 'Vacancies'}
+                {v === 'catalog' ? 'Courses' : v === 'paths' ? 'Pathways' : 'Opportunities'}
               </button>
             ))}
           </div>
@@ -219,35 +219,36 @@ export default function LearnPage() {
           </div>
         )}
 
-        {/* Vacancies */}
-        {view === 'vacancies' && (
+        {/* Opportunities (Merged Gigs & Vacancies) */}
+        {view === 'opportunities' && (
           <div style={{ marginBottom: 100 }}>
              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 40 }}>
-               <div style={{ background: 'linear-gradient(135deg, #F59E0B, #D97706)', padding: 10, borderRadius: 12, color: '#fff' }}><Briefcase size={20} /></div>
-               <h2 style={{ fontWeight: 1000, fontSize: 32, color: '#1E293B', margin: 0, textTransform: 'uppercase' }}>Live <span style={{ color: '#F59E0B' }}>Vacancies</span></h2>
+               <div style={{ background: 'linear-gradient(135deg, #F59E0B, #EC4899)', padding: 10, borderRadius: 12, color: '#fff' }}><Briefcase size={20} /></div>
+               <h2 style={{ fontWeight: 1000, fontSize: 32, color: '#1E293B', margin: 0, textTransform: 'uppercase' }}>Discover <span style={{ background: 'linear-gradient(90deg, #F59E0B, #EC4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Opportunities</span></h2>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32 }}>
               {[
+                { id: "G-101", title: "Product Survey Specialist", category: "Gig", location: "Remote", color: "#EC4899", isGig: true },
                 { id: "38633", title: "Automotive Sales Consultant", category: "Sales", location: "Morrow, GA, US", color: "#F59E0B" },
                 { id: "39289", title: "Manager Trainee", category: "Leadership", location: "Yonkers, NY, US", color: "#3B82F6" },
+                { id: "G-102", title: "Short-term Fleet Audit", category: "Gig", location: "Atlanta, GA", color: "#f59e0b", isGig: true },
                 { id: "39616", title: "Product Owner", category: "Technology", location: "Atlanta, GA, US", color: "#EC4899" },
                 { id: "39268", title: "Customer Service Associate", category: "Customer Service", location: "Eugene, OR, US", color: "#22C55E" },
-                { id: "39547", title: "Vehicle Operations Manager", category: "Management", location: "Memphis, TN, US", color: "#8B5CF6" },
-                { id: "39632", title: "Manager Trainee", category: "Leadership", location: "O Fallon, IL, US", color: "#3B82F6" }
               ].map(job => (
-                <div key={job.id} style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: 40, padding: 40, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 20px 50px rgba(0,0,0,0.04)', minHeight: 280 }}>
-                  <div>
+                <div key={job.id} style={{ background: '#fff', border: job.isGig ? '2px solid transparent' : '1px solid #E2E8F0', borderRadius: 40, padding: 40, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 20px 50px rgba(0,0,0,0.04)', minHeight: 280, position: 'relative', borderImage: job.isGig ? 'linear-gradient(135deg, #f59e0b, #ec4899) 1' : 'none' }}>
+                  {job.isGig && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: 'linear-gradient(90deg, #f59e0b, #ec4899)', borderRadius: '40px 40px 0 0' }} />}
+                  <div style={{ position: 'relative', zIndex: 1 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                          <div style={{ width: 10, height: 10, borderRadius: '50%', background: job.color }}></div>
                          <span style={{ color: '#94A3B8', fontSize: 11, fontWeight: 950, textTransform: 'uppercase' }}>{job.category}</span>
                       </div>
-                      <span style={{ background: '#FFFBEB', color: '#F59E0B', fontSize: 11, fontWeight: 950, padding: '6px 12px', borderRadius: 12 }}>NEW ROLE</span>
+                      <span style={{ background: job.isGig ? 'rgba(236, 72, 153, 0.1)' : '#FFFBEB', color: job.isGig ? '#EC4899' : '#F59E0B', fontSize: 11, fontWeight: 950, padding: '6px 12px', borderRadius: 12 }}>{job.isGig ? 'GIG' : 'NEW ROLE'}</span>
                     </div>
                     <h3 style={{ fontWeight: 1000, fontSize: 22, color: '#1E293B', margin: '0 0 12px', lineHeight: 1.2 }}>{job.title}</h3>
                     <p style={{ fontSize: 14, color: '#64748B', fontWeight: 600, margin: 0 }}>📍 {job.location}</p>
                   </div>
-                  <Link href="/jobs" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, background: '#1E293B', color: '#fff', border: 'none', borderRadius: 20, padding: '16px', fontWeight: 950, fontSize: 14, textDecoration: 'none', marginTop: 24 }}>
+                  <Link href="/jobs" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, background: '#1E293B', color: '#fff', border: 'none', borderRadius: 20, padding: '16px', fontWeight: 950, fontSize: 14, textDecoration: 'none', marginTop: 24, position: 'relative', zIndex: 1 }}>
                     VIEW DETAILS <ArrowRight size={16} />
                   </Link>
                 </div>
@@ -255,7 +256,7 @@ export default function LearnPage() {
             </div>
             <div style={{ textAlign: 'center', marginTop: 60 }}>
                <Link href="/jobs" style={{ display: 'inline-flex', alignItems: 'center', gap: 12, color: '#1E293B', fontWeight: 1000, fontSize: 16, textDecoration: 'none', borderBottom: '2px solid #F59E0B', paddingBottom: 4 }}>
-                  EXPLORE ALL 54 VACANCIES <ChevronRight size={20} />
+                  EXPLORE ALL OPPORTUNITIES <ChevronRight size={20} />
                </Link>
             </div>
           </div>
