@@ -20,31 +20,34 @@ const MENTORS = [
   { id: '9', name: 'Nina Okafor', expertiseArea: 'Franchise & Airport Strategy', rating: 4.8, yearsExperience: 13, sessionsDone: 71, language: 'English, French', supportedRole: 'Regional Director Franchise', domain: 'Finance & Strategy', avatar: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&q=80' },
 ];
 
-// Generate 41 more mentors to make it 50
-const firstNames = ['Robert', 'Emily', 'Michael', 'Sarah', 'William', 'Jessica', 'Richard', 'Karen', 'Joseph', 'Nancy', 'Charles', 'Lisa', 'Thomas', 'Betty', 'Matthew', 'Sandra', 'Daniel', 'Donna', 'Mark', 'Paul', 'Steven', 'Laura', 'Andrew', 'Carol', 'Kenneth', 'Michelle', 'Joshua', 'Amanda', 'Kevin', 'Dorothy', 'Brian', 'Melissa', 'George', 'Deborah', 'Edward', 'Stephanie', 'Ronald', 'Rebecca', 'Timothy', 'Sharon', 'Jason'];
-const lastNames = ['Smith', 'Brown', 'Davis', 'Wilson', 'Moore', 'Taylor', 'Anderson', 'Thomas', 'Jackson', 'White', 'Harris', 'Martin', 'Thompson', 'Garcia', 'Martinez', 'Robinson', 'Clark', 'Rodriguez', 'Lewis', 'Lee', 'Walker', 'Hall', 'Allen', 'Young', 'Hernandez', 'King', 'Wright', 'Lopez', 'Hill', 'Scott', 'Green', 'Adams', 'Baker', 'Gonzalez', 'Nelson', 'Carter', 'Quintana', 'Mitchell', 'Perez', 'Roberts', 'Turner'];
+const firstNames = ['Robert', 'Emily', 'Michael', 'Sarah', 'William', 'Jessica', 'Richard', 'Karen', 'Joseph', 'Nancy', 'Charles', 'Lisa', 'Thomas', 'Betty', 'Matthew', 'Sandra', 'Daniel', 'Donna', 'Mark', 'Paul', 'Steven', 'Laura', 'Andrew', 'Carol', 'Kenneth', 'Michelle', 'Joshua', 'Amanda', 'Kevin', 'Dorothy', 'Brian', 'Melissa', 'George', 'Deborah', 'Edward', 'Stephanie', 'Ronald', 'Rebecca', 'Timothy', 'Sharon', 'Jason', 'Jeffrey', 'Ryan', 'Jacob', 'Gary', 'Nicholas', 'Eric', 'Jonathan', 'Stephen', 'Larry', 'Justin'];
+const lastNames = ['Smith', 'Brown', 'Davis', 'Wilson', 'Moore', 'Taylor', 'Anderson', 'Thomas', 'Jackson', 'White', 'Harris', 'Martin', 'Thompson', 'Garcia', 'Martinez', 'Robinson', 'Clark', 'Rodriguez', 'Lewis', 'Lee', 'Walker', 'Hall', 'Allen', 'Young', 'Hernandez', 'King', 'Wright', 'Lopez', 'Hill', 'Scott', 'Green', 'Adams', 'Baker', 'Gonzalez', 'Nelson', 'Carter', 'Quintana', 'Mitchell', 'Perez', 'Roberts', 'Turner', 'Phillips', 'Campbell', 'Parker', 'Evans', 'Edwards', 'Collins', 'Stewart', 'Sanchez', 'Morris', 'Rogers'];
 
-for (let i = 10; i <= 50; i++) {
+for (let i = 10; i <= 60; i++) {
   const fName = firstNames[(i - 10) % firstNames.length];
   const lName = lastNames[(i - 10) % lastNames.length];
   const domain = DOMAINS[i % DOMAINS.length];
   const rating = (4.5 + Math.random() * 0.5).toFixed(1);
   const years = 10 + Math.floor(Math.random() * 20);
-  const sessions = 20 + Math.floor(Math.random() * 180);
+  const sessions = 40 + Math.floor(Math.random() * 300);
   
+  const rolePrefixes = ['Director', 'Lead Specialist', 'Senior VP', 'Global Head', 'Principal Architect', 'Project Lead'];
+  const rolePrefix = rolePrefixes[Math.floor(Math.random() * rolePrefixes.length)];
+
   MENTORS.push({
     id: i.toString(),
     name: `${fName} ${lName}`,
-    expertiseArea: `${domain} Specialist`,
+    expertiseArea: `${domain} Strategic Leadership`,
     rating: parseFloat(rating),
     yearsExperience: years,
     sessionsDone: sessions,
-    language: 'English',
-    supportedRole: `Manager ${domain}`,
+    language: i % 5 === 0 ? 'English, Spanish' : i % 7 === 0 ? 'English, French' : 'English',
+    supportedRole: `${rolePrefix} ${domain}`,
     domain: domain,
-    avatar: `https://i.pravatar.cc/150?u=mentor${i}`
+    avatar: `https://i.pravatar.cc/150?u=hertz_mentor_${i}`
   });
 }
+
 
 export default function MentorsPage() {
   const [activeDomain, setActiveDomain] = useState('All');
