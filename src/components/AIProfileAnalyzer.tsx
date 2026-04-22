@@ -731,39 +731,42 @@ export function AIProfileAnalyzer() {
            
            {!portalActivePath && !showNewJourney && (
              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 60, position: 'relative', zIndex: 10, animation: 'cardIn 0.8s ease' }}>
-                <svg style={{ position: 'absolute', top: 76, right: '50%', marginRight: 90, width: 200, height: 40, zIndex: 0, overflow: 'visible' }} viewBox="0 0 200 40">
+                <svg style={{ position: 'absolute', top: 60, right: '50%', marginRight: 100, width: 220, height: 60, zIndex: 0, overflow: 'visible' }} viewBox="0 0 220 60">
                     <defs>
-                      <linearGradient id="gradLeft" x1="100%" y1="0%" x2="0%" y2="0%">
-                        <stop offset="0%" stopColor="#1e293b" />
+                      <linearGradient id="glowLeft" x1="100%" y1="0%" x2="0%" y2="0%">
+                        <stop offset="0%" stopColor="rgba(59, 130, 246, 0.1)" />
                         <stop offset="100%" stopColor="#3b82f6" />
                       </linearGradient>
-                      <filter id="glow">
-                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                        <feMerge>
-                          <feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/>
-                        </feMerge>
+                      <filter id="energyGlow">
+                        <feGaussianBlur stdDeviation="3" result="blur"/>
+                        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
                       </filter>
-                      <marker id="arrowheadLeft" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-                        <path d="M 8 0 L 0 3 L 8 6 Z" fill="#3b82f6" />
-                      </marker>
                     </defs>
-                    <path d="M 200 20 Q 100 10, 10 20" fill="none" stroke="url(#gradLeft)" strokeWidth="3" strokeDasharray="10 6" markerEnd="url(#arrowheadLeft)" filter="url(#glow)" style={{ opacity: 0.8 }}>
-                      <animate attributeName="stroke-dashoffset" from="32" to="0" dur="1.5s" repeatCount="indefinite" />
+                    {/* Background path */}
+                    <path d="M 220 30 Q 110 0, 10 30" fill="none" stroke="#F1F5F9" strokeWidth="2" strokeDasharray="5 5" />
+                    {/* Animated energy pulse */}
+                    <path d="M 220 30 Q 110 0, 10 30" fill="none" stroke="url(#glowLeft)" strokeWidth="4" strokeLinecap="round" filter="url(#energyGlow)" strokeDasharray="40 180">
+                      <animate attributeName="stroke-dashoffset" from="0" to="220" dur="2s" repeatCount="indefinite" />
                     </path>
+                    {/* Arrow head */}
+                    <path d="M 12 24 L 2 30 L 12 36 Z" fill="#3b82f6" filter="url(#energyGlow)" />
                 </svg>
-                <svg style={{ position: 'absolute', top: 76, left: '50%', marginLeft: 90, width: 200, height: 40, zIndex: 0, overflow: 'visible' }} viewBox="0 0 200 40">
+
+                <svg style={{ position: 'absolute', top: 60, left: '50%', marginLeft: 100, width: 220, height: 60, zIndex: 0, overflow: 'visible' }} viewBox="0 0 220 60">
                     <defs>
-                      <linearGradient id="gradRight" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#1e293b" />
+                      <linearGradient id="glowRight" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="rgba(59, 130, 246, 0.1)" />
                         <stop offset="100%" stopColor="#3b82f6" />
                       </linearGradient>
-                      <marker id="arrowheadRight" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
-                        <path d="M 0 0 L 8 3 L 0 6 Z" fill="#3b82f6" />
-                      </marker>
                     </defs>
-                    <path d="M 0 20 Q 100 10, 190 20" fill="none" stroke="url(#gradRight)" strokeWidth="3" strokeDasharray="10 6" markerEnd="url(#arrowheadRight)" filter="url(#glow)" style={{ opacity: 0.8 }}>
-                      <animate attributeName="stroke-dashoffset" from="-32" to="0" dur="1.5s" repeatCount="indefinite" />
+                    {/* Background path */}
+                    <path d="M 0 30 Q 110 0, 210 30" fill="none" stroke="#F1F5F9" strokeWidth="2" strokeDasharray="5 5" />
+                    {/* Animated energy pulse */}
+                    <path d="M 0 30 Q 110 0, 210 30" fill="none" stroke="url(#glowRight)" strokeWidth="4" strokeLinecap="round" filter="url(#energyGlow)" strokeDasharray="40 180">
+                      <animate attributeName="stroke-dashoffset" from="0" to="-220" dur="2s" repeatCount="indefinite" />
                     </path>
+                    {/* Arrow head */}
+                    <path d="M 208 24 L 218 30 L 208 36 Z" fill="#3b82f6" filter="url(#energyGlow)" />
                 </svg>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 280, marginTop: 20 }}>
