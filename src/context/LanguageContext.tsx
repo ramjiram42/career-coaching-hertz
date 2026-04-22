@@ -26,6 +26,27 @@ const translations: Translations = {
     ES: 'Oportunidades',
     IT: 'Opportunità'
   },
+  'MENTORSHIP': {
+    EN: 'Mentorship',
+    DE: 'Mentoring',
+    FR: 'Mentorat',
+    ES: 'Mentoría',
+    IT: 'Mentorship'
+  },
+  'NETWORK': {
+    EN: 'Network',
+    DE: 'Netzwerk',
+    FR: 'Réseau',
+    ES: 'Red',
+    IT: 'Rete'
+  },
+  'MILESTONES': {
+    EN: 'Milestones',
+    DE: 'Meilensteine',
+    FR: 'Jalons',
+    ES: 'Hitos',
+    IT: 'Traguardi'
+  },
   'LEARNING_MARKET': {
     EN: 'Learning Hub',
     DE: 'Lernzentrum',

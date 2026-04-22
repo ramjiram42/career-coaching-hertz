@@ -70,7 +70,7 @@ export default function MentorsPage() {
              <p style={{ color: '#F59E0B', fontSize: 13, fontWeight: 950, textTransform: 'uppercase', letterSpacing: '0.2em', margin: 0 }}>Global Talent Network</p>
           </div>
           <h1 style={{ color: '#fff', fontSize: 72, fontWeight: 1000, letterSpacing: '-0.04em', margin: '0 0 12px', lineHeight: 0.9 }}>
-            Expert <br /> <span style={{ background: 'linear-gradient(90deg, #F59E0B, #FFD100)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Mentors</span>
+            Mentorship <br /> <span style={{ background: 'linear-gradient(90deg, #F59E0B, #FFD100)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Ecosystem</span>
           </h1>
           <p style={{ color: '#94A3B8', fontSize: 20, maxWidth: 600, fontWeight: 600, letterSpacing: '0.01em' }}>Connect with seasoned leaders to simulate your success and accelerate your career trajectory.</p>
         </div>
