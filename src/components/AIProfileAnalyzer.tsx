@@ -718,9 +718,9 @@ export function AIProfileAnalyzer() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fff', width: '100%', paddingBottom: 100, overflowX: 'hidden', color: '#111827' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 40%, #E0F2FE 100%)', width: '100%', paddingBottom: 100, overflowX: 'hidden', color: '#111827' }}>
       
-      <div style={{ background: '#fff', width: '100%', borderBottom: '1px solid #E5E7EB' }}>
+      <div style={{ background: 'rgba(255, 255, 255, 0.5)', width: '100%', borderBottom: '1px solid rgba(229, 231, 235, 0.5)', backdropFilter: 'blur(10px)', sticky: 'top', zIndex: 100 }}>
         <div style={{ position: 'relative', height: 220, overflow: 'hidden' }}>
           <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=2000&auto=format&fit=crop&q=80" alt="Hertz Fleet" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 60%, transparent 100%)' }} />

@@ -239,61 +239,98 @@ function ExpandedJourneyView({ path, goBack, isSaved, toggleSave }: any) {
            {/* The Map */}
            <div style={{ position: 'relative', paddingLeft: 30 }}>
              {/* Vertical Timeline Line */}
-             <div style={{ position: 'absolute', left: 45, top: 0, bottom: 0, width: 3, background: 'linear-gradient(to bottom, #E2E8F0 50%, #3B82F6 100%)', zIndex: 1 }}></div>
+             <div style={{ position: 'absolute', left: 45, top: 0, bottom: 0, width: 4, background: 'linear-gradient(180deg, #EC4899 0%, #10B981 50%, #3B82F6 100%)', zIndex: 1, borderRadius: 2, opacity: 0.8 }}></div>
              
              {path.nodes.map((node: any, idx: number) => {
                const isSelected = selectedNode?.role === node.role;
                
-               let nodeColor = '#94A3B8';
-               let icon = <CheckCircle size={18} color="#fff" />;
-               
-               if (node.status === 'past') { nodeColor = '#E2E8F0'; }
-               if (node.status === 'current') { nodeColor = '#0F172A'; icon = <Briefcase size={16} color="#fff"/>; }
-               if (node.status === 'next') { nodeColor = '#3B82F6'; icon = <Crosshair size={16} color="#fff"/>; }
-               if (node.status === 'future') { nodeColor = '#8B5CF6'; icon = <Zap size={16} color="#fff"/>; }
+                let nodeColor = '#94A3B8';
+                let glowColor = 'rgba(148, 163, 184, 0.2)';
+                let icon = <CheckCircle size={18} color="#fff" />;
+                
+                if (node.status === 'past') { 
+                  nodeColor = '#E2E8F0'; 
+                  glowColor = 'rgba(226, 232, 240, 0.1)';
+                }
+                if (node.status === 'current') { 
+                  nodeColor = '#0F172A'; 
+                  glowColor = 'rgba(15, 23, 42, 0.2)';
+                  icon = <Briefcase size={16} color="#fff"/>; 
+                }
+                if (node.status === 'next') { 
+                  nodeColor = '#3B82F6'; 
+                  glowColor = 'rgba(59, 130, 246, 0.3)';
+                  icon = <Crosshair size={16} color="#fff"/>; 
+                }
+                if (node.status === 'future') { 
+                  nodeColor = '#8B5CF6'; 
+                  glowColor = 'rgba(139, 92, 246, 0.3)';
+                  icon = <Zap size={16} color="#fff"/>; 
+                }
 
-               return (
-                 <div 
-                   key={idx} 
-                   onClick={() => setSelectedNode(node)}
-                   style={{ 
-                     display: 'flex', 
-                     alignItems: 'center', 
-                     marginBottom: 30, 
-                     cursor: 'pointer',
-                     transform: isSelected ? 'scale(1.02) translateX(10px)' : 'none',
-                     transition: 'all 0.2s',
-                     position: 'relative',
-                     zIndex: 2
-                   }}
-                 >
-                    {/* Node Dot */}
-                    <div style={{ width: 34, height: 34, borderRadius: '50%', background: nodeColor, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 20, border: isSelected ? `4px solid ${nodeColor}40` : '4px solid #fff', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-                       {icon}
-                    </div>
+                return (
+                  <div 
+                    key={idx} 
+                    onClick={() => setSelectedNode(node)}
+                    style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      marginBottom: 34, 
+                      cursor: 'pointer',
+                      transform: isSelected ? 'scale(1.02) translateX(12px)' : 'none',
+                      transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                      position: 'relative',
+                      zIndex: 2
+                    }}
+                  >
+                     {/* Node Dot */}
+                     <div style={{ 
+                       width: 38, 
+                       height: 38, 
+                       borderRadius: '50%', 
+                       background: nodeColor, 
+                       display: 'flex', 
+                       alignItems: 'center', 
+                       justifyContent: 'center', 
+                       marginRight: 24, 
+                       border: isSelected ? `6px solid ${nodeColor}22` : '4px solid #fff', 
+                       boxShadow: `0 4px 12px ${glowColor}`,
+                       flexShrink: 0,
+                       transition: 'all 0.3s ease'
+                     }}>
+                        {icon}
+                     </div>
                     
-                    {/* Node Box */}
-                    <div style={{ 
-                      flex: 1, 
-                      padding: '16px 20px', 
-                      background: isSelected ? `${nodeColor}10` : '#fff',
-                      border: isSelected ? `2px solid ${nodeColor}` : '1px solid #E2E8F0',
-                      borderRadius: 12,
-                      boxShadow: isSelected ? `0 10px 20px ${nodeColor}20` : '0 4px 10px rgba(0,0,0,0.02)',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center'
-                    }}>
-                       <div>
-                          <div style={{ fontSize: 11, fontWeight: 800, color: nodeColor, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 4 }}>
-                            {node.status === 'past' ? 'Completed Role' : node.status === 'current' ? 'Current Role' : node.status === 'next' ? 'Target Next Move' : 'Future Vision'}
-                          </div>
-                          <div style={{ fontSize: 18, fontWeight: 800, color: node.status === 'past' ? '#64748B' : '#0F172A' }}>
-                            {node.role}
-                          </div>
-                       </div>
-                       {isSelected && <ChevronRight color={nodeColor} />}
-                    </div>
+                     {/* Node Box */}
+                     {/* Dynamic background based on fading position */}
+                     <div style={{ 
+                       flex: 1, 
+                       padding: '20px 28px', 
+                       background: isSelected ? `${nodeColor}0D` : `rgba(255,255,255,${1 - (idx * 0.05)})`,
+                       backdropFilter: isSelected ? 'blur(10px)' : 'none',
+                       border: `1px solid ${isSelected ? nodeColor : '#E2E8F0'}`,
+                       borderRadius: 20,
+                       boxShadow: isSelected ? `0 15px 30px -10px ${glowColor}` : '0 4px 15px rgba(0,0,0,0.02)',
+                       display: 'flex',
+                       justifyContent: 'space-between',
+                       alignItems: 'center',
+                       position: 'relative',
+                       overflow: 'hidden',
+                       transition: 'all 0.3s ease'
+                     }} className="node-timeline-card">
+                        {isSelected && <div style={{ position: 'absolute', top: 0, left: 0, width: 6, height: '100%', background: nodeColor }} />}
+                        <div>
+                           <div style={{ fontSize: 10, fontWeight: 950, color: nodeColor, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>
+                             {node.status === 'past' ? 'Completed Role' : node.status === 'current' ? 'Current Role' : node.status === 'next' ? 'Target Next Move' : 'Future Vision'}
+                           </div>
+                           <div style={{ fontSize: 20, fontWeight: 900, color: node.status === 'past' ? '#94A3B8' : '#0F172A', letterSpacing: '-0.02em' }}>
+                             {node.role}
+                           </div>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                           {isSelected && <ChevronRight size={20} color={nodeColor} />}
+                        </div>
+                     </div>
                  </div>
                );
              })}
