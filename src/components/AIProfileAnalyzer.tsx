@@ -731,13 +731,39 @@ export function AIProfileAnalyzer() {
            
            {!portalActivePath && !showNewJourney && (
              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 60, position: 'relative', zIndex: 10, animation: 'cardIn 0.8s ease' }}>
-                <svg style={{ position: 'absolute', top: 76, right: '50%', marginRight: 90, width: 200, height: 40, zIndex: 0 }} viewBox="0 0 200 40">
-                    <defs><marker id="arrowheadLeft" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#111827" /></marker></defs>
-                    <path d="M 200 20 L 10 20" fill="none" stroke="#111827" strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrowheadLeft)"><animate attributeName="stroke-dashoffset" from="12" to="0" dur="1s" repeatCount="indefinite" /></path>
+                <svg style={{ position: 'absolute', top: 76, right: '50%', marginRight: 90, width: 200, height: 40, zIndex: 0, overflow: 'visible' }} viewBox="0 0 200 40">
+                    <defs>
+                      <linearGradient id="gradLeft" x1="100%" y1="0%" x2="0%" y2="0%">
+                        <stop offset="0%" stopColor="#1e293b" />
+                        <stop offset="100%" stopColor="#3b82f6" />
+                      </linearGradient>
+                      <filter id="glow">
+                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                        <feMerge>
+                          <feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                      <marker id="arrowheadLeft" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                        <path d="M 8 0 L 0 3 L 8 6 Z" fill="#3b82f6" />
+                      </marker>
+                    </defs>
+                    <path d="M 200 20 Q 100 10, 10 20" fill="none" stroke="url(#gradLeft)" strokeWidth="3" strokeDasharray="10 6" markerEnd="url(#arrowheadLeft)" filter="url(#glow)" style={{ opacity: 0.8 }}>
+                      <animate attributeName="stroke-dashoffset" from="32" to="0" dur="1.5s" repeatCount="indefinite" />
+                    </path>
                 </svg>
-                <svg style={{ position: 'absolute', top: 76, left: '50%', marginLeft: 90, width: 200, height: 40, zIndex: 0 }} viewBox="0 0 200 40">
-                    <defs><marker id="arrowheadRight" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#111827" /></marker></defs>
-                    <path d="M 0 20 L 190 20" fill="none" stroke="#111827" strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrowheadRight)"><animate attributeName="stroke-dashoffset" from="12" to="0" dur="1s" repeatCount="indefinite" /></path>
+                <svg style={{ position: 'absolute', top: 76, left: '50%', marginLeft: 90, width: 200, height: 40, zIndex: 0, overflow: 'visible' }} viewBox="0 0 200 40">
+                    <defs>
+                      <linearGradient id="gradRight" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#1e293b" />
+                        <stop offset="100%" stopColor="#3b82f6" />
+                      </linearGradient>
+                      <marker id="arrowheadRight" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+                        <path d="M 0 0 L 8 3 L 0 6 Z" fill="#3b82f6" />
+                      </marker>
+                    </defs>
+                    <path d="M 0 20 Q 100 10, 190 20" fill="none" stroke="url(#gradRight)" strokeWidth="3" strokeDasharray="10 6" markerEnd="url(#arrowheadRight)" filter="url(#glow)" style={{ opacity: 0.8 }}>
+                      <animate attributeName="stroke-dashoffset" from="-32" to="0" dur="1.5s" repeatCount="indefinite" />
+                    </path>
                 </svg>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 280, marginTop: 20 }}>
@@ -796,16 +822,37 @@ export function AIProfileAnalyzer() {
                      {/* The Career Tree is now STATIC as requested */}
                      <div style={{ position: 'relative', height: 180, width: '100%', marginBottom: 20, marginTop: -20, pointerEvents: 'none', zIndex: 10 }}>
                          <svg width="100%" height="100%" viewBox="0 0 1000 180" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, overflow: 'visible' }}>
-                           <defs>
-                             {/* Arrow pointing down */}
-                             <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                               <path d="M 0 0 L 10 5 L 0 10 z" fill="#3B82F6" />
-                             </marker>
-                           </defs>
-                           <path d="M 500 0 C 500 80, 125 40, 125 180" fill="none" stroke="#3B82F6" strokeWidth="2.5" strokeDasharray="6 4" markerEnd="url(#arrow)" opacity="0.6"><animate attributeName="stroke-dashoffset" from="20" to="0" dur="1.5s" repeatCount="indefinite" /></path>
-                           <path d="M 500 0 C 500 80, 375 40, 375 180" fill="none" stroke="#3B82F6" strokeWidth="2.5" strokeDasharray="6 4" markerEnd="url(#arrow)" opacity="0.6"><animate attributeName="stroke-dashoffset" from="20" to="0" dur="1.5s" repeatCount="indefinite" /></path>
-                           <path d="M 500 0 C 500 80, 625 40, 625 180" fill="none" stroke="#3B82F6" strokeWidth="2.5" strokeDasharray="6 4" markerEnd="url(#arrow)" opacity="0.6"><animate attributeName="stroke-dashoffset" from="20" to="0" dur="1.5s" repeatCount="indefinite" /></path>
-                           <path d="M 500 0 C 500 80, 875 40, 875 180" fill="none" stroke="#3B82F6" strokeWidth="2.5" strokeDasharray="6 4" markerEnd="url(#arrow)" opacity="0.6"><animate attributeName="stroke-dashoffset" from="20" to="0" dur="1.5s" repeatCount="indefinite" /></path>
+                            <defs>
+                              <linearGradient id="treeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stopColor="#3B82F6" />
+                                <stop offset="100%" stopColor="#EC4899" />
+                              </linearGradient>
+                              <filter id="treeGlow">
+                                <feGaussianBlur stdDeviation="3" result="glow"/>
+                                <feMerge>
+                                  <feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                              </filter>
+                              <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#EC4899" />
+                              </marker>
+                            </defs>
+                            <path d="M 500 0 C 500 80, 125 40, 125 180" fill="none" stroke="url(#treeGrad)" strokeWidth="3" strokeDasharray="8 6" markerEnd="url(#arrow)" filter="url(#treeGlow)" style={{ opacity: 0.9 }}>
+                              <animate attributeName="stroke-dashoffset" from="28" to="0" dur="2s" repeatCount="indefinite" />
+                              <animate attributeName="opacity" from="0" to="0.9" dur="1s" fill="freeze" />
+                            </path>
+                            <path d="M 500 0 C 500 80, 375 40, 375 180" fill="none" stroke="url(#treeGrad)" strokeWidth="3" strokeDasharray="8 6" markerEnd="url(#arrow)" filter="url(#treeGlow)" style={{ opacity: 0.9 }}>
+                              <animate attributeName="stroke-dashoffset" from="28" to="0" dur="2s" repeatCount="indefinite" />
+                              <animate attributeName="opacity" from="0" to="0.9" dur="1.2s" fill="freeze" />
+                            </path>
+                            <path d="M 500 0 C 500 80, 625 40, 625 180" fill="none" stroke="url(#treeGrad)" strokeWidth="3" strokeDasharray="8 6" markerEnd="url(#arrow)" filter="url(#treeGlow)" style={{ opacity: 0.9 }}>
+                              <animate attributeName="stroke-dashoffset" from="28" to="0" dur="2s" repeatCount="indefinite" />
+                              <animate attributeName="opacity" from="0" to="0.9" dur="1.4s" fill="freeze" />
+                            </path>
+                            <path d="M 500 0 C 500 80, 875 40, 875 180" fill="none" stroke="url(#treeGrad)" strokeWidth="3" strokeDasharray="8 6" markerEnd="url(#arrow)" filter="url(#treeGlow)" style={{ opacity: 0.9 }}>
+                              <animate attributeName="stroke-dashoffset" from="28" to="0" dur="2s" repeatCount="indefinite" />
+                              <animate attributeName="opacity" from="0" to="0.9" dur="1.6s" fill="freeze" />
+                            </path>
                          </svg>
                      </div>
 
