@@ -751,21 +751,21 @@ export function AIProfileAnalyzer() {
            {!portalActivePath && !showNewJourney && (
              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 60, position: 'relative', zIndex: 10, animation: 'cardIn 0.8s ease' }}>
                 <svg style={{ position: 'absolute', top: 60, right: '50%', marginRight: 100, width: 220, height: 60, zIndex: 0, overflow: 'visible' }} viewBox="0 0 220 60">
-                    {/* The classic black dotted line */}
-                    <path d="M 220 30 Q 110 0, 15 30" fill="none" stroke="#1E293B" strokeWidth="2" strokeDasharray="6 4" strokeLinecap="round" opacity="0.3">
+                    {/* Straight black dotted line */}
+                    <path d="M 220 30 L 15 30" fill="none" stroke="#111827" strokeWidth="2" strokeDasharray="6 4" strokeLinecap="round">
                       <animate attributeName="stroke-dashoffset" from="20" to="0" dur="1s" repeatCount="indefinite" />
                     </path>
                     {/* Arrow head */}
-                    <path d="M 16 24 L 6 30 L 16 36 Z" fill="#1E293B" opacity="0.4" />
+                    <path d="M 16 24 L 6 30 L 16 36 Z" fill="#111827" />
                 </svg>
 
                 <svg style={{ position: 'absolute', top: 60, left: '50%', marginLeft: 100, width: 220, height: 60, zIndex: 0, overflow: 'visible' }} viewBox="0 0 220 60">
-                    {/* The classic black dotted line */}
-                    <path d="M 0 30 Q 110 0, 205 30" fill="none" stroke="#1E293B" strokeWidth="2" strokeDasharray="6 4" strokeLinecap="round" opacity="0.3">
+                    {/* Straight black dotted line */}
+                    <path d="M 0 30 L 205 30" fill="none" stroke="#111827" strokeWidth="2" strokeDasharray="6 4" strokeLinecap="round">
                       <animate attributeName="stroke-dashoffset" from="0" to="20" dur="1s" repeatCount="indefinite" />
                     </path>
                     {/* Arrow head */}
-                    <path d="M 204 24 L 214 30 L 204 36 Z" fill="#1E293B" opacity="0.4" />
+                    <path d="M 204 24 L 214 30 L 204 36 Z" fill="#111827" />
                 </svg>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 280, marginTop: 20 }}>
