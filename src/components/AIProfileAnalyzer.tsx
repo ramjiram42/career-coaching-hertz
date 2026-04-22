@@ -368,14 +368,15 @@ const DAILY_QUOTES = [
   "Success is not about the destination, it's about the climb.",
 ];
 
-// Helper Component for the 3-Lane Discovery View
 function LaneRow({ card, pathData, t, setPortalActivePath, isPromoted = false }: any) {
   if (!pathData) return null;
+  const isDesired = card.label === 'Desired path';
+  const accentColor = isPromoted ? '#3B82F6' : (isDesired ? '#EC4899' : '#10B981');
   
   return (
     <div style={{ display: 'flex', alignItems: 'center', width: '100%', position: 'relative' }}>
        {/* Branch line from spine */}
-       <div style={{ width: 40, height: 2, background: '#E2E8F0', position: 'absolute', left: -40, top: '50%' }} />
+       <div style={{ width: 40, height: 2, background: `linear-gradient(90deg, #E2E8F0, ${accentColor}44)`, position: 'absolute', left: -40, top: '50%' }} />
        
        <div className="discovery-row-container" 
             style={{ 
@@ -383,56 +384,74 @@ function LaneRow({ card, pathData, t, setPortalActivePath, isPromoted = false }:
               flexDirection: 'row', 
               alignItems: 'center', 
               flex: 1,
-              background: '#fff', 
-              border: '1px solid #E2E8F0', 
-              borderRadius: 20, 
-              padding: '16px 24px', 
-              boxShadow: '0 4px 15px rgba(0,0,0,0.03)', 
-              transition: 'all 0.3s ease',
-              position: 'relative'
+              background: 'rgba(255, 255, 255, 0.8)', 
+              backdropFilter: 'blur(10px)',
+              border: `1px solid ${accentColor}22`, 
+              borderRadius: 24, 
+              padding: '24px 32px', 
+              boxShadow: `0 10px 40px -15px ${accentColor}1A`, 
+              transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+              position: 'relative',
+              overflow: 'hidden'
             }}>
          
-         {/* Main Card (Start point of lane) */}
-         <div style={{ display: 'flex', alignItems: 'center', gap: 16, minWidth: 260, borderRight: '1px solid #F1F5F9', paddingRight: 20 }}>
-            <div style={{ width: 48, height: 48, borderRadius: 10, overflow: 'hidden', border: '1px solid #F1F5F9', flexShrink: 0 }}>
-              <Image src={card.image} width={48} height={48} alt="" style={{ objectFit: 'cover' }} />
+         <div style={{ position: 'absolute', top: 0, left: 0, width: 4, height: '100%', background: accentColor }} />
+         
+         {/* Main Card */}
+         <div style={{ display: 'flex', alignItems: 'center', gap: 20, minWidth: 300, borderRight: '1px solid #F1F5F9', paddingRight: 32 }}>
+            <div style={{ position: 'relative' }}>
+              <div style={{ position: 'absolute', inset: -8, background: accentColor, borderRadius: 14, opacity: 0.1, filter: 'blur(8px)' }} />
+              <div style={{ width: 64, height: 64, borderRadius: 14, overflow: 'hidden', border: '2px solid #fff', flexShrink: 0, boxShadow: '0 8px 20px rgba(0,0,0,0.1)', position: 'relative' }}>
+                <Image src={card.image} width={64} height={64} alt="" style={{ objectFit: 'cover' }} />
+              </div>
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <h3 style={{ fontSize: 14, fontWeight: 900, color: '#1E293B', margin: 0 }}>{card.role}</h3>
-                <div style={{ color: '#CBD5E1' }}><Info size={12} /></div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                <h3 style={{ fontSize: 16, fontWeight: 950, color: '#1E293B', margin: 0, letterSpacing: '-0.01em' }}>{card.role}</h3>
+                <div style={{ color: '#CBD5E1' }}><Info size={14} /></div>
               </div>
-              <div style={{ height: 4, background: '#F1F5F9', borderRadius: 2, overflow: 'hidden', marginTop: 8, width: 100 }}><div style={{ width: '53%', height: '100%', background: '#3B82F6' }}></div></div>
-              <div style={{ background: '#FEF3C7', color: '#D97706', fontSize: 8, fontWeight: 950, padding: '3px 6px', borderRadius: 4, display: 'inline-flex', alignItems: 'center', gap: 3, marginTop: 8 }}>
-                <Zap size={8} fill="#D97706" /> LEADERSHIP ROLE
+              <div style={{ height: 6, background: '#F1F5F9', borderRadius: 3, overflow: 'hidden', marginTop: 12, width: 140 }}>
+                <div style={{ width: '68%', height: '100%', background: `linear-gradient(90deg, ${accentColor}, #6366F1)` }}></div>
+              </div>
+              <div style={{ color: accentColor, fontSize: 9, fontWeight: 950, textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <Sparkles size={10} fill={accentColor} /> High Match Potential
               </div>
             </div>
          </div>
 
          {/* Pathway Progression */}
-         <div style={{ flex: 1, display: 'flex', alignItems: 'center', paddingLeft: 20 }}>
+         <div style={{ flex: 1, display: 'flex', alignItems: 'center', paddingLeft: 32 }}>
               {pathData.nodes.filter((n: any) => n.status !== 'past').slice(0, 2).map((node: any, nIdx: number) => (
                 <React.Fragment key={nIdx}>
-                   <div style={{ width: 60, height: 2, background: '#F1F5F9', position: 'relative', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#fff', border: '2px solid #CBD5E1' }} />
-                      <div style={{ position: 'absolute', bottom: -14, fontSize: 9, fontWeight: 900, color: '#94A3B8', whiteSpace: 'nowrap' }}>+{nIdx + 1} ROLE</div>
+                   <div style={{ width: 80, height: 2, background: `linear-gradient(90deg, #F1F5F9, ${accentColor}33, #F1F5F9)`, position: 'relative', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#fff', border: `3px solid ${accentColor}`, boxShadow: `0 0 10px ${accentColor}33` }} />
+                      <div style={{ position: 'absolute', bottom: -18, fontSize: 10, fontWeight: 950, color: '#94A3B8', whiteSpace: 'nowrap', letterSpacing: '0.05em' }}>NEXT LVL</div>
                    </div>
-                   <div style={{ background: '#fff', border: '1px solid #F1F5F9', borderRadius: 12, padding: '10px 14px', minWidth: 150, boxShadow: '0 2px 8px rgba(0,0,0,0.02)', position: 'relative' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <h4 style={{ fontSize: 12, fontWeight: 800, color: '#1E293B', margin: 0 }}>{node.role}</h4>
-                        <div style={{ color: '#F1F5F9' }}><Info size={12} /></div>
+                   <div style={{ 
+                     background: 'rgba(255, 255, 255, 0.5)', 
+                     border: '1px solid #F1F5F9', 
+                     borderRadius: 16, 
+                     padding: '12px 20px', 
+                     minWidth: 180, 
+                     boxShadow: '0 4px 12px rgba(0,0,0,0.02)', 
+                     position: 'relative',
+                     transition: 'all 0.3s ease'
+                   }} className="progression-box">
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        <p style={{ fontSize: 10, fontWeight: 900, color: accentColor, margin: 0, textTransform: 'uppercase', letterSpacing: '0.02em' }}>{nIdx === 0 ? 'Milestone' : 'Target'}</p>
+                        <h4 style={{ fontSize: 13, fontWeight: 850, color: '#1E293B', margin: 0 }}>{node.role}</h4>
                       </div>
-                      <div style={{ position: 'absolute', right: -4, top: '50%', transform: 'translateY(-50%)', color: '#CBD5E1' }}><ChevronRight size={14} /></div>
+                      <div style={{ position: 'absolute', right: -6, top: '50%', transform: 'translateY(-50%)', color: accentColor, background: '#fff', borderRadius: '50%', padding: 2, border: '1px solid #F1F5F9' }}><ChevronRight size={14} /></div>
                    </div>
                 </React.Fragment>
               ))}
               
-              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 20 }}>
-                 <div style={{ color: '#94A3B8', display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, fontWeight: 800, cursor: 'pointer' }} className="hover-icon"><Heart size={14} /> <span style={{ fontSize: 10 }}>Save path</span></div>
-                 <button onClick={(e) => { e.stopPropagation(); setPortalActivePath(card.pathId); }} style={{ background: '#fff', color: '#1e293b', border: '1px solid #E2E8F0', padding: '8px 16px', borderRadius: 8, fontSize: 10, fontWeight: 950, cursor: 'pointer', whiteSpace: 'nowrap', boxShadow: '0 2px 5px rgba(0,0,0,0.05)', transition: 'all 0.2s' }} className="btn-roadmap">{t('FULL_ROADMAP')}</button>
+              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 24 }}>
+                 <div style={{ color: '#94A3B8', display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, fontWeight: 800, cursor: 'pointer', transition: 'color 0.2s' }} className="hover-heart"><Heart size={16} /> <span style={{ fontSize: 11 }}>Save</span></div>
+                 <button onClick={(e) => { e.stopPropagation(); setPortalActivePath(card.pathId); }} style={{ background: accentColor, color: '#fff', border: 'none', padding: '12px 24px', borderRadius: 14, fontSize: 11, fontWeight: 950, cursor: 'pointer', whiteSpace: 'nowrap', boxShadow: `0 8px 20px ${accentColor}33`, transition: 'all 0.3s ease' }} className="btn-roadmap-premium">{t('FULL_ROADMAP')}</button>
               </div>
            </div>
-       </div>
+        </div>
     </div>
   );
 }
@@ -921,11 +940,11 @@ export function AIProfileAnalyzer() {
                                 
                                 {/* Shared Vertical Spine Origin */}
                                 <div style={{ width: 100, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 20 }}>
-                                  <div style={{ width: 2, height: 440, background: '#E2E8F0', position: 'relative' }}>
+                                  <div style={{ width: 2, height: 440, background: 'linear-gradient(180deg, #EC4899, #10B981, #3B82F6)', position: 'relative', opacity: 0.3 }}>
                                      {/* Branching knots */}
-                                     <div style={{ position: 'absolute', left: -4, top: 40, width: 10, height: 10, borderRadius: '50%', background: '#fff', border: '2px solid #E2E8F0' }} />
-                                     <div style={{ position: 'absolute', left: -4, top: 220, width: 10, height: 10, borderRadius: '50%', background: '#fff', border: '2px solid #E2E8F0' }} />
-                                     <div style={{ position: 'absolute', left: -4, top: 400, width: 10, height: 10, borderRadius: '50%', background: '#fff', border: '2px solid #E2E8F0' }} />
+                                     <div style={{ position: 'absolute', left: -6, top: 40, width: 14, height: 14, borderRadius: '50%', background: '#fff', border: '3px solid #EC4899', boxShadow: '0 0 15px rgba(236, 72, 153, 0.3)' }} />
+                                     <div style={{ position: 'absolute', left: -6, top: 220, width: 14, height: 14, borderRadius: '50%', background: '#fff', border: '3px solid #10B981', boxShadow: '0 0 15px rgba(16, 185, 129, 0.3)' }} />
+                                     <div style={{ position: 'absolute', left: -6, top: 400, width: 14, height: 14, borderRadius: '50%', background: '#fff', border: '3px solid #3B82F6', boxShadow: '0 0 15px rgba(59, 130, 246, 0.3)' }} />
                                   </div>
                                 </div>
 
@@ -978,9 +997,11 @@ export function AIProfileAnalyzer() {
                 </div>
                 <style>{`
                   @keyframes popIn { from { transform: scale(0.95) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
-                  .discovery-row-container:hover { border-color: #3B82F6; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(59, 130, 246, 0.12); }
-                  .hover-scale:hover { transform: scale(1.1); background: #E2E8F0 !important; }
-                  .btn-roadmap:hover { background: #3B82F6 !important; color: #fff !important; border-color: #3B82F6 !important; }
+                  .discovery-row-container:hover { border-color: rgba(255,255,255,0.5); transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); }
+                  .discovery-row-container:hover .progression-box { background: rgba(255, 255, 255, 0.9) !important; transform: scale(1.05); }
+                  .hover-scale:hover { transform: scale(1.05); background: #f8fafc !important; }
+                  .btn-roadmap-premium:hover { transform: translateY(-2px); filter: brightness(1.1); box-shadow: 0 12px 24px rgba(0,0,0,0.15); }
+                  .hover-heart:hover { color: #EF4444 !important; }
                 `}</style>
              </div>
            )}
