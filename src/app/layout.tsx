@@ -15,15 +15,19 @@ export const metadata: Metadata = {
   description: 'Internal mobility platform for Hertz employees.',
 }
 
+import { LanguageProvider } from '@/context/LanguageContext'
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={font.className} style={{ background: '#F8FAFC', color: '#111827', fontFamily: font.style.fontFamily }}>
-        <NavBar />
-        <div style={{ minHeight: 'calc(100vh - 64px)' }}>
-          {children}
-        </div>
-        <CareerAdvisor />
+        <LanguageProvider>
+          <NavBar />
+          <div style={{ minHeight: 'calc(100vh - 64px)' }}>
+            {children}
+          </div>
+          <CareerAdvisor />
+        </LanguageProvider>
       </body>
     </html>
   )

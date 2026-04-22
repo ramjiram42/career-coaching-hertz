@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { BookOpen, Play, CheckCircle, Clock, Star, ChevronRight, Target, ArrowRight, Zap, Users } from 'lucide-react'
+import { BookOpen, Play, CheckCircle, Clock, Star, ChevronRight, Target, ArrowRight, Zap, Users, Cpu, Shield, Globe, Award, Timer, Briefcase } from 'lucide-react'
+import Image from 'next/image'
 
 // ─── Learning Catalog ────────────────────────────────────
 const COURSES = [
@@ -60,136 +61,203 @@ const LEARNING_PATHS = [
   {
     name: 'Operations Director Readiness', courses: 3, duration: '8 weeks', progress: 28,
     skills: ['P&L Ownership', 'Enterprise Reporting', 'Fleet Systems'],
-    color: '#FFD100', targetRole: 'Regional Operations Director',
+    color: '#3B82F6', targetRole: 'Regional Operations Director',
   },
   {
     name: 'Fleet Leadership Track', courses: 2, duration: '3 weeks', progress: 0,
     skills: ['inTouched', 'Fleet Analytics', 'Fleet Mgmt'],
-    color: '#3B82F6', targetRole: 'Fleet Operations Manager',
+    color: '#EC4899', targetRole: 'Fleet Operations Manager',
   },
 ]
 
-const categoryColors: Record<string, string> = {
-  Finance: '#3B82F6', Analytics: '#F59E0B', 'Fleet Tech': '#22C55E',
-  Leadership: '#8B5CF6', Emerging: '#EC4899', All: '#000',
-}
-
 export default function LearnPage() {
   const [filter, setFilter] = useState('All')
-  const [view, setView] = useState<'catalog' | 'paths'>('catalog')
+  const [view, setView] = useState<'catalog' | 'paths' | 'vacancies'>('catalog')
   const categories = ['All', ...Array.from(new Set(COURSES.map(c => c.category)))]
   const filtered = filter === 'All' ? COURSES : COURSES.filter(c => c.category === filter)
   const enrolled = COURSES.filter(c => c.enrolled && c.progress < 100)
   const recommended = COURSES.filter(c => c.recommended && !c.enrolled)
 
   return (
-    <main style={{ background: '#F8FAFC', minHeight: '100vh', paddingBottom: '4rem' }}>
-
+    <main style={{ background: '#F9FAFB', minHeight: '100vh', paddingBottom: '4rem', overflowX: 'hidden' }}>
+      
       {/* Header */}
-      <div style={{ background: '#000', padding: '2.5rem 0', borderBottom: '4px solid #FFD100' }}>
-        <div className="container">
-          <p style={{ color: '#FFD100', fontSize: '0.7rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.2em', margin: '0 0 0.5rem' }}>Learning & Development</p>
-          <h1 style={{ color: '#fff', fontSize: '2.25rem', fontWeight: 900, letterSpacing: '-0.04em', margin: '0 0 0.4rem' }}>Learning Marketplace</h1>
-          <p style={{ color: '#9CA3AF', fontSize: '0.9rem', margin: 0 }}>Courses, paths, and gigs connected to your skill gaps and target roles</p>
+      <div style={{ background: 'radial-gradient(circle at 0% 0%, #1e293b 0%, #0f172a 100%)', padding: '100px 0 140px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '40px 40px', opacity: 0.2 }}></div>
+        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+             <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#3B82F6', boxShadow: '0 0 15px #3B82F6' }}></div>
+             <p style={{ color: '#3B82F6', fontSize: 13, fontWeight: 950, textTransform: 'uppercase', letterSpacing: '0.2em', margin: 0 }}>Knowledge Simulation Core</p>
+          </div>
+          <h1 style={{ color: '#fff', fontSize: 72, fontWeight: 1000, letterSpacing: '-0.04em', margin: '0 0 12px', lineHeight: 0.9 }}>
+            Learning <br /> <span style={{ background: 'linear-gradient(90deg, #3B82F6, #EC4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Marketplace</span>
+          </h1>
+          <p style={{ color: '#94A3B8', fontSize: 20, maxWidth: 600, fontWeight: 600, letterSpacing: '0.01em' }}>Precision-engineered courses and paths to close your skill gaps for your next high-performance move.</p>
         </div>
       </div>
 
-      {/* Progress Banner */}
-      {enrolled.length > 0 && (
-        <div style={{ background: '#fff', borderBottom: '1px solid #F1F5F9', padding: '1.25rem 0' }}>
-          <div className="container">
-            <p style={{ fontWeight: 900, fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#9CA3AF', margin: '0 0 0.875rem' }}>In Progress ({enrolled.length})</p>
-            <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto', paddingBottom: '0.25rem' }}>
-              {enrolled.map(c => (
-                <div key={c.id} style={{ background: '#F9FAFB', border: '1px solid #E5E7EB', borderRadius: 14, padding: '0.875rem 1.25rem', minWidth: 260, flexShrink: 0 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <span style={{ fontWeight: 800, fontSize: '0.85rem', color: '#111827' }}>{c.title}</span>
-                    <span style={{ fontWeight: 900, color: c.color, fontSize: '0.85rem' }}>{c.progress}%</span>
-                  </div>
-                  <div style={{ height: 5, background: '#E5E7EB', borderRadius: 99, overflow: 'hidden' }}>
-                    <div style={{ height: '100%', width: `${c.progress}%`, background: c.color, borderRadius: 99 }} />
-                  </div>
-                  <p style={{ fontSize: '0.7rem', color: '#9CA3AF', margin: '0.4rem 0 0', fontWeight: 600 }}>{c.provider} · {c.hrs}hrs remaining</p>
+      {/* Analytics Status Bar */}
+      <div style={{ marginTop: -60, position: 'relative', zIndex: 10 }}>
+        <div className="container">
+          <div style={{ background: '#fff', borderRadius: 32, padding: '32px 40px', border: '1px solid #E2E8F0', boxShadow: '0 40px 100px -20px rgba(0,0,0,0.12)', display: 'flex', gap: 60, alignItems: 'center' }}>
+             <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+                   <p style={{ fontSize: 11, fontWeight: 950, color: '#94A3B8', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Active Learning ECU</p>
+                   <p style={{ fontSize: 11, fontWeight: 950, color: '#3B82F6' }}>{enrolled.length} SYSTEMS ACTIVE</p>
                 </div>
-              ))}
-            </div>
+                <div style={{ display: 'flex', gap: 8 }}>
+                   {COURSES.map((_, i) => (
+                      <div key={i} style={{ flex: 1, height: 4, borderRadius: 2, background: i < enrolled.length ? '#3B82F6' : '#F1F5F9' }}></div>
+                   ))}
+                </div>
+             </div>
+             <div style={{ height: 40, width: 1, background: '#E2E8F0' }}></div>
+             <div style={{ display: 'flex', gap: 40 }}>
+                <div style={{ textAlign: 'center' }}>
+                   <p style={{ fontSize: 11, fontWeight: 950, color: '#94A3B8', textTransform: 'uppercase', marginBottom: 4 }}>Skill Gap %</p>
+                   <p style={{ fontSize: 22, fontWeight: 1000, color: '#1E293B', margin: 0 }}>24%</p>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                   <p style={{ fontSize: 11, fontWeight: 950, color: '#94A3B8', textTransform: 'uppercase', marginBottom: 4 }}>Certified</p>
+                   <p style={{ fontSize: 22, fontWeight: 1000, color: '#1B9C85', margin: 0 }}>08</p>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                   <p style={{ fontSize: 11, fontWeight: 950, color: '#94A3B8', textTransform: 'uppercase', marginBottom: 4 }}>Goal Sync</p>
+                   <div style={{ padding: '4px 10px', background: 'rgba(236, 72, 153, 0.1)', borderRadius: 20, color: '#EC4899', fontSize: 11, fontWeight: 950 }}>OPTIMIZED</div>
+                </div>
+             </div>
           </div>
         </div>
-      )}
+      </div>
 
-      <div className="container" style={{ paddingTop: '2rem' }}>
-
-        {/* View toggle + category filter */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.75rem', flexWrap: 'wrap', gap: '0.75rem' }}>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            {categories.map(c => {
-              const col = categoryColors[c] || '#000'
-              return (
-                <button key={c} onClick={() => setFilter(c)} style={{ padding: '0.4rem 1rem', borderRadius: 999, border: '1.5px solid', borderColor: filter === c ? col : '#E5E7EB', background: filter === c ? col : '#fff', color: filter === c ? (c === 'All' ? '#FFD100' : '#fff') : '#374151', fontWeight: 700, fontSize: '0.78rem', cursor: 'pointer', transition: 'all 0.15s' }}>{c}</button>
-              )
-            })}
+      <div className="container" style={{ paddingTop: '80px' }}>
+        {/* Navigation & Controls */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 60 }}>
+          <div style={{ display: 'flex', gap: 12 }}>
+            {categories.map(c => (
+              <button 
+                key={c} 
+                onClick={() => setFilter(c)} 
+                style={{ 
+                  padding: '12px 24px', 
+                  borderRadius: 14, 
+                  border: filter === c ? '2px solid #0F172A' : '1px solid #E5E7EB', 
+                  background: filter === c ? '#0F172A' : '#fff', 
+                  color: filter === c ? '#fff' : '#475569', 
+                  fontWeight: 800, 
+                  fontSize: 14, 
+                  cursor: 'pointer', 
+                  transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                }}
+              >
+                {c}
+              </button>
+            ))}
           </div>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            {(['catalog', 'paths'] as const).map(v => (
-              <button key={v} onClick={() => setView(v)} style={{ padding: '0.5rem 1.1rem', borderRadius: 999, border: '1.5px solid #E5E7EB', background: view === v ? '#000' : '#fff', color: view === v ? '#FFD100' : '#374151', fontWeight: 700, fontSize: '0.78rem', cursor: 'pointer', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                {v === 'catalog' ? 'Course Catalog' : 'Learning Paths'}
+
+          <div style={{ background: '#F1F5F9', padding: 6, borderRadius: 16, display: 'flex', gap: 4 }}>
+            {(['catalog', 'paths', 'vacancies'] as const).map(v => (
+              <button 
+                key={v} 
+                onClick={() => setView(v)} 
+                style={{ 
+                  padding: '10px 20px', 
+                  borderRadius: 12, 
+                  border: 'none', 
+                  background: view === v ? '#fff' : 'transparent', 
+                  color: view === v ? '#1E293B' : '#64748B', 
+                  fontWeight: 850, 
+                  fontSize: 13, 
+                  cursor: 'pointer', 
+                  textTransform: 'uppercase'
+                }}
+              >
+                {v === 'catalog' ? 'Courses' : v === 'paths' ? 'Pathways' : 'Vacancies'}
               </button>
             ))}
           </div>
         </div>
 
-        {/* ── RECOMMENDED SECTION ───────────────────────────── */}
-        {view === 'catalog' && filter === 'All' && recommended.length > 0 && (
-          <div style={{ marginBottom: '2.5rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-              <Zap size={16} color="#FFD100" />
-              <h2 style={{ fontWeight: 900, fontSize: '1rem', color: '#000', margin: 0, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Recommended for Ram</h2>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem' }}>
-              {recommended.slice(0, 3).map(c => <CourseCard key={c.id} c={c} highlight />)}
-            </div>
-          </div>
-        )}
-
-        {/* ── CATALOG GRID ──────────────────────────────────── */}
+        {/* Catalog */}
         {view === 'catalog' && (
-          <div>
-            {filter !== 'All' && <h2 style={{ fontWeight: 900, fontSize: '1rem', color: '#000', margin: '0 0 1.25rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{filter} Courses</h2>}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem' }}>
-              {(filter === 'All' ? COURSES : filtered).map(c => <CourseCard key={c.id} c={c} />)}
+          <div style={{ marginBottom: 100 }}>
+             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 40 }}>
+               <div style={{ background: 'linear-gradient(135deg, #3B82F6, #2563EB)', padding: 10, borderRadius: 12, color: '#fff' }}><Zap size={20} /></div>
+               <h2 style={{ fontWeight: 1000, fontSize: 32, color: '#1E293B', margin: 0, textTransform: 'uppercase' }}>For Your <span style={{ color: '#3B82F6' }}>Simulation</span></h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32 }}>
+              {filtered.map(c => <CourseCard key={c.id} c={c} highlight={recommended.some(r => r.id === c.id)} />)}
             </div>
           </div>
         )}
 
-        {/* ── LEARNING PATHS ────────────────────────────────── */}
+        {/* Pathways */}
         {view === 'paths' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
             {LEARNING_PATHS.map(path => (
-              <div key={path.name} style={{ background: '#fff', border: '1px solid #E5E7EB', borderRadius: 20, padding: '2rem', boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
-                  <div>
-                    <p style={{ fontSize: '0.7rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', color: path.color, margin: '0 0 0.4rem' }}>Learning Path</p>
-                    <h3 style={{ fontWeight: 900, fontSize: '1.25rem', color: '#000', margin: '0 0 0.3rem' }}>{path.name}</h3>
-                    <p style={{ fontSize: '0.82rem', color: '#6B7280', margin: 0 }}>Target: <strong style={{ color: '#000' }}>{path.targetRole}</strong> · {path.courses} courses · {path.duration}</p>
-                  </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <p style={{ fontSize: '1.5rem', fontWeight: 900, color: path.color, margin: 0 }}>{path.progress}%</p>
-                    <p style={{ fontSize: '0.65rem', color: '#9CA3AF', fontWeight: 700, textTransform: 'uppercase', margin: 0 }}>Complete</p>
-                  </div>
+              <div key={path.name} style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: 40, padding: 48, boxShadow: '0 30px 60px -12px rgba(0,0,0,0.08)', display: 'flex', gap: 48, alignItems: 'center' }}>
+                <div style={{ width: 240, height: 240, borderRadius: 32, background: `linear-gradient(135deg, ${path.color}11, ${path.color}22)`, border: `1px solid ${path.color}11`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                   <div style={{ textAlign: 'center' }}>
+                      <p style={{ fontSize: 44, fontWeight: 1000, color: path.color, margin: 0 }}>{path.progress}%</p>
+                      <p style={{ fontSize: 11, fontWeight: 950, color: '#94A3B8', textTransform: 'uppercase' }}>SYNC</p>
+                   </div>
                 </div>
-                <div style={{ height: 8, background: '#F1F5F9', borderRadius: 99, overflow: 'hidden', marginBottom: '1.25rem' }}>
-                  <div style={{ height: '100%', width: `${path.progress}%`, background: path.color, borderRadius: 99 }} />
+                <div style={{ flex: 1 }}>
+                   <h3 style={{ fontWeight: 1000, fontSize: 36, color: '#1E293B', margin: '0 0 8px' }}>{path.name}</h3>
+                   <p style={{ fontSize: 18, color: '#64748B', fontWeight: 600, margin: '0 0 24px' }}>Targeting <strong style={{ color: '#1E293B' }}>{path.targetRole}</strong></p>
+                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 32 }}>
+                      {path.skills.map(s => (
+                        <span key={s} style={{ background: '#F8FAFC', color: '#1E293B', border: '1px solid #E2E8F0', fontSize: 13, fontWeight: 800, padding: '8px 16px', borderRadius: 12 }}>{s}</span>
+                      ))}
+                   </div>
+                   <button style={{ background: '#1E293B', color: '#fff', border: 'none', borderRadius: 18, padding: '16px 40px', fontWeight: 950, fontSize: 16, cursor: 'pointer' }}>
+                     {path.progress > 0 ? 'RESUME SIMULATION' : 'START SIMULATION'}
+                   </button>
                 </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                  {path.skills.map(s => (
-                    <span key={s} style={{ background: path.color + '18', color: path.color, border: `1px solid ${path.color}33`, fontSize: '0.72rem', fontWeight: 700, padding: '0.25rem 0.7rem', borderRadius: 999 }}>{s}</span>
-                  ))}
-                </div>
-                <button style={{ background: '#000', color: '#FFD100', border: 'none', borderRadius: 10, padding: '0.7rem 1.5rem', fontWeight: 900, fontSize: '0.82rem', cursor: 'pointer' }}>
-                  {path.progress > 0 ? 'Continue Path' : 'Start Path'}
-                </button>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Vacancies */}
+        {view === 'vacancies' && (
+          <div style={{ marginBottom: 100 }}>
+             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 40 }}>
+               <div style={{ background: 'linear-gradient(135deg, #F59E0B, #D97706)', padding: 10, borderRadius: 12, color: '#fff' }}><Briefcase size={20} /></div>
+               <h2 style={{ fontWeight: 1000, fontSize: 32, color: '#1E293B', margin: 0, textTransform: 'uppercase' }}>Live <span style={{ color: '#F59E0B' }}>Vacancies</span></h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32 }}>
+              {[
+                { id: "38633", title: "Automotive Sales Consultant", category: "Sales", location: "Morrow, GA, US", color: "#F59E0B" },
+                { id: "39289", title: "Manager Trainee", category: "Leadership", location: "Yonkers, NY, US", color: "#3B82F6" },
+                { id: "39616", title: "Product Owner", category: "Technology", location: "Atlanta, GA, US", color: "#EC4899" },
+                { id: "39268", title: "Customer Service Associate", category: "Customer Service", location: "Eugene, OR, US", color: "#22C55E" },
+                { id: "39547", title: "Vehicle Operations Manager", category: "Management", location: "Memphis, TN, US", color: "#8B5CF6" },
+                { id: "39632", title: "Manager Trainee", category: "Leadership", location: "O Fallon, IL, US", color: "#3B82F6" }
+              ].map(job => (
+                <div key={job.id} style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: 40, padding: 40, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 20px 50px rgba(0,0,0,0.04)', minHeight: 280 }}>
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                         <div style={{ width: 10, height: 10, borderRadius: '50%', background: job.color }}></div>
+                         <span style={{ color: '#94A3B8', fontSize: 11, fontWeight: 950, textTransform: 'uppercase' }}>{job.category}</span>
+                      </div>
+                      <span style={{ background: '#FFFBEB', color: '#F59E0B', fontSize: 11, fontWeight: 950, padding: '6px 12px', borderRadius: 12 }}>NEW ROLE</span>
+                    </div>
+                    <h3 style={{ fontWeight: 1000, fontSize: 22, color: '#1E293B', margin: '0 0 12px', lineHeight: 1.2 }}>{job.title}</h3>
+                    <p style={{ fontSize: 14, color: '#64748B', fontWeight: 600, margin: 0 }}>📍 {job.location}</p>
+                  </div>
+                  <Link href="/jobs" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, background: '#1E293B', color: '#fff', border: 'none', borderRadius: 20, padding: '16px', fontWeight: 950, fontSize: 14, textDecoration: 'none', marginTop: 24 }}>
+                    VIEW DETAILS <ArrowRight size={16} />
+                  </Link>
+                </div>
+              ))}
+            </div>
+            <div style={{ textAlign: 'center', marginTop: 60 }}>
+               <Link href="/jobs" style={{ display: 'inline-flex', alignItems: 'center', gap: 12, color: '#1E293B', fontWeight: 1000, fontSize: 16, textDecoration: 'none', borderBottom: '2px solid #F59E0B', paddingBottom: 4 }}>
+                  EXPLORE ALL 54 VACANCIES <ChevronRight size={20} />
+               </Link>
+            </div>
           </div>
         )}
       </div>
@@ -197,66 +265,44 @@ export default function LearnPage() {
   )
 }
 
-// ─── Course Card Component ───────────────────────────────
-function CourseCard({ c, highlight }: { c: typeof COURSES[0]; highlight?: boolean }) {
+function CourseCard({ c, highlight }: { c: any; highlight?: boolean }) {
   const [enrolled, setEnrolled] = useState(c.enrolled)
-
   return (
-    <div style={{ background: '#fff', border: highlight ? `2px solid ${c.color}40` : '1px solid #E5E7EB', borderRadius: 20, padding: '1.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 2px 12px rgba(0,0,0,0.05)', position: 'relative', overflow: 'hidden' }}>
-      {highlight && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: c.color, borderRadius: '20px 20px 0 0' }} />}
-
+    <div style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: 40, padding: 40, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: highlight ? '0 40px 100px -20px rgba(59, 130, 246, 0.15)' : '0 20px 50px rgba(0,0,0,0.04)', position: 'relative', overflow: 'hidden', minHeight: 480 }}>
+      {highlight && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 6, background: 'linear-gradient(90deg, #3B82F6, #EC4899)' }} />}
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.875rem' }}>
-          <span style={{ background: c.color + '18', color: c.color, fontSize: '0.65rem', fontWeight: 900, padding: '0.2rem 0.65rem', borderRadius: 999, textTransform: 'uppercase' }}>{c.category}</span>
-          <span style={{ background: '#F1F5F9', color: '#6B7280', fontSize: '0.65rem', fontWeight: 700, padding: '0.2rem 0.65rem', borderRadius: 999 }}>{c.level}</span>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+             <div style={{ width: 10, height: 10, borderRadius: '50%', background: c.color }}></div>
+             <span style={{ color: '#94A3B8', fontSize: 11, fontWeight: 950, textTransform: 'uppercase' }}>{c.category}</span>
+          </div>
+          <span style={{ background: '#F1F5F9', color: '#64748B', fontSize: 11, fontWeight: 950, padding: '6px 12px', borderRadius: 12 }}>{c.level}</span>
         </div>
-
-        <h3 style={{ fontWeight: 800, fontSize: '0.95rem', color: '#111827', margin: '0 0 0.5rem', lineHeight: 1.4 }}>{c.title}</h3>
-        <p style={{ fontSize: '0.8rem', color: '#6B7280', margin: '0 0 0.75rem', lineHeight: 1.6 }}>{c.desc}</p>
-
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', marginBottom: '0.875rem' }}>
-          {c.skills.map(s => (
-            <span key={s} style={{ background: '#F9FAFB', color: '#374151', fontSize: '0.65rem', fontWeight: 700, padding: '0.2rem 0.55rem', borderRadius: 999, border: '1px solid #E5E7EB' }}>{s}</span>
+        <h3 style={{ fontWeight: 1000, fontSize: 24, color: '#1E293B', margin: '0 0 16px', lineHeight: 1.1 }}>{c.title}</h3>
+        <p style={{ fontSize: 15, color: '#64748B', margin: '0 0 24px', lineHeight: 1.6, fontWeight: 600 }}>{c.desc}</p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 24 }}>
+          {c.skills.map((s: string) => (
+            <span key={s} style={{ background: `${c.color}08`, color: c.color, fontSize: 12, fontWeight: 800, padding: '6px 14px', borderRadius: 10, border: `1px solid ${c.color}11` }}>{s}</span>
           ))}
         </div>
-
-        <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem', fontSize: '0.72rem', color: '#9CA3AF', fontWeight: 600 }}>
-          <span>⏱ {c.duration}</span>
-          <span>📚 {c.hrs}hrs</span>
-          <span>🎯 {c.match}% match</span>
+        <div style={{ display: 'flex', gap: 20, marginBottom: enrolled ? 32 : 40 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Timer size={16} color="#94A3B8" /><span style={{ fontSize: 13, color: '#64748B', fontWeight: 800 }}>{c.hrs}HRS</span></div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Target size={16} color="#3B82F6" /><span style={{ fontSize: 13, color: '#3B82F6', fontWeight: 950 }}>{c.match}%</span></div>
         </div>
-
         {enrolled && c.progress > 0 && c.progress < 100 && (
-          <div style={{ marginBottom: '0.875rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.3rem' }}>
-              <span style={{ fontSize: '0.68rem', color: '#6B7280', fontWeight: 700 }}>Progress</span>
-              <span style={{ fontSize: '0.68rem', fontWeight: 800, color: c.color }}>{c.progress}%</span>
+          <div style={{ marginBottom: 32 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+              <span style={{ fontSize: 11, color: '#94A3B8', fontWeight: 950 }}>PROGRESS</span>
+              <span style={{ fontSize: 11, fontWeight: 1000, color: c.color }}>{c.progress}%</span>
             </div>
-            <div style={{ height: 4, background: '#F1F5F9', borderRadius: 99, overflow: 'hidden' }}>
+            <div style={{ height: 6, background: '#F1F5F9', borderRadius: 99, overflow: 'hidden' }}>
               <div style={{ height: '100%', width: `${c.progress}%`, background: c.color, borderRadius: 99 }} />
             </div>
           </div>
         )}
-
-        {c.progress === 100 && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.5rem' }}>
-            <CheckCircle size={14} color="#22C55E" />
-            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#22C55E' }}>Completed</span>
-          </div>
-        )}
       </div>
-
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        {c.progress === 100
-          ? <button style={{ flex: 1, background: '#DCFCE7', color: '#22C55E', border: 'none', borderRadius: 10, padding: '0.65rem', fontWeight: 900, fontSize: '0.78rem', cursor: 'pointer' }}>✓ Done · View Certificate</button>
-          : enrolled
-            ? <button style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem', background: c.color, color: '#fff', border: 'none', borderRadius: 10, padding: '0.65rem', fontWeight: 900, fontSize: '0.78rem', cursor: 'pointer' }}>
-                <Play size={13} /> Continue
-              </button>
-            : <button onClick={() => setEnrolled(true)} style={{ flex: 1, background: '#000', color: '#FFD100', border: 'none', borderRadius: 10, padding: '0.65rem', fontWeight: 900, fontSize: '0.78rem', cursor: 'pointer' }}>
-                Enroll Now
-              </button>
-        }
+      <div style={{ display: 'flex' }}>
+        {c.progress === 100 ? <button style={{ flex: 1, background: '#22C55E', color: '#fff', border: 'none', borderRadius: 20, padding: '16px', fontWeight: 950 }}>COMPLETED</button> : enrolled ? <button style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, background: '#1E293B', color: '#fff', border: 'none', borderRadius: 20, padding: '16px', fontWeight: 950 }}><Play size={16} /> RESUME</button> : <button onClick={() => setEnrolled(true)} style={{ flex: 1, background: highlight ? '#3B82F6' : '#fff', color: highlight ? '#fff' : '#1E293B', border: highlight ? 'none' : '2px solid #E2E8F0', borderRadius: 20, padding: '16px', fontWeight: 950 }}>ENROLL</button>}
       </div>
     </div>
   )

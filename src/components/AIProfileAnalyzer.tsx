@@ -5,6 +5,9 @@ import { useState, useRef, useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import CareerCoachingPortal from './pathways/CareerCoachingPortal';
 import NewJourneyFlow from './pathways/NewJourneyFlow';
+import careerPathsData from '../data/careerPaths.json';
+import { useLanguage } from '@/context/LanguageContext';
+import React from 'react';
 
 type Step = 'upload' | 'analyzing' | 'results';
 
@@ -16,6 +19,7 @@ interface CardData {
   badge: string;
   badgeColor: string;
   image: string;
+  pathId: string;
 }
 
 // 365 Professional Quotes for the Daily Motivation Engine
@@ -364,7 +368,77 @@ const DAILY_QUOTES = [
   "Success is not about the destination, it's about the climb.",
 ];
 
+// Helper Component for the 3-Lane Discovery View
+function LaneRow({ card, pathData, t, setPortalActivePath, isPromoted = false }: any) {
+  if (!pathData) return null;
+  
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', width: '100%', position: 'relative' }}>
+       {/* Branch line from spine */}
+       <div style={{ width: 40, height: 2, background: '#E2E8F0', position: 'absolute', left: -40, top: '50%' }} />
+       
+       <div className="discovery-row-container" 
+            style={{ 
+              display: 'flex', 
+              flexDirection: 'row', 
+              alignItems: 'center', 
+              flex: 1,
+              background: '#fff', 
+              border: '1px solid #E2E8F0', 
+              borderRadius: 20, 
+              padding: '16px 24px', 
+              boxShadow: '0 4px 15px rgba(0,0,0,0.03)', 
+              transition: 'all 0.3s ease',
+              position: 'relative'
+            }}>
+         
+         {/* Main Card (Start point of lane) */}
+         <div style={{ display: 'flex', alignItems: 'center', gap: 16, minWidth: 260, borderRight: '1px solid #F1F5F9', paddingRight: 20 }}>
+            <div style={{ width: 48, height: 48, borderRadius: 10, overflow: 'hidden', border: '1px solid #F1F5F9', flexShrink: 0 }}>
+              <Image src={card.image} width={48} height={48} alt="" style={{ objectFit: 'cover' }} />
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <h3 style={{ fontSize: 14, fontWeight: 900, color: '#1E293B', margin: 0 }}>{card.role}</h3>
+                <div style={{ color: '#CBD5E1' }}><Info size={12} /></div>
+              </div>
+              <div style={{ height: 4, background: '#F1F5F9', borderRadius: 2, overflow: 'hidden', marginTop: 8, width: 100 }}><div style={{ width: '53%', height: '100%', background: '#3B82F6' }}></div></div>
+              <div style={{ background: '#FEF3C7', color: '#D97706', fontSize: 8, fontWeight: 950, padding: '3px 6px', borderRadius: 4, display: 'inline-flex', alignItems: 'center', gap: 3, marginTop: 8 }}>
+                <Zap size={8} fill="#D97706" /> LEADERSHIP ROLE
+              </div>
+            </div>
+         </div>
+
+         {/* Pathway Progression */}
+         <div style={{ flex: 1, display: 'flex', alignItems: 'center', paddingLeft: 20 }}>
+              {pathData.nodes.filter((n: any) => n.status !== 'past').slice(0, 2).map((node: any, nIdx: number) => (
+                <React.Fragment key={nIdx}>
+                   <div style={{ width: 60, height: 2, background: '#F1F5F9', position: 'relative', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#fff', border: '2px solid #CBD5E1' }} />
+                      <div style={{ position: 'absolute', bottom: -14, fontSize: 9, fontWeight: 900, color: '#94A3B8', whiteSpace: 'nowrap' }}>+{nIdx + 1} ROLE</div>
+                   </div>
+                   <div style={{ background: '#fff', border: '1px solid #F1F5F9', borderRadius: 12, padding: '10px 14px', minWidth: 150, boxShadow: '0 2px 8px rgba(0,0,0,0.02)', position: 'relative' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <h4 style={{ fontSize: 12, fontWeight: 800, color: '#1E293B', margin: 0 }}>{node.role}</h4>
+                        <div style={{ color: '#F1F5F9' }}><Info size={12} /></div>
+                      </div>
+                      <div style={{ position: 'absolute', right: -4, top: '50%', transform: 'translateY(-50%)', color: '#CBD5E1' }}><ChevronRight size={14} /></div>
+                   </div>
+                </React.Fragment>
+              ))}
+              
+              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 20 }}>
+                 <div style={{ color: '#94A3B8', display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, fontWeight: 800, cursor: 'pointer' }} className="hover-icon"><Heart size={14} /> <span style={{ fontSize: 10 }}>Save path</span></div>
+                 <button onClick={(e) => { e.stopPropagation(); setPortalActivePath(card.pathId); }} style={{ background: '#fff', color: '#1e293b', border: '1px solid #E2E8F0', padding: '8px 16px', borderRadius: 8, fontSize: 10, fontWeight: 950, cursor: 'pointer', whiteSpace: 'nowrap', boxShadow: '0 2px 5px rgba(0,0,0,0.05)', transition: 'all 0.2s' }} className="btn-roadmap">{t('FULL_ROADMAP')}</button>
+              </div>
+           </div>
+       </div>
+    </div>
+  );
+}
+
 export function AIProfileAnalyzer() {
+  const { t } = useLanguage();
   const [step, setStep] = useState<Step>('upload');
   const [analyzingText, setAnalyzingText] = useState('Initializing Neural Engine...');
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
@@ -372,6 +446,7 @@ export function AIProfileAnalyzer() {
   const [showSurprise, setShowSurprise] = useState(false);
   const [portalActivePath, setPortalActivePath] = useState<string | null>(null);
   const [showNewJourney, setShowNewJourney] = useState(false);
+  const [expandedPathId, setExpandedPathId] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -381,7 +456,6 @@ export function AIProfileAnalyzer() {
     }
   }, []);
 
-  // Daily Quote Logic - Picks a unique quote for every day of the year
   const dailyQuote = useMemo(() => {
     const today = new Date();
     const start = new Date(today.getFullYear(), 0, 0);
@@ -391,42 +465,54 @@ export function AIProfileAnalyzer() {
     return DAILY_QUOTES[dayOfYear % DAILY_QUOTES.length];
   }, []);
 
-  const careerCards: CardData[] = [
+  const careerCards = [
     {
       id: '1',
+      pathId: 'intelligent-automation-arch',
       role: 'Intelligent Automation Architect',
-      match: 'HIGH MATCH',
+      label: 'Desired path',
+      labelColor: '#EC4899',
+      match: 'HIGH_MATCH',
       matchColor: '#10B981',
-      badge: 'NEXT STEP',
+      badge: 'NEXT_STEP',
       badgeColor: '#10B981',
-      image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=400&fit=crop'
+      image: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=400&h=400&fit=crop'
     },
     {
       id: '2',
-      role: 'Technical Program Manager',
-      match: 'MEDIUM MATCH',
-      matchColor: '#F59E0B',
-      badge: 'EXPLORE',
-      badgeColor: '#F59E0B',
-      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=400&fit=crop'
+      pathId: 'enterprise-automation-arch',
+      role: 'Enterprise Automation Architect',
+      label: 'Popular path',
+      labelColor: '#10B981',
+      match: 'HIGH_MATCH',
+      matchColor: '#10B981',
+      badge: 'NEXT_STEP',
+      badgeColor: '#10B981',
+      image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=400&fit=crop'
     },
     {
       id: '3',
-      role: 'Engineering Manager (Automation)',
-      match: 'HIGH MATCH',
-      matchColor: '#000000',
-      badge: 'NEXT STEP',
-      badgeColor: '#000000',
-      image: 'https://images.unsplash.com/photo-1522071823991-b9671f30c46f?w=400&h=400&fit=crop'
+      pathId: 'tech-program-manager',
+      role: 'Technical Program Manager',
+      label: 'Suggested path',
+      labelColor: '#F59E0B',
+      match: 'ADJACENT',
+      matchColor: '#F59E0B',
+      badge: 'EXPLORE',
+      badgeColor: '#F59E0B',
+      image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=400&fit=crop'
     },
     {
       id: '4',
-      role: 'AI Engineer / Data Scientist',
-      match: 'WILD CARD',
+      pathId: 'ai-architect',
+      role: 'AI Architect',
+      label: 'Promoted Lane',
+      labelColor: '#8B5CF6',
+      match: 'WILD_CARD',
       matchColor: '#8B5CF6',
       badge: 'EXPLORE',
       badgeColor: '#8B5CF6',
-      image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=400&fit=crop'
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=400&fit=crop'
     }
   ];
 
@@ -455,7 +541,6 @@ export function AIProfileAnalyzer() {
         padding: '20px',
         position: 'relative'
       }}>
-         {/* FLOATING LIGHT PARTICLES IN BACKGROUND */}
          <div style={{ position: 'absolute', inset: -100, pointerEvents: 'none', zIndex: 0 }}>
             <div className="light-particle" style={{ position: 'absolute', top: '20%', left: '10%', width: 4, height: 4, background: '#f59e0b', borderRadius: '50%', filter: 'blur(2px)', animation: 'floatParticle 8s infinite ease-in-out' }} />
             <div className="light-particle" style={{ position: 'absolute', top: '70%', left: '20%', width: 6, height: 6, background: '#ec4899', borderRadius: '50%', filter: 'blur(3px)', animation: 'floatParticle 12s infinite ease-in-out', animationDelay: '2s' }} />
@@ -466,7 +551,6 @@ export function AIProfileAnalyzer() {
          <div style={{
            width: '100%',
            background: '#fff',
-           backdropFilter: 'none',
            border: '1px solid #E5E7EB',
            borderRadius: 36,
            padding: '55px 70px',
@@ -478,7 +562,6 @@ export function AIProfileAnalyzer() {
            overflow: 'hidden',
            animation: 'cardIn 1s cubic-bezier(0.2, 0.8, 0.2, 1)'
          }}>
-            {/* CINEMATIC MESH GRADIENT */}
             <div style={{ 
               position: 'absolute', 
               inset: 0, 
@@ -487,7 +570,6 @@ export function AIProfileAnalyzer() {
               zIndex: 0 
             }} />
 
-            {/* LIGHT SHIMMER SWEEP EFFECT */}
             <div style={{
               position: 'absolute',
               top: 0,
@@ -500,7 +582,6 @@ export function AIProfileAnalyzer() {
               zIndex: 1
             }} />
             
-            {/* NEURAL GRID BACKGROUND (SUBTLE) */}
             <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.12, pointerEvents: 'none', zIndex: 0 }} viewBox="0 0 1000 300">
               <defs>
                 <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -510,7 +591,6 @@ export function AIProfileAnalyzer() {
               <rect width="100%" height="100%" fill="url(#grid)" />
             </svg>
 
-            {/* LEFT: PROFILE DATA */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 40, position: 'relative', zIndex: 1 }}>
                <div style={{ 
                  position: 'relative',
@@ -522,7 +602,6 @@ export function AIProfileAnalyzer() {
                  boxShadow: '0 0 40px rgba(245, 158, 11, 0.3)',
                  animation: 'profilePop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)'
                }}>
-                  {/* ORBITAL PULSE EFFECT */}
                   <div style={{
                     position: 'absolute',
                     inset: -12,
@@ -545,130 +624,38 @@ export function AIProfileAnalyzer() {
 
                <div style={{ animation: 'fadeSlideRight 0.8s both' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                     <h1 style={{ fontSize: 52, color: '#111827', margin: 0, letterSpacing: '-0.04em', fontWeight: 1000, fontFamily: 'inherit' }}>Ram</h1>
+                     <h1 style={{ fontSize: 52, color: '#111827', margin: 0, letterSpacing: '-0.04em', fontWeight: 1000 }}>Ram</h1>
                   </div>
-                  <p style={{ fontSize: 19, color: '#6B7280', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', margin: '4px 0', fontFamily: 'inherit' }}>
+                  <p style={{ fontSize: 19, color: '#6B7280', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', margin: '4px 0' }}>
                      Solution Architect
                   </p>
                </div>
             </div>
 
-            {/* RIGHT: ACTIONS */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, position: 'relative', zIndex: 1, animation: 'fadeSlideLeft 0.8s both' }}>
                <input type="file" id="resume-upload" hidden onChange={handleFileChange} accept=".pdf,.doc,.docx" />
-               
-               {/* BIG OPTIONS ROW */}
                <div style={{ display: 'flex', gap: 16 }}>
-                  <button 
-                    onClick={() => document.getElementById('resume-upload')?.click()}
-                    style={{ 
-                      flex: 1, 
-                      background: 'linear-gradient(to bottom right, #ffffff, #f8fafc)', 
-                      color: '#1e293b', 
-                      padding: '24px 20px', 
-                      borderRadius: 16, 
-                      fontWeight: 800, 
-                      border: '1px solid rgba(226, 232, 240, 0.8)', 
-                      fontSize: 13, 
-                      textTransform: 'uppercase', 
-                      letterSpacing: '0.06em',
-                      cursor: 'pointer', 
-                      display: 'flex', 
-                      flexDirection: 'column', 
-                      justifyContent: 'center', 
-                      alignItems: 'center', 
-                      gap: 10, 
-                      transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)', 
-                      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.02)',
-                      minWidth: 160
-                    }}
-                    onMouseEnter={(e) => { 
-                      e.currentTarget.style.transform = 'translateY(-3px)'; 
-                      e.currentTarget.style.boxShadow = '0 12px 20px rgba(0, 0, 0, 0.06)'; 
-                      e.currentTarget.style.borderColor = '#cbd5e1'; 
-                    }}
-                    onMouseLeave={(e) => { 
-                      e.currentTarget.style.transform = 'translateY(0)'; 
-                      e.currentTarget.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.02)'; 
-                      e.currentTarget.style.borderColor = 'rgba(226, 232, 240, 0.8)'; 
-                    }}
-                  >
-                    <div style={{ background: '#F1F5F9', padding: '10px', borderRadius: '50%', marginBottom: '4px', color: '#0369a1' }}>
-                      <User size={22} />
-                    </div>
+                  <button onClick={() => document.getElementById('resume-upload')?.click()} style={{ flex: 1, background: '#fff', color: '#1e293b', padding: '24px 20px', borderRadius: 16, fontWeight: 800, border: '1px solid rgba(226, 232, 240, 0.8)', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, boxShadow: '0 4px 10px rgba(0, 0, 0, 0.02)', minWidth: 160 }}>
+                    <div style={{ background: '#F1F5F9', padding: '10px', borderRadius: '50%', color: '#0369a1' }}><User size={22} /></div>
                     FIRST TIME USER
                   </button>
-                  
-                  <button 
-                    onClick={() => document.getElementById('resume-upload')?.click()}
-                    style={{ 
-                      flex: 1, 
-                      background: 'linear-gradient(to bottom right, #ffffff, #f8fafc)', 
-                      color: '#1e293b', 
-                      padding: '24px 20px', 
-                      borderRadius: 16, 
-                      fontWeight: 800, 
-                      border: '1px solid rgba(226, 232, 240, 0.8)', 
-                      fontSize: 13, 
-                      textTransform: 'uppercase', 
-                      letterSpacing: '0.06em',
-                      cursor: 'pointer', 
-                      display: 'flex', 
-                      flexDirection: 'column', 
-                      justifyContent: 'center', 
-                      alignItems: 'center', 
-                      gap: 10, 
-                      transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)', 
-                      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.02)',
-                      minWidth: 160
-                    }}
-                    onMouseEnter={(e) => { 
-                      e.currentTarget.style.transform = 'translateY(-3px)'; 
-                      e.currentTarget.style.boxShadow = '0 12px 20px rgba(0, 0, 0, 0.06)'; 
-                      e.currentTarget.style.borderColor = '#cbd5e1'; 
-                    }}
-                    onMouseLeave={(e) => { 
-                      e.currentTarget.style.transform = 'translateY(0)'; 
-                      e.currentTarget.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.02)'; 
-                      e.currentTarget.style.borderColor = 'rgba(226, 232, 240, 0.8)'; 
-                    }}
-                  >
-                    <div style={{ background: '#F1F5F9', padding: '10px', borderRadius: '50%', marginBottom: '4px', color: '#0369a1' }}>
-                      <Search size={22} />
-                    </div>
+                  <button onClick={() => document.getElementById('resume-upload')?.click()} style={{ flex: 1, background: '#fff', color: '#1e293b', padding: '24px 20px', borderRadius: 16, fontWeight: 800, border: '1px solid rgba(226, 232, 240, 0.8)', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, boxShadow: '0 4px 10px rgba(0, 0, 0, 0.02)', minWidth: 160 }}>
+                    <div style={{ background: '#F1F5F9', padding: '10px', borderRadius: '50%', color: '#0369a1' }}><Search size={22} /></div>
                     RE-EVALUATE
                   </button>
                </div>
-
-               {/* SMALL CONTROLS ROW */}
                <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
-                  <button 
-                    onClick={selectedFile ? handleAnalyze : () => { localStorage.setItem('hertz_profile_analyzed', 'true'); setStep('results'); }}
-                    style={{ 
-                      flex: 1, background: 'linear-gradient(135deg, #f59e0b, #ec4899)', color: '#fff', padding: '14px 16px', borderRadius: 12, fontWeight: 900, border: 'none', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.05em', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, boxShadow: '0 8px 20px rgba(236,72,153,0.25)', transition: 'transform 0.2s'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                  >
+                  <button onClick={selectedFile ? handleAnalyze : () => { localStorage.setItem('hertz_profile_analyzed', 'true'); setStep('results'); }} style={{ flex: 1, background: 'linear-gradient(135deg, #f59e0b, #ec4899)', color: '#fff', padding: '14px 16px', borderRadius: 12, fontWeight: 900, border: 'none', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.05em', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, boxShadow: '0 8px 20px rgba(236,72,153,0.25)' }}>
                     {selectedFile ? 'Submit Analysis' : 'Skip & Submit'} <ArrowRight size={16} />
                   </button>
-                  <button 
-                    onClick={() => setSelectedFile(null)}
-                    style={{ 
-                      flex: 1, background: '#fff', color: '#64748B', padding: '14px 16px', borderRadius: 12, fontWeight: 900, border: '1px solid #E2E8F0', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.05em', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 2px 5px rgba(0,0,0,0.02)', display: 'flex', justifyContent: 'center', alignItems: 'center'
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.background = '#F8FAFC'; e.currentTarget.style.color = '#0F172A'; e.currentTarget.style.borderColor = '#CBD5E1'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#64748B'; e.currentTarget.style.borderColor = '#E2E8F0'; }}
-                  >
-                    Reset
-                  </button>
+                  <button onClick={() => setSelectedFile(null)} style={{ flex: 1, background: '#fff', color: '#64748B', padding: '14px 16px', borderRadius: 12, fontWeight: 900, border: '1px solid #E2E8F0', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.05em', cursor: 'pointer' }}>Reset</button>
                </div>
             </div>
          </div>
 
          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 15, opacity: 0.7, marginTop: 40, animation: 'fadeSlideUp 1s 1s both' }}>
             <div style={{ width: 60, height: 1, background: 'linear-gradient(90deg, transparent, #CBD5E1)' }} />
-            <p style={{ fontSize: 13, color: '#9CA3AF', fontWeight: 600, letterSpacing: '0.06em', margin: 0, fontFamily: 'inherit' }}>
+            <p style={{ fontSize: 13, color: '#9CA3AF', fontWeight: 600, letterSpacing: '0.06em', margin: 0 }}>
                Hertz Career Forge is powered by <span style={{ color: '#374151', fontWeight: 800 }}>Intelligent Neural Pathfinding.</span>
             </p>
             <div style={{ width: 60, height: 1, background: 'linear-gradient(90deg, #CBD5E1, transparent)' }} />
@@ -683,18 +670,9 @@ export function AIProfileAnalyzer() {
             @keyframes meshMove { from { background-position: 0% 0%; } to { background-position: 100% 100%; } }
             @keyframes fadeSlideRight { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
             @keyframes fadeSlideLeft { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-            @keyframes glowTextGreen { from { box-shadow: 0 0 5px rgba(16, 185, 129, 0); } to { box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); } }
-            @keyframes iconPulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } }
-            @keyframes scaleIn { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
             @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 0.7; transform: translateY(0); } }
-            @keyframes glowTextWhite { from { text-shadow: 0 0 0px #fff; } to { text-shadow: 0 0 10px rgba(255,255,255,0.5); } }
-            @keyframes cycleTransport {
-              0% { opacity: 0; transform: translateX(-25px) scale(0.8); }
-              5% { opacity: 1; transform: translateX(0) scale(1); }
-              20% { opacity: 1; transform: translateX(0) scale(1); }
-              25% { opacity: 0; transform: translateX(25px) scale(0.8); }
-              100% { opacity: 0; transform: translateX(25px) scale(0.8); }
-            }
+            @keyframes spin { to { transform: rotate(360deg); } }
+            @keyframes cycleRealTransport { 0% { opacity: 0; transform: translateX(-20px) scale(0.8); } 5% { opacity: 1; transform: translateX(0) scale(1); } 15% { opacity: 1; transform: translateX(0) scale(1); } 20% { opacity: 0; transform: translateX(20px) scale(0.8); } 100% { opacity: 0; transform: translateX(20px) scale(0.8); } }
          `}</style>
       </div>
     );
@@ -703,20 +681,9 @@ export function AIProfileAnalyzer() {
   if (step === 'analyzing') {
     return (
       <div style={{ maxWidth: 600, margin: '160px auto', textAlign: 'center' }}>
-        <style>{`
-            @keyframes cycleRealTransport {
-              0% { opacity: 0; transform: translateX(-20px) scale(0.8); }
-              5% { opacity: 1; transform: translateX(0) scale(1); }
-              15% { opacity: 1; transform: translateX(0) scale(1); }
-              20% { opacity: 0; transform: translateX(20px) scale(0.8); }
-              100% { opacity: 0; transform: translateX(20px) scale(0.8); }
-            }
-            @keyframes spin { 100% { transform: rotate(360deg); } }
-        `}</style>
         <div style={{ position: 'relative', width: 100, height: 100, margin: '0 auto 40px' }}>
           <div style={{ position: 'absolute', inset: 0, border: '8px solid #F1F5F9', borderRadius: '50%' }} />
           <div style={{ position: 'absolute', inset: 0, border: '8px solid #FFD100', borderRadius: '50%', borderTopColor: 'transparent', animation: 'spin 0.8s linear infinite' }} />
-          
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=100&h=100&fit=crop" style={{ position: 'absolute', width: 56, height: 56, borderRadius: '50%', objectFit: 'cover', opacity: 0, animation: 'cycleRealTransport 5s infinite 0s' }} alt="Real Car" />
             <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=100&h=100&fit=crop" style={{ position: 'absolute', width: 56, height: 56, borderRadius: '50%', objectFit: 'cover', opacity: 0, animation: 'cycleRealTransport 5s infinite 1s' }} alt="Real Bus" />
@@ -734,599 +701,256 @@ export function AIProfileAnalyzer() {
   return (
     <div style={{ minHeight: '100vh', background: '#fff', width: '100%', paddingBottom: 100, overflowX: 'hidden', color: '#111827' }}>
       
-      {/* HERO SECTION WRAPPER */}
       <div style={{ background: '#fff', width: '100%', borderBottom: '1px solid #E5E7EB' }}>
-      
-      {/* HOMEPAGE STYLE CLEAN BANNER */}
-      <div style={{ position: 'relative', height: 220, overflow: 'hidden' }}>
-         <img 
-            src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=2000&auto=format&fit=crop&q=80" 
-            alt="Hertz Fleet" 
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} 
-         />
-         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 60%, transparent 100%)' }} />
-         
-         <div style={{ position: 'absolute', left: '2.5rem', top: '50%', transform: 'translateY(-50%)' }}>
-            <h2 style={{ fontSize: '2rem', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.1, margin: 0, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
-               NAVIGATE YOUR<br/>NEXT MOVE.
-            </h2>
-            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
-               <button onClick={() => { setStep('upload'); setSelectedFile(null); }} style={{ background: 'linear-gradient(90deg, #f59e0b, #ec4899)', color: '#fff', padding: '0.5rem 1.25rem', borderRadius: 8, fontWeight: 900, fontSize: '0.75rem', border: 'none', textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer', boxShadow: '0 10px 20px rgba(236, 72, 153, 0.3)' }}>UPLOAD RESUME</button>
-               <button onClick={() => { localStorage.removeItem('hertz_profile_analyzed'); setStep('upload'); setSelectedFile(null); }} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', padding: '0.5rem 1.25rem', borderRadius: 8, fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)' }}>REVALIDATE</button>
-            </div>
-         </div>
-
-         <div style={{ position: 'absolute', right: '2.5rem', top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(20px)', borderRadius: 16, padding: '1.25rem 1.5rem', display: 'flex', alignItems: 'center', gap: '1rem', boxShadow: '0 20px 40px rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ position: 'relative', height: 220, overflow: 'hidden' }}>
+          <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=2000&auto=format&fit=crop&q=80" alt="Hertz Fleet" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 60%, transparent 100%)' }} />
+          <div style={{ position: 'absolute', left: '2.5rem', top: '50%', transform: 'translateY(-50%)' }}>
+            <h2 style={{ fontSize: '2rem', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.1, margin: 0, whiteSpace: 'pre-line' }}>{t('NAVIGATE_YOUR_NEXT_MOVE')}</h2>
+               <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
+                <button onClick={() => { setStep('upload'); setSelectedFile(null); }} style={{ background: 'linear-gradient(90deg, #f59e0b, #ec4899)', color: '#fff', padding: '0.5rem 1.25rem', borderRadius: 8, fontWeight: 900, fontSize: '0.75rem', border: 'none', textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer' }}>{t('UPLOAD_RESUME')}</button>
+                <button onClick={() => { localStorage.removeItem('hertz_profile_analyzed'); setStep('upload'); setSelectedFile(null); }} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', padding: '0.5rem 1.25rem', borderRadius: 8, fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)' }}>{t('REVALIDATE')}</button>
+               </div>
+          </div>
+          <div style={{ position: 'absolute', right: '2.5rem', top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(20px)', borderRadius: 16, padding: '1.25rem 1.5rem', display: 'flex', alignItems: 'center', gap: '1rem', boxShadow: '0 20px 40px rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.05)' }}>
             <div style={{ flex: 1 }}>
                <p style={{ fontWeight: 900, fontSize: '1.1rem', color: '#fff', margin: 0 }}>Ram</p>
                <p style={{ fontSize: '0.75rem', color: '#94A3B8', margin: '0.2rem 0 0.5rem' }}>Your profile is looking awesome</p>
-               <button style={{ color: '#ec4899', background: 'none', border: 'none', padding: 0, fontSize: '0.75rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.25rem', cursor: 'pointer' }}>
-                  Elevate your potential <ArrowRight size={12} />
-               </button>
+               <button style={{ color: '#ec4899', background: 'none', border: 'none', padding: 0, fontSize: '0.75rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.25rem' }}>Elevate your potential <ArrowRight size={12} /></button>
             </div>
             <div style={{ width: 52, height: 52, background: 'linear-gradient(135deg, #f59e0b, #ec4899)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: 2 }}>
-               <div style={{ width: '100%', height: '100%', borderRadius: '50%', overflow: 'hidden' }}>
-                  <Image src="/ram_profile.png" alt="Ram" width={52} height={52} style={{ objectFit: 'cover' }} />
-               </div>
+               <div style={{ width: '100%', height: '100%', borderRadius: '50%', overflow: 'hidden' }}><Image src="/ram_profile.png" alt="Ram" width={52} height={52} style={{ objectFit: 'cover' }} /></div>
             </div>
-         </div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div style={{ maxWidth: 1400, margin: '0 auto', padding: '80px 40px' }}>
-
-      {/* EXPLORE FUTURE MOVES SECTION */}
-      <div style={{ textAlign: 'center', marginBottom: 100, position: 'relative' }}>
-         <h2 style={{ fontSize: 44, fontWeight: 900, color: '#1E293B', marginBottom: 60, letterSpacing: '-0.02em', fontFamily: 'inherit' }}>
-            Explore Future Moves
-         </h2>
-         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 60, position: 'relative', zIndex: 10 }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '80px 40px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 100, position: 'relative' }}>
+           <h2 style={{ fontSize: 44, fontWeight: 900, color: '#1E293B', marginBottom: 60, letterSpacing: '-0.02em' }}>{t('EXPLORE_FUTURE_MOVES')}</h2>
            
-           {/* Animated Left Arrow */}
-           <svg style={{ position: 'absolute', top: 76, right: '50%', marginRight: 90, width: 200, height: 40, zIndex: 0 }} viewBox="0 0 200 40">
-               <defs>
-                  <marker id="arrowheadLeft" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#111827" />
-                  </marker>
-               </defs>
-               <path d="M 200 20 L 10 20" fill="none" stroke="#111827" strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrowheadLeft)">
-                 <animate attributeName="stroke-dashoffset" from="12" to="0" dur="1s" repeatCount="indefinite" />
-               </path>
-           </svg>
-           
-           {/* Animated Right Arrow */}
-           <svg style={{ position: 'absolute', top: 76, left: '50%', marginLeft: 90, width: 200, height: 40, zIndex: 0 }} viewBox="0 0 200 40">
-               <defs>
-                  <marker id="arrowheadRight" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#111827" />
-                  </marker>
-               </defs>
-               <path d="M 0 20 L 190 20" fill="none" stroke="#111827" strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrowheadRight)">
-                 <animate attributeName="stroke-dashoffset" from="12" to="0" dur="1s" repeatCount="indefinite" />
-               </path>
-           </svg>
-           
-           {/* Left Item */}
-           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 280, marginTop: 20 }}>
-             <div style={{ borderRadius: '50%', padding: 4, background: '#fff' }}>
-               <div style={{ width: 120, height: 120, borderRadius: '50%', overflow: 'hidden', border: '4px solid #10B981', background: '#1e293b', position: 'relative' }}>
-                  
-<style>{`
-  .tech-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: techCrossfade 15s infinite; }
-  .ts-1 { animation-delay: 0s; }
-  .ts-2 { animation-delay: 5s; }
-  .ts-3 { animation-delay: 10s; }
-  @keyframes techCrossfade {
-    0% { opacity: 0; transform: scale(1.05); }
-    10% { opacity: 1; transform: scale(1.0); }
-    33% { opacity: 1; transform: scale(1.0); }
-    43% { opacity: 0; transform: scale(1.05); }
-    100% { opacity: 0; transform: scale(1.05); }
-  }
-`}</style>
-<div style={{ position: 'relative', width: '100%', height: '100%' }}>
-  <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=400&q=80" className="tech-slide ts-1" alt="Tech Code" />
-  <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=400&q=80" className="tech-slide ts-2" alt="Tech Team" />
-  <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&q=80" className="tech-slide ts-3" alt="Tech Engineer" />
-</div>
-
-               </div>
-             </div>
-             <div style={{ background: '#10B981', color: '#fff', fontSize: 13, fontWeight: 900, padding: '4px 18px', borderRadius: 8, textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: 12 }}>TECH UPGRADE</div>
-             <div style={{ color: '#3B82F6', fontWeight: 800, fontSize: 16, marginTop: 16, cursor: 'pointer', textAlign: 'center', lineHeight: 1.4 }}>Suggested Moves</div>
-           </div>
-
-           {/* Middle Item */}
-           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 340, position: 'relative' }}>
-             {showSurprise && (
-                <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 300, height: 300, background: 'radial-gradient(circle, rgba(254,240,138,0.5) 0%, rgba(254,240,138,0) 70%)', zIndex: -1 }}></div>
-             )}
-             <div style={{ borderRadius: '50%', padding: 4, background: '#fff' }}>
-               <div style={{ width: 160, height: 160, borderRadius: '50%', overflow: 'hidden', border: '4px solid #fff', boxShadow: '0 10px 25px rgba(0,0,0,0.1)' }}>
-                  <Image src="/ram_profile.png" alt="You Today" width={160} height={160} style={{ objectFit: 'cover', transform: 'scale(1.1) translateY(5%)' }} />
-               </div>
-             </div>
-             
-             {!showSurprise ? (
-                <button onClick={() => setShowSurprise(true)} style={{ background: '#083375', color: '#fff', border: 'none', padding: '12px 28px', borderRadius: 4, fontWeight: 800, fontSize: 16, cursor: 'pointer', marginTop: 30 }}>Simulate Pathway</button>
-             ) : (
-               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 10, animation: 'cardIn 0.8s ease forwards' }}>
-                 <div style={{ width: 2, height: 20, borderLeft: '2px dashed #93C5FD', marginBottom: 10 }}></div>
-                 <span style={{ color: '#94A3B8', fontSize: 13, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.15em' }}>YOU TODAY</span>
-                 <span style={{ color: '#111827', fontSize: 22, fontWeight: 900, marginTop: 4, letterSpacing: '-0.02em', textTransform: 'uppercase' }}>Solution Architect</span>
-               </div>
-             )}
-           </div>
-
-           {/* Right Item */}
-           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 280, marginTop: 20 }}>
-             <div style={{ borderRadius: '50%', padding: 4, background: '#fff' }}>
-               <div style={{ width: 120, height: 120, borderRadius: '50%', overflow: 'hidden', border: '4px solid #F59E0B', background: '#1e293b', position: 'relative' }}>
-                  
-<style>{`
-  .strat-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: stratCrossfade 15s infinite; }
-  .ss-1 { animation-delay: 0s; }
-  .ss-2 { animation-delay: 5s; }
-  .ss-3 { animation-delay: 10s; }
-  @keyframes stratCrossfade {
-    0% { opacity: 0; transform: scale(1.05); }
-    10% { opacity: 1; transform: scale(1.0); }
-    33% { opacity: 1; transform: scale(1.0); }
-    43% { opacity: 0; transform: scale(1.05); }
-    100% { opacity: 0; transform: scale(1.05); }
-  }
-`}</style>
-<div style={{ position: 'relative', width: '100%', height: '100%' }}>
-  <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&q=80" className="strat-slide ss-1" alt="Strategic Global" />
-  <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&q=80" className="strat-slide ss-2" alt="Strategic Future Server" />
-  <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&q=80" className="strat-slide ss-3" alt="Strategic Pathing" />
-</div>
-
-               </div>
-             </div>
-             <div style={{ background: '#F59E0B', color: '#fff', fontSize: 13, fontWeight: 900, padding: '4px 18px', borderRadius: 8, textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: 12 }}>STRATEGIC NODE</div>
-             <div 
-                onClick={() => { setShowNewJourney(true); setShowSurprise(false); setPortalActivePath(null); }} 
-                style={{ color: '#3B82F6', fontWeight: 800, fontSize: 16, marginTop: 16, cursor: 'pointer', textAlign: 'center', lineHeight: 1.4 }}
-              >
-                Make a new Journey
-              </div>
-           </div>
-
-         </div>
-
-         
-         
-         {/* SURPRISE ME ANIMATED TREE */}
-         {showSurprise && !portalActivePath && !showNewJourney && (
-           <div style={{ marginTop: 20 }}>
-               <div style={{ position: 'relative', height: 140, width: '100%', marginBottom: 30, marginTop: -10 }}>
-                   <svg width="100%" height="100%" viewBox="0 0 1000 100" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, overflow: 'visible', filter: 'drop-shadow(0 0 8px rgba(147, 197, 253, 0.5))' }}>
-                     <defs>
-                       <linearGradient id="glowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                         <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.2" />
-                         <stop offset="50%" stopColor="#60A5FA" stopOpacity="1" />
-                         <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.2" />
-                       </linearGradient>
-                       <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                         <path d="M 0 0 L 10 5 L 0 10 z" fill="#3B82F6" />
-                       </marker>
-                     </defs>
-                     <path d="M 500 0 C 450 80, 200 60, 125 100" fill="none" stroke="url(#glowGradient)" strokeWidth="3" strokeDasharray="6 6" markerEnd="url(#arrow)">
-                        <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite" />
-                     </path>
-                     <path d="M 500 0 C 480 60, 420 60, 375 100" fill="none" stroke="url(#glowGradient)" strokeWidth="3" strokeDasharray="6 6" markerEnd="url(#arrow)">
-                        <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite" />
-                     </path>
-                     <path d="M 500 0 C 520 60, 580 60, 625 100" fill="none" stroke="url(#glowGradient)" strokeWidth="3" strokeDasharray="6 6" markerEnd="url(#arrow)">
-                        <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite" />
-                     </path>
-                     <path d="M 500 0 C 550 80, 800 60, 875 100" fill="none" stroke="url(#glowGradient)" strokeWidth="3" strokeDasharray="6 6" markerEnd="url(#arrow)">
-                        <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite" />
-                     </path>
-                   </svg>
+           {!portalActivePath && !showNewJourney && (
+             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 60, position: 'relative', zIndex: 10, animation: 'cardIn 0.8s ease' }}>
+                <svg style={{ position: 'absolute', top: 76, right: '50%', marginRight: 90, width: 200, height: 40, zIndex: 0 }} viewBox="0 0 200 40">
+                    <defs><marker id="arrowheadLeft" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#111827" /></marker></defs>
+                    <path d="M 200 20 L 10 20" fill="none" stroke="#111827" strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrowheadLeft)"><animate attributeName="stroke-dashoffset" from="12" to="0" dur="1s" repeatCount="indefinite" /></path>
+                </svg>
+                <svg style={{ position: 'absolute', top: 76, left: '50%', marginLeft: 90, width: 200, height: 40, zIndex: 0 }} viewBox="0 0 200 40">
+                    <defs><marker id="arrowheadRight" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#111827" /></marker></defs>
+                    <path d="M 0 20 L 190 20" fill="none" stroke="#111827" strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrowheadRight)"><animate attributeName="stroke-dashoffset" from="12" to="0" dur="1s" repeatCount="indefinite" /></path>
+                </svg>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 280, marginTop: 20 }}>
+                  <div style={{ borderRadius: '50%', padding: 4, background: '#fff' }}>
+                    <div style={{ width: 120, height: 120, borderRadius: '50%', overflow: 'hidden', border: '4px solid #10B981', background: '#1e293b', position: 'relative' }}>
+                       <style>{`
+                         .tech-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: techCrossfade 15s infinite; }
+                         .ts-1 { animation-delay: 0s; } .ts-2 { animation-delay: 5s; } .ts-3 { animation-delay: 10s; }
+                         @keyframes techCrossfade { 0% { opacity: 0; transform: scale(1.05); } 10% { opacity: 1; transform: scale(1.0); } 33% { opacity: 1; transform: scale(1.0); } 43% { opacity: 0; transform: scale(1.05); } 100% { opacity: 0; transform: scale(1.05); } }
+                       `}</style>
+                       <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                         <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=400&q=80" className="tech-slide ts-1" alt="Tech" />
+                         <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=400&q=80" className="tech-slide ts-2" alt="Tech" />
+                         <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&q=80" className="tech-slide ts-3" alt="Tech" />
+                       </div>
+                    </div>
+                  </div>
+                  <div style={{ background: '#10B981', color: '#fff', fontSize: 13, fontWeight: 900, padding: '4px 18px', borderRadius: 8, textTransform: 'uppercase', marginTop: 12 }}>{t('TECH_UPGRADE')}</div>
+                  <div onClick={() => setShowSurprise(true)} style={{ color: '#3B82F6', fontWeight: 800, fontSize: 16, marginTop: 16, cursor: 'pointer' }}>{t('SUGGESTED_MOVES')}</div>
                 </div>
 
-                {/* The 4 Cards Row */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24, textAlign: 'center', perspective: '1000px' }}>
-                   
-                   {/* Card 1 */}
-                   <div 
-                     onClick={() => setPortalActivePath('intelligent-automation-arch')} 
-                     className="path-card-creative"
-                     style={{ 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        alignItems: 'center', 
-                        cursor: 'pointer',
-                        animation: 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
-                        animationDelay: '0.1s',
-                        opacity: 0,
-                        transformStyle: 'preserve-3d'
-                     }}
-                   >
-                      <div style={{ background: '#10B981', color: '#fff', fontSize: 11, fontWeight: 900, padding: '4px 16px', borderRadius: 8, border: '2px solid #fff', textTransform: 'uppercase', marginBottom: -10, position: 'relative', zIndex: 2, boxShadow: '0 4px 6px rgba(16, 185, 129, 0.3)' }}>HIGH MATCH</div>
-                      <div style={{ 
-                        background: '#fff', 
-                        border: '1px solid #E2E8F0', 
-                        borderRadius: 12, 
-                        padding: '30px 20px', 
-                        width: '100%', 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        alignItems: 'center', 
-                        boxShadow: '0 10px 25px rgba(0,0,0,0.05)', 
-                        position: 'relative', 
-                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                        transform: 'translateZ(0)'
-                      }}>
-                         <div style={{ position: 'absolute', top: 12, left: 12, fontSize: 10, color: '#94A3B8', fontWeight: 600 }}>JOURNEY</div>
-                         <div style={{ position: 'absolute', top: 12, right: 12 }}><Compass size={16} color="#CBD5E1" /></div>
-                         <div style={{ width: 90, height: 90, borderRadius: '50%', overflow: 'hidden', border: '4px solid #F1F5F9', marginBottom: 16, boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>
-                            <Image src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=200&q=80" width={90} height={90} alt="" style={{ objectFit: 'cover' }} />
-                         </div>
-                         <div style={{ fontSize: 16, fontWeight: 700, color: '#0F172A', lineHeight: 1.2, marginBottom: 20 }}>Intelligent<br/>Automation Architect</div>
-                         <div style={{ background: 'linear-gradient(135deg, #4d9e20, #3B82F6)', color: '#fff', fontSize: 10, fontWeight: 900, padding: '6px 16px', borderRadius: 20, textTransform: 'uppercase', boxShadow: '0 4px 10px rgba(59, 130, 246, 0.2)' }}>NEXT STEP</div>
-                      </div>
-                   </div>
-
-                   {/* Card 2 */}
-                   <div 
-                     onClick={() => setPortalActivePath('enterprise-automation-arch')} 
-                     className="path-card-creative"
-                     style={{ 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        alignItems: 'center', 
-                        cursor: 'pointer',
-                        animation: 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
-                        animationDelay: '0.2s',
-                        opacity: 0
-                     }}
-                   >
-                      <div style={{ background: '#10B981', color: '#fff', fontSize: 11, fontWeight: 900, padding: '4px 16px', borderRadius: 8, border: '2px solid #fff', textTransform: 'uppercase', marginBottom: -10, position: 'relative', zIndex: 2, boxShadow: '0 4px 6px rgba(16, 185, 129, 0.3)' }}>HIGH MATCH</div>
-                      <div style={{ 
-                        background: '#fff', 
-                        border: '1px solid #E2E8F0', 
-                        borderRadius: 12, 
-                        padding: '30px 20px', 
-                        width: '100%', 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        alignItems: 'center', 
-                        boxShadow: '0 10px 25px rgba(0,0,0,0.05)', 
-                        position: 'relative', 
-                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
-                      }}>
-                         <div style={{ position: 'absolute', top: 12, left: 12, fontSize: 10, color: '#94A3B8', fontWeight: 600 }}>JOURNEY</div>
-                         <div style={{ position: 'absolute', top: 12, right: 12 }}><Compass size={16} color="#CBD5E1" /></div>
-                         <div style={{ width: 90, height: 90, borderRadius: '50%', overflow: 'hidden', border: '4px solid #F1F5F9', marginBottom: 16, boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>
-                            <Image src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=200&q=80" width={90} height={90} alt="" style={{ objectFit: 'cover' }} />
-                         </div>
-                         <div style={{ fontSize: 16, fontWeight: 700, color: '#0F172A', lineHeight: 1.2, marginBottom: 20 }}>Enterprise<br/>Automation Architect</div>
-                         <div style={{ background: 'linear-gradient(135deg, #EA580C, #F59E0B)', color: '#fff', fontSize: 10, fontWeight: 900, padding: '6px 16px', borderRadius: 20, textTransform: 'uppercase', boxShadow: '0 4px 10px rgba(234, 88, 12, 0.2)' }}>FUTURE MOVE</div>
-                      </div>
-                   </div>
-
-                   {/* Card 3 */}
-                   <div 
-                     onClick={() => setPortalActivePath('tech-program-manager')} 
-                     className="path-card-creative"
-                     style={{ 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        alignItems: 'center', 
-                        cursor: 'pointer',
-                        animation: 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
-                        animationDelay: '0.3s',
-                        opacity: 0
-                     }}
-                   >
-                      <div style={{ background: '#F59E0B', color: '#fff', fontSize: 11, fontWeight: 900, padding: '4px 16px', borderRadius: 8, border: '2px solid #fff', textTransform: 'uppercase', marginBottom: -10, position: 'relative', zIndex: 2, boxShadow: '0 4px 6px rgba(245, 158, 11, 0.3)' }}>ADJACENT</div>
-                      <div style={{ 
-                        background: '#fff', 
-                        border: '1px solid #E2E8F0', 
-                        borderRadius: 12, 
-                        padding: '30px 20px', 
-                        width: '100%', 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        alignItems: 'center', 
-                        boxShadow: '0 10px 25px rgba(0,0,0,0.05)', 
-                        position: 'relative', 
-                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
-                      }}>
-                         <div style={{ position: 'absolute', top: 12, left: 12, fontSize: 10, color: '#94A3B8', fontWeight: 600 }}>JOURNEY</div>
-                         <div style={{ position: 'absolute', top: 12, right: 12 }}><Compass size={16} color="#CBD5E1" /></div>
-                         <div style={{ width: 90, height: 90, borderRadius: '50%', overflow: 'hidden', border: '4px solid #F1F5F9', marginBottom: 16, boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>
-                            <Image src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=200&q=80" width={90} height={90} alt="" style={{ objectFit: 'cover' }} />
-                         </div>
-                         <div style={{ fontSize: 16, fontWeight: 700, color: '#0F172A', lineHeight: 1.2, marginBottom: 20 }}>Technical<br/>Program Manager</div>
-                         <div style={{ background: 'linear-gradient(135deg, #EA580C, #F59E0B)', color: '#fff', fontSize: 10, fontWeight: 900, padding: '6px 16px', borderRadius: 20, textTransform: 'uppercase', boxShadow: '0 4px 10px rgba(234, 88, 12, 0.2)' }}>FUTURE MOVE</div>
-                      </div>
-                   </div>
-
-                   {/* Card 4 */}
-                   <div 
-                     onClick={() => setPortalActivePath('ai-architect')} 
-                     className="path-card-creative"
-                     style={{ 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        alignItems: 'center', 
-                        cursor: 'pointer',
-                        animation: 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
-                        animationDelay: '0.4s',
-                        opacity: 0
-                     }}
-                   >
-                      <div style={{ background: '#8B5CF6', color: '#fff', fontSize: 11, fontWeight: 900, padding: '4px 16px', borderRadius: 8, border: '2px solid #fff', textTransform: 'uppercase', marginBottom: -10, position: 'relative', zIndex: 2, boxShadow: '0 4px 6px rgba(139, 92, 246, 0.3)' }}>WILD CARD</div>
-                      <div style={{ 
-                        background: '#fff', 
-                        border: '1px solid #E2E8F0', 
-                        borderRadius: 12, 
-                        padding: '30px 20px', 
-                        width: '100%', 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        alignItems: 'center', 
-                        boxShadow: '0 10px 25px rgba(0,0,0,0.05)', 
-                        position: 'relative', 
-                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
-                      }}>
-                         <div style={{ position: 'absolute', top: 12, left: 12, fontSize: 10, color: '#94A3B8', fontWeight: 600 }}>JOURNEY</div>
-                         <div style={{ position: 'absolute', top: 12, right: 12 }}><Compass size={16} color="#CBD5E1" /></div>
-                         <div style={{ width: 90, height: 90, borderRadius: '50%', overflow: 'hidden', border: '4px solid #F1F5F9', marginBottom: 16, boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>
-                            <Image src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&q=80" width={90} height={90} alt="" style={{ objectFit: 'cover' }} />
-                         </div>
-                         <div style={{ fontSize: 16, fontWeight: 700, color: '#0F172A', lineHeight: 1.2, marginBottom: 20 }}>AI<br/>Architect</div>
-                         <div style={{ background: 'linear-gradient(135deg, #9F1239, #8B5CF6)', color: '#fff', fontSize: 10, fontWeight: 900, padding: '6px 16px', borderRadius: 20, textTransform: 'uppercase', boxShadow: '0 4px 10px rgba(139, 92, 246, 0.2)' }}>WILD CARD</div>
-                      </div>
-                   </div>
-
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 340, position: 'relative' }}>
+                  <div style={{ borderRadius: '50%', padding: 4, background: '#fff' }}>
+                    <div style={{ width: 160, height: 160, borderRadius: '50%', overflow: 'hidden', border: '4px solid #fff', boxShadow: '0 10px 25px rgba(0,0,0,0.1)' }}>
+                      <Image src="/ram_profile.png" alt="You" width={160} height={160} style={{ objectFit: 'cover', transform: 'scale(1.1) translateY(5%)' }} />
+                    </div>
+                  </div>
+                  <button onClick={() => setShowSurprise(true)} style={{ background: '#083375', color: '#fff', border: 'none', padding: '12px 28px', borderRadius: 4, fontWeight: 800, fontSize: 16, cursor: 'pointer', marginTop: 30 }}>{t('SIMULATE_PATHWAY')}</button>
                 </div>
 
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 280, marginTop: 20 }}>
+                  <div style={{ borderRadius: '50%', padding: 4, background: '#fff' }}>
+                    <div style={{ width: 120, height: 120, borderRadius: '50%', overflow: 'hidden', border: '4px solid #F59E0B', background: '#1e293b', position: 'relative' }}>
+                       <style>{`
+                         .strat-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: stratCrossfade 15s infinite; }
+                         .ss-1 { animation-delay: 0s; } .ss-2 { animation-delay: 5s; } .ss-3 { animation-delay: 10s; }
+                         @keyframes stratCrossfade { 0% { opacity: 0; transform: scale(1.05); } 10% { opacity: 1; transform: scale(1.0); } 33% { opacity: 1; transform: scale(1.0); } 43% { opacity: 0; transform: scale(1.05); } 100% { opacity: 0; transform: scale(1.05); } }
+                       `}</style>
+                       <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                         <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&q=80" className="strat-slide ss-1" alt="Strat" />
+                         <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&q=80" className="strat-slide ss-2" alt="Strat" />
+                         <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&q=80" className="strat-slide ss-3" alt="Strat" />
+                       </div>
+                    </div>
+                  </div>
+                  <div style={{ background: '#F59E0B', color: '#fff', fontSize: 13, fontWeight: 900, padding: '4px 18px', borderRadius: 8, textTransform: 'uppercase', marginTop: 12 }}>{t('STRATEGIC_NODE')}</div>
+                  <div onClick={() => { setShowNewJourney(true); setShowSurprise(false); setPortalActivePath(null); }} style={{ color: '#3B82F6', fontWeight: 800, fontSize: 16, marginTop: 16, cursor: 'pointer' }}>{t('MAKE_A_NEW_JOURNEY')}</div>
+                </div>
+             </div>
+           )}
+
+           {showSurprise && !portalActivePath && !showNewJourney && (
+             <div style={{ animation: 'cardIn 0.8s ease' }}>
+                <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative' }}>
+                   <React.Fragment>
+                     {/* The Career Tree is now STATIC as requested */}
+                     <div style={{ position: 'relative', height: 180, width: '100%', marginBottom: 20, marginTop: -20, pointerEvents: 'none', zIndex: 10 }}>
+                         <svg width="100%" height="100%" viewBox="0 0 1000 180" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, overflow: 'visible' }}>
+                           <defs>
+                             {/* Arrow pointing down */}
+                             <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                               <path d="M 0 0 L 10 5 L 0 10 z" fill="#3B82F6" />
+                             </marker>
+                           </defs>
+                           <path d="M 500 0 C 500 80, 125 40, 125 180" fill="none" stroke="#3B82F6" strokeWidth="2.5" strokeDasharray="6 4" markerEnd="url(#arrow)" opacity="0.6"><animate attributeName="stroke-dashoffset" from="20" to="0" dur="1.5s" repeatCount="indefinite" /></path>
+                           <path d="M 500 0 C 500 80, 375 40, 375 180" fill="none" stroke="#3B82F6" strokeWidth="2.5" strokeDasharray="6 4" markerEnd="url(#arrow)" opacity="0.6"><animate attributeName="stroke-dashoffset" from="20" to="0" dur="1.5s" repeatCount="indefinite" /></path>
+                           <path d="M 500 0 C 500 80, 625 40, 625 180" fill="none" stroke="#3B82F6" strokeWidth="2.5" strokeDasharray="6 4" markerEnd="url(#arrow)" opacity="0.6"><animate attributeName="stroke-dashoffset" from="20" to="0" dur="1.5s" repeatCount="indefinite" /></path>
+                           <path d="M 500 0 C 500 80, 875 40, 875 180" fill="none" stroke="#3B82F6" strokeWidth="2.5" strokeDasharray="6 4" markerEnd="url(#arrow)" opacity="0.6"><animate attributeName="stroke-dashoffset" from="20" to="0" dur="1.5s" repeatCount="indefinite" /></path>
+                         </svg>
+                     </div>
+
+                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24, width: '100%', transition: 'all 0.5s ease', marginBottom: expandedPathId ? 60 : 0 }}>
+                       {careerCards.map((card, idx) => (
+                         <div key={card.id} className="path-card-tree" onClick={() => setExpandedPathId(card.pathId)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', animation: 'popIn 0.5s ease forwards', animationDelay: `${0.1 + idx * 0.1}s`, opacity: 0, width: '100%', background: '#fff', border: expandedPathId === card.pathId ? '2px solid #3B82F6' : '1px solid #E2E8F0', borderRadius: 24, padding: '40px 20px', boxShadow: expandedPathId === card.pathId ? '0 15px 35px rgba(59, 130, 246, 0.15)' : '0 10px 25px rgba(0,0,0,0.05)', transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)', position: 'relative', overflow: 'hidden' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                               <div style={{ background: card.matchColor, color: '#fff', fontSize: 10, fontWeight: 950, padding: '4px 16px', borderRadius: 8, border: '2px solid #fff', textTransform: 'uppercase', marginBottom: -10, zIndex: 2, boxShadow: `0 4px 6px ${card.matchColor}4D` }}>{t(card.match)}</div>
+                               <div style={{ background: '#fff', borderRadius: 12, padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
+                                  <div style={{ position: 'absolute', top: 0, left: 0, fontSize: 10, color: '#94A3B8', fontWeight: 700 }}>JOURNEY</div>
+                                  <div style={{ position: 'absolute', top: 0, right: 0 }}><Compass size={18} color="#CBD5E1" /></div>
+                                  <div style={{ width: 110, height: 110, borderRadius: '50%', overflow: 'hidden', border: '6px solid #F1F5F9', margin: '20px 0', boxShadow: '0 8px 15px rgba(0,0,0,0.1)' }}>
+                                    <Image src={card.image} width={110} height={110} alt="" style={{ objectFit: 'cover' }} />
+                                  </div>
+                                  <div style={{ fontSize: 18, fontWeight: 900, color: '#0F172A', lineHeight: 1.1, textAlign: 'center', marginBottom: 20 }}>{card.role}</div>
+                                  <button onClick={(e) => { e.stopPropagation(); setExpandedPathId(card.pathId); }} style={{ background: card.badgeColor, color: '#fff', fontSize: 10, fontWeight: 950, padding: '10px 24px', borderRadius: 12, textTransform: 'uppercase', boxShadow: `0 8px 16px ${card.badgeColor}33`, border: 'none', cursor: 'pointer' }}>{expandedPathId === card.pathId ? 'VIEWING PATH' : t(card.badge)}</button>
+                               </div>
+                            </div>
+                         </div>
+                       ))}
+                     </div>
+                   </React.Fragment>
+
+                   {/* The 3-Lane Discovery Dashboard expands BELOW the tree */}
+                   {expandedPathId && (
+                     <div style={{ width: '100%', transition: 'all 0.5s ease', animation: 'popIn 0.6s ease-out forwards', paddingTop: 40, borderTop: '2px dashed #E2E8F0', marginTop: 20 }}>
+                        {careerCards.map((selectedCardInLoop) => {
+                          if (expandedPathId !== selectedCardInLoop.pathId) return null;
+
+                          const cardIdx = careerCards.findIndex(c => c.pathId === expandedPathId);
+                          const lane1 = careerCards[cardIdx];
+                          const lane2 = careerCards[(cardIdx + 1) % 4];
+                          const lane3 = careerCards[(cardIdx + 2) % 4];
+
+                          const getPath = (pId: string) => careerPathsData.categories.flatMap(c => c.paths).find(p => p.id === pId);
+                          
+                          const path1 = getPath(lane1.pathId);
+                          const path2 = getPath(lane2.pathId);
+                          const path3 = getPath(lane3.pathId);
+
+                          return (
+                            <div key="discovery-dashboard" style={{ position: 'relative' }}>
+                              {/* Header text with close option */}
+                              <div style={{ marginBottom: 32, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                                <div>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+                                    <div style={{ background: '#3B82F6', width: 4, height: 24, borderRadius: 2 }} />
+                                    <h2 style={{ fontSize: 28, fontWeight: 900, color: '#1E293B', margin: 0 }}>Path Simulation: <span style={{ color: '#3B82F6' }}>{selectedCardInLoop.role}</span></h2>
+                                  </div>
+                                  <p style={{ fontSize: 14, color: '#94A3B8', fontWeight: 600, marginLeft: 16 }}>Detailed career roadmap based on your current expertise</p>
+                                </div>
+                                
+                                <button 
+                                     onClick={() => setExpandedPathId(null)}
+                                     style={{ background: '#fff', border: '1px solid #E2E8F0', padding: '10px 20px', borderRadius: 12, display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, fontWeight: 900, color: '#64748B', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', transition: 'all 0.2s' }}
+                                     className="hover-scale"
+                                 >
+                                   <X size={16} /> CLOSE SIMULATION
+                                </button>
+                              </div>
+
+                              <div style={{ display: 'flex', gap: 0, position: 'relative', background: 'rgba(248, 250, 252, 0.5)', padding: '40px 20px', borderRadius: 32, border: '1px solid #F1F5F9' }}>
+                                
+                                {/* Shared Vertical Spine Origin */}
+                                <div style={{ width: 100, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 20 }}>
+                                  <div style={{ width: 2, height: 440, background: '#E2E8F0', position: 'relative' }}>
+                                     {/* Branching knots */}
+                                     <div style={{ position: 'absolute', left: -4, top: 40, width: 10, height: 10, borderRadius: '50%', background: '#fff', border: '2px solid #E2E8F0' }} />
+                                     <div style={{ position: 'absolute', left: -4, top: 220, width: 10, height: 10, borderRadius: '50%', background: '#fff', border: '2px solid #E2E8F0' }} />
+                                     <div style={{ position: 'absolute', left: -4, top: 400, width: 10, height: 10, borderRadius: '50%', background: '#fff', border: '2px solid #E2E8F0' }} />
+                                  </div>
+                                </div>
+
+                                {/* The Lanes */}
+                                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 40, paddingTop: 40 }}>
+                                  
+                                  {/* Lane 1: Desired Path */}
+                                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                                     <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginLeft: 20 }}>
+                                       <div style={{ background: '#EC4899', color: '#fff', fontSize: 10, fontWeight: 900, padding: '4px 12px', borderRadius: 6, textTransform: 'uppercase' }}>Desired Path</div>
+                                       <div style={{ background: '#F1F5F9', padding: '4px 8px', borderRadius: 6, display: 'flex', alignItems: 'center', gap: 4 }}>
+                                          <Zap size={10} fill="#F59E0B" color="#F59E0B" />
+                                          <span style={{ fontSize: 10, fontWeight: 800, color: '#64748B' }}>Match Rank #1</span>
+                                       </div>
+                                     </div>
+                                     <LaneRow card={lane1} pathData={path1} t={t} setPortalActivePath={setPortalActivePath} />
+                                  </div>
+
+                                  {/* Lane 2: Popular Path */}
+                                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                                     <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginLeft: 20 }}>
+                                       <div style={{ background: '#10B981', color: '#fff', fontSize: 10, fontWeight: 900, padding: '4px 12px', borderRadius: 6, textTransform: 'uppercase' }}>Popular Path</div>
+                                       <div style={{ background: '#F1F5F9', padding: '4px 8px', borderRadius: 6, display: 'flex', alignItems: 'center', gap: 4 }}>
+                                          <span style={{ fontSize: 10, fontWeight: 800, color: '#64748B' }}>Match Rank #2</span>
+                                       </div>
+                                     </div>
+                                     <LaneRow card={lane2} pathData={path2} t={t} setPortalActivePath={setPortalActivePath} />
+                                  </div>
+
+                                  {/* Lane 3: Promoted Lane */}
+                                  <div style={{ position: 'relative' }}>
+                                     <div style={{ position: 'absolute', inset: '0 -24px 0 -40px', background: '#F0F7FF', borderRadius: 32, zIndex: 0 }} />
+                                     <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: 12, padding: '24px 0' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginLeft: 20 }}>
+                                          <div style={{ color: '#3B82F6', fontSize: 13, fontWeight: 900 }}>Promoted Lane <span style={{ color: '#94A3B8', fontWeight: 600, fontSize: 11, marginLeft: 8 }}>Internal Strategic Role <HelpCircle size={12} /></span></div>
+                                        </div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginLeft: 20 }}>
+                                           <div style={{ background: '#3B82F6', color: '#fff', fontSize: 10, fontWeight: 950, padding: '4px 12px', borderRadius: 6, textTransform: 'uppercase' }}>+5% Salary growth opportunity</div>
+                                        </div>
+                                        <LaneRow card={lane3} pathData={path3} t={t} setPortalActivePath={setPortalActivePath} isPromoted />
+                                     </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                     </div>
+                   )}
+                </div>
                 <style>{`
-                   @keyframes popIn {
-                      from { transform: scale(0.8) translateY(20px); opacity: 0; }
-                      to { transform: scale(1) translateY(0); opacity: 1; }
-                   }
-                   .path-card-creative:hover > div:nth-child(2) {
-                      transform: translateY(-8px) scale(1.02);
-                      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
-                   }
-                   .path-card-creative:hover > div:nth-child(1) {
-                      transform: translateY(-4px);
-                      box-shadow: 0 8px 15px rgba(0,0,0,0.2) !important;
-                   }
+                  @keyframes popIn { from { transform: scale(0.95) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+                  .discovery-row-container:hover { border-color: #3B82F6; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(59, 130, 246, 0.12); }
+                  .hover-scale:hover { transform: scale(1.1); background: #E2E8F0 !important; }
+                  .btn-roadmap:hover { background: #3B82F6 !important; color: #fff !important; border-color: #3B82F6 !important; }
                 `}</style>
              </div>
-         )}
-         
-         {/* NEW JOURNEY FLOW */}
-         {showNewJourney && (
-           <NewJourneyFlow 
-              onFindJourney={(role) => {
-                // Map custom role to nearest existing path for demo
-                const roleMap: Record<string, string> = {
-                  'Automation Architect': 'intelligent-automation-arch',
-                  'Head of Automation': 'enterprise-automation-arch',
-                  'Chief AI Officer': 'ai-architect',
-                  'Engineering Manager': 'automation-eng-manager',
-                  'Product Manager': 'product-manager-ai',
-                  'CTO': 'intelligent-automation-arch',
-                  'Operations Director': 'delivery-head',
-                  'Solution Consultant': 'digital-transformation-consultant'
-                };
-                setPortalActivePath(roleMap[role] || 'intelligent-automation-arch');
-                setShowNewJourney(false);
-                setShowSurprise(true);
-              }}
-              onCancel={() => setShowNewJourney(false)}
-           />
-         )}
-         
-         {/* CAREER COACHING PORTAL */}
-         {showSurprise && portalActivePath && (
-           <CareerCoachingPortal overridePath={portalActivePath} onBack={() => { setPortalActivePath(null); setShowSurprise(true); }} />
-         )}
-       </div>
+           )}
+        </div>
+        
+        {showNewJourney && (
+          <NewJourneyFlow onFindJourney={(role) => { const roleMap: Record<string, string> = { 'Automation Architect': 'intelligent-automation-arch', 'Head of Automation': 'enterprise-automation-arch', 'Chief AI Officer': 'ai-architect' }; setPortalActivePath(roleMap[role] || 'intelligent-automation-arch'); setShowNewJourney(false); setShowSurprise(true); }} onCancel={() => setShowNewJourney(false)} />
+        )}
+        
+        {showSurprise && portalActivePath && (
+          <CareerCoachingPortal overridePath={portalActivePath} onBack={() => { setPortalActivePath(null); setShowSurprise(true); }} />
+        )}
 
-
-       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, marginBottom: 120 }}>
-             {/* LEFT SIDE: SKILL PROGRESS BARS */}
-             <div style={{ background: '#fff', padding: '40px', borderRadius: 32, border: '1px solid #F1F5F9', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
-                <h3 style={{ fontSize: 24, fontWeight: 950, color: '#111827', marginBottom: 40 }}>YOUR MATCH SCORE</h3>
-                {[
-                  { label: 'RPA ARCHITECTURE', value: 95, score: '28/30' },
-                  { label: 'AI & MACHINE LEARNING', value: 85, score: '25/30' },
-                  { label: 'SYSTEM INTEGRATION', value: 92, score: '27/30' },
-                  { label: 'TECH LEADERSHIP', value: 80, score: '24/30' },
-                  { label: 'REVENUE OPTIMIZATION', value: 70, score: '21/30' }
-                ].map((skill, i) => (
-                  <div key={i} style={{ marginBottom: 32 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-                      <span style={{ fontSize: 12, fontWeight: 950, color: '#94A3B8', letterSpacing: '0.05em' }}>{skill.label}</span>
-                      <span style={{ fontSize: 13, fontWeight: 900, color: '#111827' }}>{skill.score}</span>
-                    </div>
-                    <div style={{ height: 6, background: '#F1F5F9', borderRadius: 10, position: 'relative', overflow: 'hidden' }}>
-                      <div style={{ 
-                        width: `${skill.value}%`, 
-                        height: '100%', 
-                        background: 'linear-gradient(90deg, #2A60E4, #E1128F)', 
-                        borderRadius: 10,
-                        transition: 'width 1.5s cubic-bezier(0.19, 1, 0.22, 1)' 
-                      }} />
-                    </div>
-                  </div>
-                ))}
-             </div>
-
-             {/* RIGHT SIDE: ANALOG SPEEDOMETER GAUGE */}
-             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#0F172A', borderRadius: 40, padding: '60px 40px', position: 'relative', border: '1px solid #1E293B', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 320, height: 320, background: 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
-                
-                <div style={{ position: 'absolute', bottom: 20, right: 30, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: 0.8 }}>
-                   <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(236, 72, 153, 0.1)', border: '1px solid rgba(236, 72, 153, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ec4899', cursor: 'pointer', transition: 'all 0.3s' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.2)'; e.currentTarget.style.boxShadow = '0 0 20px #ec4899'; }}>
-                      <Zap size={18} fill="#ec4899" />
-                   </div>
-                   <span style={{ fontSize: 9, fontWeight: 900, color: '#ec4899', marginTop: 4, letterSpacing: '0.1em' }}>NITRO</span>
-                </div>
-
-                <div style={{ position: 'relative', width: 320, height: 260, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                   <svg width="320" height="260" viewBox="0 0 200 160" style={{ overflow: 'visible' }}>
-                      <defs>
-                        <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor="#3B82F6" />
-                          <stop offset="100%" stopColor="#E1128F" />
-                        </linearGradient>
-                        <filter id="gaugeGlow">
-                          <feGaussianBlur stdDeviation="4" result="blur" />
-                          <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                        </filter>
-                      </defs>
-
-                      {/* Gauge Base Arc */}
-                      <path d="M 30 130 A 80 80 0 1 1 170 130" fill="none" stroke="#1E293B" strokeWidth="14" strokeLinecap="round" />
-                      
-                      {/* Interactive Progress Arc */}
-                      <path 
-                        d="M 30 130 A 80 80 0 1 1 170 130" 
-                        fill="none" 
-                        stroke="url(#gaugeGradient)" 
-                        strokeWidth="14" 
-                        strokeLinecap="round"
-                        strokeDasharray="360"
-                        strokeDashoffset={360 - (360 * 0.85)} 
-                        style={{ transition: 'stroke-dashoffset 2s cubic-bezier(0.19, 1, 0.22, 1)', filter: 'url(#gaugeGlow)' }}
-                      />
-
-                      {/* Dashboard Ticks */}
-                      {[...Array(21)].map((_, i) => {
-                        const angle = -210 + (i * 12); 
-                        const rad = (angle * Math.PI) / 180;
-                        const isMajor = i % 5 === 0;
-                        const tickLen = isMajor ? 14 : 7;
-                        const x1 = 100 + Math.cos(rad) * 65;
-                        const y1 = 90 + Math.sin(rad) * 65;
-                        const x2 = 100 + Math.cos(rad) * (65 + tickLen);
-                        const y2 = 90 + Math.sin(rad) * (65 + tickLen);
-                        return (
-                          <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={isMajor ? "#94A3B8" : "#334155"} strokeWidth={isMajor ? "2.5" : "1"} />
-                        );
-                      })}
-
-                      {/* Analog Needle */}
-                      <g style={{ transform: `rotate(${-120 + (240 * 0.85)}deg)`, transformOrigin: '100px 90px', transition: 'transform 2.8s cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
-                        <path d="M 100 90 L 100 12" stroke="#fff" strokeWidth="3" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 6px #fff)' }} />
-                        <circle cx="100" cy="90" r="10" fill="#0F172A" stroke="#3B82F6" strokeWidth="3" />
-                        <circle cx="100" cy="90" r="3" fill="#fff" />
-                      </g>
-                   </svg>
-
-                   <div style={{ position: 'absolute', bottom: 40, textAlign: 'center' }}>
-                      <span style={{ fontSize: 80, fontWeight: 1000, color: '#fff', lineHeight: 1, textShadow: '0 0 40px rgba(59, 130, 246, 0.8)' }}>85</span>
-                      <p style={{ fontSize: 13, fontWeight: 900, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.2rem', marginTop: 10 }}>Overall Match</p>
-                   </div>
-                </div>
-
-                <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', padding: '0 30px', marginTop: 10 }}>
-                   <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: 10, color: '#475569', fontWeight: 900, letterSpacing: '0.1em' }}>RELIABILITY</div>
-                      <div style={{ fontSize: 14, color: '#10B981', fontWeight: 800 }}>OPTIMAL</div>
-                   </div>
-                   <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: 10, color: '#475569', fontWeight: 900, letterSpacing: '0.1em' }}>ENGINE</div>
-                      <div style={{ fontSize: 14, color: '#3B82F6', fontWeight: 800 }}>ACTIVE</div>
-                   </div>
-                </div>
-             </div>
-          </div>
-
-          <h1 style={{ textAlign: 'center', fontSize: 40, fontWeight: 1000, color: '#111827', marginBottom: 100, textTransform: 'uppercase', letterSpacing: '-0.03em' }}>Explore Future Moves</h1>
-
-         {/* Tree Top Root Area */}
-         <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 140, marginBottom: 180 }}>
-            
-            {/* NEXT STEP (Left Node) */}
-            <div style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}>
-               <div style={{ width: 100, height: 100, borderRadius: '50%', border: '4px solid #10B981', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, overflow: 'hidden', boxShadow: '0 4px 15px rgba(16,185,129,0.1)' }}>
-                  <Image src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=100&h=100&fit=crop" width={100} height={100} alt="Next" />
-               </div>
-               <span style={{ display: 'inline-block', background: '#10B981', color: '#fff', fontSize: 10, fontWeight: 950, padding: '6px 16px', borderRadius: 6, marginBottom: 12, textTransform: 'uppercase' }}>NEXT STEP</span>
-               <p style={{ fontSize: 13, fontWeight: 800, color: '#007AFF', cursor: 'pointer', maxWidth: 180, margin: '0 auto', lineHeight: 1.4 }}>Click Here to Find Suggested Moves</p>
-            </div>
-
-            {/* YOU TODAY (Center) */}
-            <div style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}>
-               <div style={{ position: 'relative' }}>
-                  <div style={{ position: 'absolute', top: -10, left: -10, right: -10, bottom: -10, borderRadius: '50%', background: 'linear-gradient(135deg, #FFD100, transparent)', opacity: 0.3, filter: 'blur(15px)' }} />
-                  <div style={{ position: 'relative', width: 140, height: 140, borderRadius: '50%', border: '8px solid #F1F5F9', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 32, overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
-                     <Image src="/ram_profile.png" width={140} height={140} alt="You" />
-                  </div>
-               </div>
-               <div style={{ marginTop: 24 }}>
-                  <span style={{ display: 'block', fontSize: 11, fontWeight: 950, color: '#94A3B8', letterSpacing: '0.2rem', marginBottom: 8, textTransform: 'uppercase' }}>YOU TODAY</span>
-                  <p style={{ fontSize: 22, fontWeight: 950, color: '#111827', margin: 0, letterSpacing: '-0.02em', textTransform: 'uppercase' }}>Solution Architect</p>
-               </div>
-            </div>
-
-            {/* FUTURE MOVE (Right Node) */}
-            <div style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}>
-               <div style={{ width: 100, height: 100, borderRadius: '50%', border: '4px solid #F59E0B', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, overflow: 'hidden', boxShadow: '0 4px 15px rgba(245,158,11,0.1)' }}>
-                  <Image src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=100&h=100&fit=crop" width={100} height={100} alt="Future" />
-               </div>
-               <span style={{ display: 'inline-block', background: '#F59E0B', color: '#fff', fontSize: 10, fontWeight: 950, padding: '6px 16px', borderRadius: 6, marginBottom: 12, textTransform: 'uppercase' }}>FUTURE MOVE</span>
-               <p style={{ fontSize: 13, fontWeight: 800, color: '#007AFF', cursor: 'pointer', maxWidth: 180, margin: '0 auto', lineHeight: 1.4 }}>Click Here to Find a Journey</p>
-            </div>
-
-            {/* SVG Connector Arrows */}
-            <div style={{ position: 'absolute', top: 140, left: '50%', transform: 'translateX(-50%)', width: 1100, height: 320, zIndex: 0, pointerEvents: 'none' }}>
-               <svg width="1100" height="320" viewBox="0 0 1100 320">
-                  <defs>
-                     <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                        <polygon points="0 0, 10 3.5, 0 7" fill="#007AFF" />
-                     </marker>
-                  </defs>
-                  <path d="M550 0 C550 150, 137 150, 137 300" stroke="#007AFF" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.4} markerEnd="url(#arrowhead)" />
-                  <path d="M550 0 C550 150, 412 150, 412 300" stroke="#007AFF" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.4} markerEnd="url(#arrowhead)" />
-                  <path d="M550 0 C550 150, 687 150, 687 300" stroke="#007AFF" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.4} markerEnd="url(#arrowhead)" />
-                  <path d="M550 0 C550 150, 962 150, 962 300" stroke="#007AFF" strokeWidth="2.5" strokeDasharray="8 8" fill="none" opacity={0.4} markerEnd="url(#arrowhead)" />
-               </svg>
-            </div>
-         </div>
-
-         {/* 4 Cards Grid */}
-         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 32, position: 'relative', zIndex: 10 }}>
-            {careerCards.map(card => (
-              <div key={card.id} style={{ background: '#fff', borderRadius: 32, padding: '56px 32px 40px', boxShadow: '0 4px 20px rgba(0,0,0,0.06)', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid #F1F5F9', position: 'relative', minHeight: 520, transition: 'transform 0.3s ease' }} className="hover:-translate-y-2">
-                 
-                 <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', background: card.matchColor, color: '#fff', fontSize: 10, fontWeight: 950, padding: '6px 24px', borderRadius: 10, whiteSpace: 'nowrap', boxShadow: '0 10px 15px rgba(0,0,0,0.1)', textTransform: 'uppercase', border: '2px solid rgba(3, 11, 23, 0.5)' }}>{card.match}</div>
-                 
-                 <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#94A3B8', marginBottom: 12 }}>
-                    <span style={{ fontSize: 11, fontWeight: 950, letterSpacing: '0.15em' }}>JOURNEY</span>
-                    <Search size={22} color="#fff" />
-                 </div>
-
-                 <div style={{ width: 160, height: 160, borderRadius: '50%', overflow: 'hidden', margin: '32px 0', border: '10px solid rgba(255,255,255,0.03)', flexShrink: 0, boxShadow: 'inset 0 0 0 4px rgba(0,0,0,0.2)' }}>
-                    <img src={card.image} alt={card.role} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                 </div>
-
-                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', textAlign: 'center', marginBottom: 32 }}>
-                    <h4 style={{ fontSize: 22, fontWeight: 950, color: '#111827', margin: 0, lineHeight: 1.1, textTransform: 'uppercase' }}>{card.role}</h4>
-                 </div>
-                 
-                 <button style={{ background: card.badgeColor, color: '#fff', border: 'none', padding: '14px 44px', borderRadius: 12, fontSize: 11, fontWeight: 950, textTransform: 'uppercase', letterSpacing: '0.15em', cursor: 'pointer', transition: 'all 0.2s', boxShadow: `0 8px 16px ${card.badgeColor}33` }}>{card.badge}</button>
-              </div>
-            ))}
-         </div>
       </div>
 
-      <style>{`
-        @keyframes spin { to { transform: rotate(360deg); } }
-        * { scrollbar-width: none; }
-        *::-webkit-scrollbar { display: none; }
-      `}</style>
+       <style>{`
+         @keyframes spin { to { transform: rotate(360deg); } }
+         * { scrollbar-width: none; }
+         *::-webkit-scrollbar { display: none; }
+       `}</style>
     </div>
   );
 }

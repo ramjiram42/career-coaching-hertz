@@ -5,9 +5,11 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const NavBar = () => {
   const pathname = usePathname();
+  const { language, setLanguage, t } = useLanguage();
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 });
@@ -67,11 +69,11 @@ export const NavBar = () => {
 
   const navLinks = [
     { name: 'HOME', href: '/' },
-    { name: 'JOURNEYS', href: '/your-move' },
+    { name: 'EXPLORE_JOURNEYS', href: '/your-move' },
     { name: 'GIGS', href: '#' },
     { name: 'MENTORS', href: '#' },
-    { name: 'LEARN', href: '/learn' },
-    { name: 'VACANCIES', href: '#' },
+    { name: 'LEARNING_MARKET', href: '/learn' },
+    { name: 'VACANCIES', href: '/jobs' },
   ];
 
   useEffect(() => {
@@ -208,7 +210,7 @@ export const NavBar = () => {
                transform: hoveredIdx === idx ? 'scale(1.1)' : 'scale(1)',
              }}
            >
-             {link.name}
+             {t(link.name)}
            </Link>
          ))}
       </div>
@@ -312,7 +314,7 @@ export const NavBar = () => {
                       ].map(lang => (
                         <div 
                          key={lang.name}
-                         onClick={() => setIsLocationOpen(false)}
+                         onClick={() => { setLanguage(lang.code as any); setIsLocationOpen(false); }}
                          style={{
                            display: 'flex',
                            alignItems: 'center',
@@ -329,7 +331,7 @@ export const NavBar = () => {
                              <span style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>{lang.name}</span>
                              <span style={{ fontSize: 9, fontWeight: 600, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{lang.sub}</span>
                           </div>
-                          <span style={{ fontSize: 10, fontWeight: 900, color: '#ec4899', background: 'rgba(236, 72, 153, 0.1)', padding: '2px 6px', borderRadius: 4 }}>{lang.code}</span>
+                          <span style={{ fontSize: 10, fontWeight: 900, color: language === lang.code ? '#fff' : '#ec4899', background: language === lang.code ? '#ec4899' : 'rgba(236, 72, 153, 0.1)', padding: '2px 6px', borderRadius: 4 }}>{lang.code}</span>
                        </div>
                       ))}
                    </div>
