@@ -751,41 +751,21 @@ export function AIProfileAnalyzer() {
            {!portalActivePath && !showNewJourney && (
              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 60, position: 'relative', zIndex: 10, animation: 'cardIn 0.8s ease' }}>
                 <svg style={{ position: 'absolute', top: 60, right: '50%', marginRight: 100, width: 220, height: 60, zIndex: 0, overflow: 'visible' }} viewBox="0 0 220 60">
-                    <defs>
-                      <linearGradient id="glowLeft" x1="100%" y1="0%" x2="0%" y2="0%">
-                        <stop offset="0%" stopColor="rgba(59, 130, 246, 0.1)" />
-                        <stop offset="100%" stopColor="#3b82f6" />
-                      </linearGradient>
-                      <filter id="energyGlow">
-                        <feGaussianBlur stdDeviation="3" result="blur"/>
-                        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                      </filter>
-                    </defs>
-                    {/* Background path */}
-                    <path d="M 220 30 Q 110 0, 10 30" fill="none" stroke="#F1F5F9" strokeWidth="2" strokeDasharray="5 5" />
-                    {/* Animated energy pulse */}
-                    <path d="M 220 30 Q 110 0, 10 30" fill="none" stroke="url(#glowLeft)" strokeWidth="4" strokeLinecap="round" filter="url(#energyGlow)" strokeDasharray="40 180">
-                      <animate attributeName="stroke-dashoffset" from="0" to="220" dur="2s" repeatCount="indefinite" />
+                    {/* The classic black dotted line */}
+                    <path d="M 220 30 Q 110 0, 15 30" fill="none" stroke="#1E293B" strokeWidth="2" strokeDasharray="6 4" strokeLinecap="round" opacity="0.3">
+                      <animate attributeName="stroke-dashoffset" from="20" to="0" dur="1s" repeatCount="indefinite" />
                     </path>
                     {/* Arrow head */}
-                    <path d="M 12 24 L 2 30 L 12 36 Z" fill="#3b82f6" filter="url(#energyGlow)" />
+                    <path d="M 16 24 L 6 30 L 16 36 Z" fill="#1E293B" opacity="0.4" />
                 </svg>
 
                 <svg style={{ position: 'absolute', top: 60, left: '50%', marginLeft: 100, width: 220, height: 60, zIndex: 0, overflow: 'visible' }} viewBox="0 0 220 60">
-                    <defs>
-                      <linearGradient id="glowRight" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="rgba(59, 130, 246, 0.1)" />
-                        <stop offset="100%" stopColor="#3b82f6" />
-                      </linearGradient>
-                    </defs>
-                    {/* Background path */}
-                    <path d="M 0 30 Q 110 0, 210 30" fill="none" stroke="#F1F5F9" strokeWidth="2" strokeDasharray="5 5" />
-                    {/* Animated energy pulse */}
-                    <path d="M 0 30 Q 110 0, 210 30" fill="none" stroke="url(#glowRight)" strokeWidth="4" strokeLinecap="round" filter="url(#energyGlow)" strokeDasharray="40 180">
-                      <animate attributeName="stroke-dashoffset" from="0" to="-220" dur="2s" repeatCount="indefinite" />
+                    {/* The classic black dotted line */}
+                    <path d="M 0 30 Q 110 0, 205 30" fill="none" stroke="#1E293B" strokeWidth="2" strokeDasharray="6 4" strokeLinecap="round" opacity="0.3">
+                      <animate attributeName="stroke-dashoffset" from="0" to="20" dur="1s" repeatCount="indefinite" />
                     </path>
                     {/* Arrow head */}
-                    <path d="M 208 24 L 218 30 L 208 36 Z" fill="#3b82f6" filter="url(#energyGlow)" />
+                    <path d="M 204 24 L 214 30 L 204 36 Z" fill="#1E293B" opacity="0.4" />
                 </svg>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 280, marginTop: 20 }}>
